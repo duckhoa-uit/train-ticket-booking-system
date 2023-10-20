@@ -5,7 +5,7 @@ import { useState } from 'react';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-import { LangProvider } from '@ttbs/i18n/context';
+import { LangProvider } from '@ttbs/i18n';
 import { TooltipProvider } from '@radix-ui/react-tooltip';
 
 export default function Providers({ children, lang }: { children: React.ReactNode; lang: string }) {

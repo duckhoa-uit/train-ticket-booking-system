@@ -101,8 +101,4 @@ const sendActivity = (
   return post(`${API_URL}/telemetry/activity`, properties);
 };
 
-export default {
-  sendEvent,
-  sendIdentify,
-  sendActivity,
-};
+export { sendEvent, sendIdentify, sendActivity };

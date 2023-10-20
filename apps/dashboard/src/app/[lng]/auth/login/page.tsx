@@ -15,7 +15,6 @@ import { collectPageParameters, telemetryEventTypes, useTelemetry } from '@ttbs/
 import { Alert, Button, EmailField, PasswordField } from '@ttbs/ui';
 import { ArrowLeft, Lock } from '@ttbs/ui/components/icons';
 
-// import PageWrapper from '@/components/PageWrapper';
 import AuthContainer from '@/components/ui/auth-container';
 import { I18nRouteParam } from '@/types';
 
@@ -39,10 +38,7 @@ enum ErrorCode {
   SocialIdentityProviderRequired = 'social-identity-provider-required',
 }
 
-export default function Login({
-  totpEmail,
-  params: { lng },
-}: { totpEmail?: string } & I18nRouteParam) {
+export default function Login({ params: { lng } }: I18nRouteParam) {
   const { t } = useClientTranslation(lng);
 
   const searchParams = useSearchParams();
@@ -53,24 +49,13 @@ export default function Login({
         .string()
         .min(1, `${t('error_required_field')}`)
         .email(`${t('enter_valid_email')}`),
-      password: !!totpEmail ? z.literal('') : z.string().min(1, `${t('error_required_field')}`),
+      password: z.string().min(1, `${t('error_required_field')}`),
     })
     // Passthrough other fields like totpCode
     .passthrough();
   const methods = useForm<LoginValues>({ resolver: zodResolver(formSchema) });
   const { register, formState } = methods;
-  const [twoFactorRequired, setTwoFactorRequired] = useState(!!totpEmail || false);
-  const [twoFactorLostAccess, setTwoFactorLostAccess] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-
-  const errorMessages: { [key: string]: string } = {
-    // Don't leak information about whether an email is registered or not
-    [ErrorCode.IncorrectEmailPassword]: t('incorrect_email_password'),
-    [ErrorCode.InternalServerError]: `${t('something_went_wrong')} ${t(
-      'please_try_again_and_contact_us'
-    )}`,
-    [ErrorCode.ThirdPartyIdentityProviderEnabled]: t('account_created_with_identity_provider'),
-  };
 
   const telemetry = useTelemetry();
 
@@ -91,47 +76,6 @@ export default function Login({
     <a href={`${WEBAPP_URL}/signup`} className="text-brand-500 font-medium">
       {t('dont_have_an_account')}
     </a>
-  );
-
-  const TwoFactorFooter = (
-    <>
-      <Button
-        onClick={() => {
-          setTwoFactorRequired(false);
-          methods.setValue('totpCode', '');
-
-          setErrorMessage(null);
-        }}
-        StartIcon={ArrowLeft}
-        color="minimal"
-      >
-        {t('go_back')}
-      </Button>
-      {!twoFactorLostAccess ? (
-        <Button
-          onClick={() => {
-            setTwoFactorLostAccess(true);
-            setErrorMessage(null);
-            methods.setValue('totpCode', '');
-          }}
-          StartIcon={Lock}
-          color="minimal"
-        >
-          {t('lost_access')}
-        </Button>
-      ) : null}
-    </>
-  );
-
-  const ExternalTotpFooter = (
-    <Button
-      onClick={() => {
-        window.location.replace('/');
-      }}
-      color="minimal"
-    >
-      {t('cancel')}
-    </Button>
   );
 
   const onSubmit = async (values: LoginValues) => {
@@ -159,15 +103,7 @@ export default function Login({
         description={t('login')}
         showLogo
         heading={t('welcome_back')}
-        footerText={
-          twoFactorRequired
-            ? !totpEmail
-              ? TwoFactorFooter
-              : ExternalTotpFooter
-            : process.env.NEXT_PUBLIC_DISABLE_SIGNUP !== 'true'
-            ? LoginFooter
-            : null
-        }
+        footerText={process.env.NEXT_PUBLIC_DISABLE_SIGNUP !== 'true' ? LoginFooter : null}
       >
         <FormProvider {...methods}>
           <form onSubmit={methods.handleSubmit(onSubmit)} noValidate data-testid="login-form">
@@ -176,7 +112,7 @@ export default function Login({
                 <EmailField
                   id="email"
                   label={t('email_address')}
-                  defaultValue={totpEmail || (searchParams?.get('email') as string)}
+                  defaultValue={searchParams?.get('email') as string}
                   placeholder="john.doe@example.comm"
                   required
                   {...register('email')}
@@ -185,7 +121,7 @@ export default function Login({
                   <PasswordField
                     id="password"
                     autoComplete="off"
-                    required={!totpEmail}
+                    required
                     className="mb-0"
                     {...register('password')}
                   />

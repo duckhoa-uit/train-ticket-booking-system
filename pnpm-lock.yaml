@@ -60,9 +60,6 @@ importers:
       next:
         specifier: 13.5.5
         version: 13.5.5(react-dom@18.2.0)(react@18.2.0)
-      next-collect:
-        specifier: ^0.2.1
-        version: 0.2.1(next@13.5.5)(react-dom@18.2.0)(react@18.2.0)
       next-themes:
         specifier: ^0.2.1
         version: 0.2.1(next@13.5.5)(react-dom@18.2.0)(react@18.2.0)
@@ -75,9 +72,6 @@ importers:
       react-hook-form:
         specifier: ^7.47.0
         version: 7.47.0(react@18.2.0)
-      tailwindcss-radix:
-        specifier: ^2.8.0
-        version: 2.8.0
       uuid:
         specifier: ^9.0.1
         version: 9.0.1
@@ -113,7 +107,7 @@ importers:
         specifier: ^8
         version: 8.4.31
       tailwindcss:
-        specifier: ^3
+        specifier: ^3.3.1
         version: 3.3.3
       tailwindcss-animate:
         specifier: ^1.0.7
@@ -165,7 +159,7 @@ importers:
         specifier: ^8
         version: 8.4.14
       tailwindcss:
-        specifier: ^3
+        specifier: ^3.3.1
         version: 3.3.3
       typescript:
         specifier: ^5.2.2
@@ -174,7 +168,7 @@ importers:
   packages/config:
     devDependencies:
       '@savvywombat/tailwindcss-grid-areas':
-        specifier: ^3.0.0
+        specifier: ^3.1.0
         version: 3.1.0(tailwindcss@3.3.3)
       '@tailwindcss/forms':
         specifier: ^0.5.2
@@ -185,18 +179,27 @@ importers:
       '@tailwindcss/typography':
         specifier: ^0.5.4
         version: 0.5.10(tailwindcss@3.3.3)
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^4.2.0
+        version: 4.2.0(prettier@3.0.3)
+      prettier:
+        specifier: ^3.0.3
+        version: 3.0.3
       prettier-plugin-tailwindcss:
-        specifier: ^0.2.5
-        version: 0.2.8(prettier@3.0.3)
+        specifier: ^0.2.8
+        version: 0.2.8(@trivago/prettier-plugin-sort-imports@4.2.0)(prettier@3.0.3)
       tailwind-scrollbar:
-        specifier: ^2.0.1
+        specifier: ^2.1.0
         version: 2.1.0(tailwindcss@3.3.3)
       tailwindcss:
         specifier: ^3.3.1
         version: 3.3.3
+      tailwindcss-radix:
+        specifier: ^2.8.0
+        version: 2.8.0
       typescript:
-        specifier: ^4.9.4
-        version: 4.9.5
+        specifier: ^5.2.2
+        version: 5.2.2
 
   packages/eslint-config-custom:
     devDependencies:
@@ -477,11 +480,20 @@ packages:
       semver: 6.3.1
     dev: true
 
+  /@babel/generator@7.17.7:
+    resolution: {integrity: sha512-oLcVCTeIFadUoArDTwpluncplrYBmTCCZZgXCbgNGvOBBiSDDK3eWO4b/+eOTli5tKv1lg+a5/NAXg+nTcei1w==}
+    engines: {node: '>=6.9.0'}
+    dependencies:
+      '@babel/types': 7.23.0
+      jsesc: 2.5.2
+      source-map: 0.5.7
+    dev: true
+
   /@babel/generator@7.22.10:
     resolution: {integrity: sha512-79KIf7YiWjjdZ81JnLujDRApWtl7BxTqWD88+FFdQEIOG8LJ0etDOM7CXuIgGJa55sGOwZVwuEsaLEm0PJ5/+A==}
     engines: {node: '>=6.9.0'}
     dependencies:
-      '@babel/types': 7.22.11
+      '@babel/types': 7.23.0
       '@jridgewell/gen-mapping': 0.3.3
       '@jridgewell/trace-mapping': 0.3.19
       jsesc: 2.5.2
@@ -549,7 +561,7 @@ packages:
     resolution: {integrity: sha512-AsUnxuLhRYsisFiaJwvp1QF+I3KjD5FOxut14q/GzovUe6orHLesW2C7d754kRm53h5gqrz6sFl6sxc4BVtE/g==}
     engines: {node: '>=6.9.0'}
     dependencies:
-      '@babel/types': 7.22.11
+      '@babel/types': 7.23.0
     dev: true
 
   /@babel/helper-string-parser@7.22.5:
@@ -645,6 +657,24 @@ packages:
       '@babel/types': 7.22.11
     dev: true
 
+  /@babel/traverse@7.17.3:
+    resolution: {integrity: sha512-5irClVky7TxRWIRtxlh2WPUUOLhcPN06AGgaQSB8AEwuyEBgJVuJ5imdHm5zxk8w0QS5T+tDfnDxAlhWjpb7cw==}
+    engines: {node: '>=6.9.0'}
+    dependencies:
+      '@babel/code-frame': 7.22.13
+      '@babel/generator': 7.22.10
+      '@babel/helper-environment-visitor': 7.22.5
+      '@babel/helper-function-name': 7.22.5
+      '@babel/helper-hoist-variables': 7.22.5
+      '@babel/helper-split-export-declaration': 7.22.6
+      '@babel/parser': 7.23.0
+      '@babel/types': 7.23.0
+      debug: 4.3.4
+      globals: 11.12.0
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
   /@babel/traverse@7.22.11:
     resolution: {integrity: sha512-mzAenteTfomcB7mfPtyi+4oe5BZ6MXxWcn4CX+h4IRJ+OOGXBrWU6jDQavkQI9Vuc5P+donFabBfFCcmWka9lQ==}
     engines: {node: '>=6.9.0'}
@@ -661,6 +691,14 @@ packages:
       globals: 11.12.0
     transitivePeerDependencies:
       - supports-color
+    dev: true
+
+  /@babel/types@7.17.0:
+    resolution: {integrity: sha512-TmKSNO4D5rzhL5bjWFcVHHLETzfQ/AmbKpKPOSjlP0WoHZ6L911fgoOKY4Alp/emzG4cHJdyN49zpgkbXFEHHw==}
+    engines: {node: '>=6.9.0'}
+    dependencies:
+      '@babel/helper-validator-identifier': 7.22.20
+      to-fast-properties: 2.0.0
     dev: true
 
   /@babel/types@7.22.11:
@@ -1941,6 +1979,26 @@ packages:
 
   /@total-typescript/ts-reset@0.5.1:
     resolution: {integrity: sha512-AqlrT8YA1o7Ff5wPfMOL0pvL+1X+sw60NN6CcOCqs658emD6RfiXhF7Gu9QcfKBH7ELY2nInLhKSCWVoNL70MQ==}
+    dev: true
+
+  /@trivago/prettier-plugin-sort-imports@4.2.0(prettier@3.0.3):
+    resolution: {integrity: sha512-YBepjbt+ZNBVmN3ev1amQH3lWCmHyt5qTbLCp/syXJRu/Kw2koXh44qayB1gMRxcL/gV8egmjN5xWSrYyfUtyw==}
+    peerDependencies:
+      '@vue/compiler-sfc': 3.x
+      prettier: 2.x - 3.x
+    peerDependenciesMeta:
+      '@vue/compiler-sfc':
+        optional: true
+    dependencies:
+      '@babel/generator': 7.17.7
+      '@babel/parser': 7.23.0
+      '@babel/traverse': 7.17.3
+      '@babel/types': 7.17.0
+      javascript-natural-sort: 0.7.1
+      lodash: 4.17.21
+      prettier: 3.0.3
+    transitivePeerDependencies:
+      - supports-color
     dev: true
 
   /@tsconfig/node10@1.0.9:
@@ -5058,6 +5116,10 @@ packages:
       reflect.getprototypeof: 1.0.3
     dev: true
 
+  /javascript-natural-sort@0.7.1:
+    resolution: {integrity: sha512-nO6jcEfZWQXDhOiBtG2KvKyEptz7RVbpGP4vTD2hLBdmNQSsCiicO2Ioinv6UI4y9ukqnBpy+XZ9H6uLNgJTlw==}
+    dev: true
+
   /jiti@1.20.0:
     resolution: {integrity: sha512-3TV69ZbrvV6U5DfQimop50jE9Dl6J8O1ja1dvBbMba/sZ3YBEQqJ2VZRoQPVnhlzjNtU1vaXRZVrVjU4qtm8yA==}
     hasBin: true
@@ -5093,6 +5155,7 @@ packages:
   /jsesc@2.5.2:
     resolution: {integrity: sha512-OYu7XEzjkCQ3C5Ps3QIZsQfNpqoJyZZA99wd9aWd05NCtC5pWOkShK2mkL6HXQR6/Cy2lbNdPlZBpuQHXE63gA==}
     engines: {node: '>=4'}
+    hasBin: true
     dev: true
 
   /jsesc@3.0.2:
@@ -5957,7 +6020,7 @@ packages:
       synckit: 0.8.5
     dev: true
 
-  /prettier-plugin-tailwindcss@0.2.8(prettier@3.0.3):
+  /prettier-plugin-tailwindcss@0.2.8(@trivago/prettier-plugin-sort-imports@4.2.0)(prettier@3.0.3):
     resolution: {integrity: sha512-KgPcEnJeIijlMjsA6WwYgRs5rh3/q76oInqtMXBA/EMcamrcYJpyhtRhyX1ayT9hnHlHTuO8sIifHF10WuSDKg==}
     engines: {node: '>=12.17.0'}
     peerDependencies:
@@ -6006,6 +6069,7 @@ packages:
       prettier-plugin-twig-melody:
         optional: true
     dependencies:
+      '@trivago/prettier-plugin-sort-imports': 4.2.0(prettier@3.0.3)
       prettier: 3.0.3
     dev: true
 
@@ -6640,7 +6704,6 @@ packages:
   /source-map@0.5.7:
     resolution: {integrity: sha512-LbrmJOMUSdEVxIKvdcJzQC+nQhe8FUZQTXQy6+I75skNgn3OoQ0DZA8YnFa7gp8tqtL3KPf1kmo0R5DoApeSGQ==}
     engines: {node: '>=0.10.0'}
-    dev: false
 
   /source-map@0.6.1:
     resolution: {integrity: sha512-UjgapumWlbMhkBgzT7Ykc5YXUT46F0iKu8SGXq0bcwP5dz/h0Plj6enJqjz1Zbq2l5WaqYnrVbwWOWMyF3F47g==}
@@ -6883,7 +6946,7 @@ packages:
 
   /tailwindcss-radix@2.8.0:
     resolution: {integrity: sha512-1k1UfoIYgVyBl13FKwwoKavjnJ5VEaUClCTAsgz3VLquN4ay/lyaMPzkbqD71sACDs2fRGImytAUlMb4TzOt1A==}
-    dev: false
+    dev: true
 
   /tailwindcss@3.3.3:
     resolution: {integrity: sha512-A0KgSkef7eE4Mf+nKJ83i75TMyq8HqY3qmFIJSWy8bNt0v1lG7jUcpGpoTFxAwYcWOphcTBLPPJg+bDfhDf52w==}
@@ -7173,12 +7236,6 @@ packages:
       call-bind: 1.0.2
       for-each: 0.3.3
       is-typed-array: 1.1.10
-    dev: true
-
-  /typescript@4.9.5:
-    resolution: {integrity: sha512-1FXk9E2Hm+QzZQ7z+McJiHL4NW1F2EzMu9Nq9i3zAaGqibafqYwCVU6WyWAuyQRRzOlxou8xZSyXLEN8oKj24g==}
-    engines: {node: '>=4.2.0'}
-    hasBin: true
     dev: true
 
   /typescript@5.2.2:
