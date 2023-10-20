@@ -5,7 +5,7 @@ import * as React from 'react';
 import type { GroupBase, Props, SingleValue, MultiValue } from 'react-select';
 import ReactSelect from 'react-select';
 
-import { useTranslation } from '@ttbs/lib/i18n/client';
+import { useClientTranslation } from '@ttbs/i18n';
 
 import { Label } from '../inputs/Label';
 import { getReactSelectProps } from './selectTheme';
@@ -124,7 +124,7 @@ export const SelectField = function SelectField<
     lang?: string;
   } & SelectProps<Option, IsMulti, Group>
 ) {
-  const { t } = useTranslation(props.lang ?? 'en');
+  const { t } = useClientTranslation();
   const {
     label = t(props.name || ''),
     containerClassName,

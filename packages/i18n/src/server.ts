@@ -11,14 +11,14 @@ const initI18next = async (lng: string, ns: string | string[]) => {
     .use(initReactI18next)
     .use(
       resourcesToBackend(
-        (language: string, namespace: string) => import(`./locales/${language}/${namespace}.json`)
+        (language: string, namespace: string) => import(`../locales/${language}/${namespace}.json`)
       )
     )
     .init(getOptions(lng, ns));
   return i18nInstance;
 };
 
-export async function useTranslation<
+export async function useServerTranslation<
   Ns extends FlatNamespace,
   KPrefix extends KeyPrefix<FallbackNs<Ns>> = undefined,
 >(lng: string, ns?: Ns, options: { keyPrefix?: KPrefix } = {}) {

@@ -4,7 +4,7 @@ import type { ReactNode } from 'react';
 import React, { forwardRef, useCallback, useId, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { useTranslation } from '@ttbs/lib/i18n/client';
+import { useClientTranslation } from '@ttbs/i18n';
 
 import { Alert, Input, InputField, Tooltip, cn } from '../../..';
 import { Eye, EyeOff, Search } from '../../icons';
@@ -21,7 +21,7 @@ export function InputLeading(props: JSX.IntrinsicElements['div']) {
 
 export const PasswordField = forwardRef<HTMLInputElement, InputFieldProps>(
   function PasswordField(props, ref) {
-    const { t } = useTranslation(props.lang ?? 'en');
+    const { t } = useClientTranslation();
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
     const toggleIsPasswordVisible = useCallback(
       () => setIsPasswordVisible(!isPasswordVisible),
@@ -124,7 +124,7 @@ type TextAreaFieldProps = {
 export const TextAreaField = forwardRef<HTMLTextAreaElement, TextAreaFieldProps>(
   function TextField(props, ref) {
     const id = useId();
-    const { t: _t } = useTranslation(props.lang ?? 'en');
+    const { t: _t } = useClientTranslation();
     const t = props.t || _t;
     const methods = useFormContext();
     const {

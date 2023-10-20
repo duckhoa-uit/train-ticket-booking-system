@@ -2,7 +2,7 @@
 
 import React, { forwardRef, useId, useState } from 'react';
 
-import { useTranslation } from '@ttbs/lib/i18n/client';
+import { useClientTranslation } from '@ttbs/i18n';
 
 import { Skeleton, cn } from '../../..';
 import { X } from '../../icons';
@@ -59,7 +59,7 @@ const Addon = ({ isFilled, children, className, error, onClickAddon }: AddonProp
 export const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
   function InputField(props, ref) {
     const id = useId();
-    const { t: _t, ready: isLocaleReady, i18n } = useTranslation(props.lang ?? 'en');
+    const { t: _t, ready: isLocaleReady, i18n } = useClientTranslation();
     const t = props.t || _t;
     const name = props.name || '';
     const {

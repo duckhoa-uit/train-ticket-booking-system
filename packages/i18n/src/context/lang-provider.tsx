@@ -1,7 +1,7 @@
 import i18next from 'i18next';
 import { createContext, ReactNode } from 'react';
 
-import { languages } from '@ttbs/lib/i18n/settings';
+import { languages } from '../settings';
 
 export interface LangContextType {
   lang: string;

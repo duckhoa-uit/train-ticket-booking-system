@@ -7,7 +7,7 @@ import React, { useEffect, useState } from 'react';
 import { Toaster } from 'sonner';
 
 import { APP_NAME } from '@ttbs/lib/constants';
-import { useTranslation } from '@ttbs/lib/i18n/client';
+import { useClientTranslation } from '@ttbs/i18n';
 import { Button } from '../components/button';
 import { StepCard } from '../components/card/step-card';
 import { Steps } from '../components/form';
@@ -18,12 +18,10 @@ export function WizardLayout({
   maxSteps = 2,
   currentStep = 0,
   isOptionalCallback,
-  lang = 'en',
 }: {
   children: React.ReactNode;
-  lang?: string;
 } & { maxSteps?: number; currentStep?: number; isOptionalCallback?: () => void }) {
-  const { t, ready: isLocaleReady } = useTranslation(lang);
+  const { t, ready: isLocaleReady } = useClientTranslation();
 
   const [meta, setMeta] = useState({ title: '', subtitle: ' ' });
   const pathname = usePathname();

@@ -10,7 +10,7 @@ import { z } from 'zod';
 
 import { WEBAPP_URL } from '@ttbs/lib/constants';
 import { getSafeRedirectUrl } from '@ttbs/lib/get-safe-redirect-url';
-import { useTranslation } from '@ttbs/lib/i18n/client';
+import { useClientTranslation } from '@ttbs/i18n';
 import { collectPageParameters, telemetryEventTypes, useTelemetry } from '@ttbs/lib/telemetry';
 import { Alert, Button, EmailField, PasswordField } from '@ttbs/ui';
 import { ArrowLeft, Lock } from '@ttbs/ui/components/icons';
@@ -26,7 +26,7 @@ interface LoginValues {
 }
 
 // TODO: chwa kip move =)))
-export enum ErrorCode {
+enum ErrorCode {
   IncorrectEmailPassword = 'incorrect-email-password',
   UserNotFound = 'user-not-found',
   IncorrectPassword = 'incorrect-password',
@@ -43,7 +43,7 @@ export default function Login({
   totpEmail,
   params: { lng },
 }: { totpEmail?: string } & I18nRouteParam) {
-  const { t } = useTranslation(lng);
+  const { t } = useClientTranslation(lng);
 
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -97,13 +97,9 @@ export default function Login({
     <>
       <Button
         onClick={() => {
-          if (twoFactorLostAccess) {
-            setTwoFactorLostAccess(false);
-            methods.setValue('backupCode', '');
-          } else {
-            setTwoFactorRequired(false);
-            methods.setValue('totpCode', '');
-          }
+          setTwoFactorRequired(false);
+          methods.setValue('totpCode', '');
+
           setErrorMessage(null);
         }}
         StartIcon={ArrowLeft}
@@ -144,16 +140,16 @@ export default function Login({
     telemetry.event(telemetryEventTypes.login, collectPageParameters());
     return;
 
-    const res = await signIn<'credentials'>('credentials', {
-      ...values,
-      callbackUrl,
-      redirect: false,
-    });
-    if (!res) setErrorMessage(errorMessages[ErrorCode.InternalServerError]);
-    // we're logged in! let's do a hard refresh to the desired url
-    else if (!res.error) router.push(callbackUrl);
-    // fallback if error not found
-    else setErrorMessage(errorMessages[res.error] || t('something_went_wrong'));
+    // const res = await signIn<'credentials'>('credentials', {
+    //   ...values,
+    //   callbackUrl,
+    //   redirect: false,
+    // });
+    // if (!res) setErrorMessage(errorMessages[ErrorCode.InternalServerError]);
+    // // we're logged in! let's do a hard refresh to the desired url
+    // else if (!res.error) router.push(callbackUrl);
+    // // fallback if error not found
+    // else setErrorMessage(errorMessages[res.error] || t('something_went_wrong'));
   };
 
   return (

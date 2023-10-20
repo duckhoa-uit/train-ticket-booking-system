@@ -10,7 +10,7 @@ import { getErrorFromUnknown } from '@ttbs/lib/errors';
 
 import { Alert, cn } from '../';
 import { toast } from 'sonner';
-import { useTranslation } from '@ttbs/lib/i18n/client';
+import { useClientTranslation } from '@ttbs/i18n';
 
 type InputProps = Omit<JSX.IntrinsicElements['input'], 'name'> & { name: string };
 
@@ -53,7 +53,7 @@ type InputFieldProps = {
 
 const InputField = forwardRef<HTMLInputElement, InputFieldProps>(function InputField(props, ref) {
   const id = useId();
-  const { t } = useTranslation(props.lang ?? 'en');
+  const { t } = useClientTranslation();
   const methods = useFormContext();
   const {
     label = t(props.name),
@@ -177,7 +177,7 @@ type TextAreaFieldProps = {
 export const TextAreaField = forwardRef<HTMLTextAreaElement, TextAreaFieldProps>(
   function TextField(props, ref) {
     const id = useId();
-    const { t } = useTranslation(props.lang ?? 'en');
+    const { t } = useClientTranslation();
     const methods = useFormContext();
     const {
       label = t(props.name as string),

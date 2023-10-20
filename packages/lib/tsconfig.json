@@ -5,6 +5,6 @@
     "jsx": "preserve",
     "resolveJsonModule": true
   },
-  "include": ["."],
+  "include": [".", "../i18n"],
   "exclude": ["dist", "build", "node_modules"]
 }
