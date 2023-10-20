@@ -1,0 +1,28 @@
+{
+  "name": "@ttbs/lib",
+  "private": true,
+  "sideEffects": false,
+  "version": "0.0.0",
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "license": "MIT",
+  "scripts": {
+    "lint": "eslint . --ext .ts,.js,.tsx,.jsx",
+    "lint:fix": "eslint . --ext .ts,.js,.tsx,.jsx --fix"
+  },
+  "dependencies": {
+    "i18next": "^23.6.0",
+    "i18next-browser-languagedetector": "^7.1.0",
+    "i18next-resources-to-backend": "^1.1.4",
+    "next": "13.5.5",
+    "next-collect": "^0.2.1",
+    "next-i18next": "^14.0.3",
+    "react": "^18.2.0",
+    "react-cookie": "^6.1.1",
+    "react-i18next": "^13.3.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.5",
+    "@ttbs/tsconfig": "workspace:*"
+  }
+}

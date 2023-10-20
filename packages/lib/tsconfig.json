@@ -1,0 +1,10 @@
+{
+  "extends": "@ttbs/tsconfig/base.json",
+  "compilerOptions": {
+    "target": "es5",
+    "jsx": "preserve",
+    "resolveJsonModule": true
+  },
+  "include": ["."],
+  "exclude": ["dist", "build", "node_modules"]
+}

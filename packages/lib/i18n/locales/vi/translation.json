@@ -1,0 +1,11 @@
+{
+  "welcome_back": "queo kom bách",
+  "title": "vi Home",
+  "to-client-page": "vi To client page",
+  "to-second-page": "vi To second page",
+  "welcome": "vi Welcome to Next.js 13 <1>with the new app directory features</1> and i18next",
+  "blog": {
+    "text": "vi Check out the corresponding <1>blog post</1> describing this example.",
+    "link": "https://locize.com/blog/next-13-app-dir-i18n/"
+  }
+}

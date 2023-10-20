@@ -1,0 +1,101 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/**
+* Add css variables here as well for light mode in addition to tailwind.config to avoid FOUC
+*/
+:root {
+  /* background */
+
+  --ttbs-bg-emphasis: #e5e7eb;
+  --ttbs-bg: white;
+  --ttbs-bg-subtle: #f3f4f6;
+  --ttbs-bg-muted: #f9fafb;
+  --ttbs-bg-inverted: #111827;
+
+  /* background -> components*/
+  --ttbs-bg-info: #dee9fc;
+  --ttbs-bg-success: #e2fbe8;
+  --ttbs-bg-attention: #fceed8;
+  --ttbs-bg-error: #f9e3e2;
+  --ttbs-bg-dark-error: #752522;
+
+  /* Borders */
+  --ttbs-border-emphasis: #9ca3af;
+  --ttbs-border: #d1d5db;
+  --ttbs-border-subtle: #e5e7eb;
+  --ttbs-border-booker: #e5e7eb;
+  --ttbs-border-muted: #f3f4f6;
+  --ttbs-border-error: #aa2e26;
+
+  /* Content/Text */
+  --ttbs-text-emphasis: #111827;
+  --ttbs-text: #374151;
+  --ttbs-text-subtle: #6b7280;
+  --ttbs-text-muted: #9ca3af;
+  --ttbs-text-inverted: white;
+
+  /* Content/Text -> components */
+  --ttbs-text-info: #253985;
+  --ttbs-text-success: #285231;
+  --ttbs-text-attention: #73321b;
+  --ttbs-text-error: #752522;
+
+  /* Brand shinanigans
+      -> These will be computed for the users theme at runtime.
+    */
+  --ttbs-brand: #111827;
+  --ttbs-brand-emphasis: #101010;
+  --ttbs-brand-text: white;
+}
+.dark {
+  /* background */
+
+  --ttbs-bg-emphasis: #2b2b2b;
+  --ttbs-bg: #101010;
+  --ttbs-bg-subtle: #2b2b2b;
+  --ttbs-bg-muted: #1c1c1c;
+  --ttbs-bg-inverted: #f3f4f6;
+
+  /* background -> components*/
+  --ttbs-bg-info: #263fa9;
+  --ttbs-bg-success: #306339;
+  --ttbs-bg-attention: #8e3b1f;
+  --ttbs-bg-error: #8c2822;
+  --ttbs-bg-dark-error: #752522;
+
+  /* Borders */
+  --ttbs-border-emphasis: #575757;
+  --ttbs-border: #444444;
+  --ttbs-border-subtle: #2b2b2b;
+  --ttbs-border-booker: #2b2b2b;
+  --ttbs-border-muted: #1c1c1c;
+  --ttbs-border-error: #aa2e26;
+
+  /* Content/Text */
+  --ttbs-text-emphasis: #f3f4f6;
+  --ttbs-text: #d6d6d6;
+  --ttbs-text-subtle: #a5a5a5;
+  --ttbs-text-muted: #575757;
+  --ttbs-text-inverted: #101010;
+
+  /* Content/Text -> components */
+  --ttbs-text-info: #dee9fc;
+  --ttbs-text-success: #e2fbe8;
+  --ttbs-text-attention: #fceed8;
+  --ttbs-text-error: #f9e3e2;
+
+  /* Brand shenanigans
+      -> These will be computed for the users theme at runtime.
+    */
+  --ttbs-brand: white;
+  --ttbs-brand-emphasis: #e1e1e1;
+  --ttbs-brand-text: black;
+}
+
+@layer base {
+  * {
+    @apply border-default
+  }
+}
