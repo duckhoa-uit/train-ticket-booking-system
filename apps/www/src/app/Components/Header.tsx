@@ -1,43 +1,17 @@
 "use client";
 
 import Image from "next/image";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 const Header = () => {
   const [open, setOpen] = useState(false);
   const [dropdown, setDropdown] = useState(false);
   const ref = useRef(null);
-  const ticket_links = [
-    {
-      name: "Tìm vé",
-      link: "#",
-    },
-    {
-      name: "trả vé",
-      link: "#",
-    },
-    {
-      name: "kiểm tra vé",
-      link: "#",
-    },
-  ];
   const links = [
-    // {
-    //   name: "Tìm vé",
-    //   link: "#",
-    // },
     {
       name: "thông tin đặt chỗ",
       link: "#",
     },
-    // {
-    //   name: "trả vé",
-    //   link: "#",
-    // },
-    // {
-    //   name: "kiểm tra vé",
-    //   link: "#",
-    // },
     {
       name: "Vé",
       link: "#",
@@ -73,27 +47,41 @@ const Header = () => {
       link: "#",
     },
   ];
-  // document.addEventListener("click", function handleClickOutsideBox(e) {
-  //   alert(ref.current.contains(e.target));
-  // });
+  //handle click outside to close menu, dropdown
+  const handleClickOutsideBox = (event) => {
+    console.log(event.target);
+    if (open && !ref.current.contains(event.target)) {
+      setOpen(false);
+    }
+    if (dropdown && !ref.current.contains(event.target)) {
+      setDropdown(false);
+    }
+  };
+  //document only be used on client side
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutsideBox);
+  });
   return (
-    <nav className="flex flex-col items-center gap-3 p-5 capitalize md:flex-row md:justify-between">
+    <nav className="relative flex flex-col items-center gap-3 p-5 capitalize md:flex-row md:justify-between">
       <div className="flex w-full items-center justify-between md:w-auto">
         <a href="#">
           {" "}
           <Image src={"/logoipsum.svg"} width={200} height={200} alt="logoipsum" />
         </a>
-        <button
-          className="z-10 rounded bg-blue-600 p-5 text-white transition-all duration-300 hover:cursor-pointer hover:bg-blue-500 md:hidden"
-          onClick={() => {
-            setOpen(!open);
-          }}>
-          MENU
-        </button>
+        {/* //link with useRef */}
+        <div ref={ref}>
+          <button
+            className="z-10 rounded bg-blue-600 p-5 text-white transition-all duration-300 hover:cursor-pointer hover:bg-blue-500 md:hidden"
+            onClick={() => {
+              setOpen(!open);
+            }}>
+            MENU
+          </button>
+        </div>
       </div>
       <ul
         className={`absolute mr-5 flex flex-col transition-all duration-500 ease-in-out md:static md:flex-row ${
-          open ? "right-10 top-20 z-0 w-1/5 bg-transparent bg-white" : "right-[-500px] top-[-100px]"
+          open ? "right-0 top-20 bg-transparent bg-white" : "right-0 top-[-500px]"
         }`}>
         {/* combine map function with ternary operator */}
         {links.map((link) => {
@@ -107,6 +95,8 @@ const Header = () => {
             </li>
           ) : (
             <li
+              //link with useRef
+              ref={ref}
               key={link.link}
               className="relative p-8 text-center"
               onClick={() => {
