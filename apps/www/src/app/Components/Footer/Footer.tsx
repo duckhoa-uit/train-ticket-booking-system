@@ -1,28 +1,36 @@
 import Image from "next/image";
 import React from "react";
 
+import { about, support } from "./item";
+
 const Footer = () => {
+  const aboutArray = about.links;
+  const supportArray = support.links;
   return (
     <section className="h-auto bg-gray-900 p-5 text-white">
       <div className="text-center lg:flex lg:justify-around">
         <div className="m-5 box-content">
-          <h3 className="f mb-3 font-bold">Về chúng tôi</h3>
+          <h3 className="f mb-3 font-bold">{about.title}</h3>
           <ul className=" leading-10 text-gray-400">
-            <li className="hover:cursor-pointer hover:text-gray-50">Giới thiệu</li>
-            <li className="hover:cursor-pointer hover:text-gray-50">Sự nghiệp</li>
-            <li className="hover:cursor-pointer hover:text-gray-50">Blog</li>
-            <li className="hover:cursor-pointer hover:text-gray-50">Liên hệ</li>
+            {aboutArray.map((item) => {
+              return (
+                <li className="hover:cursor-pointer hover:text-gray-50">
+                  <a href={item.link}>{item.name}</a>
+                </li>
+              );
+            })}
           </ul>
         </div>
         <div className="m-5">
-          <h3 className="mb-3 font-bold">Hỗ trợ</h3>
+          <h3 className="mb-3 font-bold">{support.title}</h3>
           <ul className=" leading-10 text-gray-400">
-            <li className="hover:cursor-pointer hover:text-gray-50">Điều khoản & Điều kiện</li>
-            <li className="hover:cursor-pointer hover:text-gray-50">Hướng dẫn thanh toán</li>
-            <li className="hover:cursor-pointer hover:text-gray-50">Chính sách thanh toán</li>
-            <li className="hover:cursor-pointer hover:text-gray-50">Chính sách hoàn trả</li>
-            <li className="hover:cursor-pointer hover:text-gray-50">Chính sách mua hàng</li>
-            <li className="hover:cursor-pointer hover:text-gray-50">Chính sách bảo mật thông tin</li>
+            {supportArray.map((item) => {
+              return (
+                <li className="hover:cursor-pointer hover:text-gray-50">
+                  <a href={item.link}>{item.name}</a>
+                </li>
+              );
+            })}
           </ul>
         </div>
         <div className="m-5">
