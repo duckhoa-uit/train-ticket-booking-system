@@ -6,16 +6,17 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "type-check": "tsc --pretty --noEmit"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.2",
     "@radix-ui/react-tooltip": "^1.0.7",
     "@tanstack/react-query": "^5.0.0",
     "@ttbs/config": "workspace:*",
+    "@ttbs/i18n": "workspace:*",
     "@ttbs/lib": "workspace:*",
     "@ttbs/ui": "workspace:*",
-    "@ttbs/i18n": "workspace:*",
     "accept-language": "^3.0.18",
     "i18next": "^23.6.0",
     "lodash": "^4.17.21",
@@ -25,11 +26,11 @@
     "react-dom": "^18",
     "react-hook-form": "^7.47.0",
     "uuid": "^9.0.1",
-    "zod": "^3.22.4"
+    "zod": "^3.21.1"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.200",
-    "@types/node": "^20.5.2",
+    "@types/node": "^20.8.1",
     "@types/react": "^18.2.5",
     "@types/react-dom": "^18.2.3",
     "@types/uuid": "^9.0.6",

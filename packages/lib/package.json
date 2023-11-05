@@ -13,7 +13,9 @@
   "dependencies": {
     "next": "13.5.5",
     "next-collect": "^0.2.1",
-    "react": "^18.2.0"
+    "react": "^18.2.0",
+    "dayjs": "^1.11.9",
+    "dayjs-business-days2": "^1.2.1"
   },
   "devDependencies": {
     "@types/react": "^18.2.5",

@@ -1,18 +1,16 @@
-import { handleError, handleResponse, handleResponseError, constructHeaders } from './base';
-import { uuidv4 } from '../../helpers';
-import { SupaResponse } from '@/types/base';
+import type { ApiResponse } from "@/types/base";
 
-export async function get<T = any>(
-  url: string,
-  options?: { [prop: string]: any }
-): Promise<SupaResponse<T>> {
+import { uuidv4 } from "../../helpers";
+import { handleError, handleResponse, handleResponseError, constructHeaders } from "./base";
+
+export async function get<T = any>(url: string, options?: { [prop: string]: any }): Promise<ApiResponse<T>> {
   const requestId = uuidv4();
   try {
     const { headers: optionHeaders, ...otherOptions } = options ?? {};
     const headers = await constructHeaders(requestId, optionHeaders);
     const response = await fetch(url, {
-      method: 'GET',
-      referrerPolicy: 'no-referrer-when-downgrade',
+      method: "GET",
+      referrerPolicy: "no-referrer-when-downgrade",
       headers,
       ...otherOptions,
     });
@@ -26,7 +24,7 @@ export async function get<T = any>(
 export async function getWithTimeout<T = any>(
   url: string,
   options?: { [prop: string]: any }
-): Promise<SupaResponse<T>> {
+): Promise<ApiResponse<T>> {
   const requestId = uuidv4();
   try {
     const timeout = options?.timeout ?? 60000;
@@ -35,8 +33,8 @@ export async function getWithTimeout<T = any>(
     const { headers: optionHeaders, ...otherOptions } = options ?? {};
     const headers = await constructHeaders(requestId, optionHeaders);
     const response = await fetch(url, {
-      method: 'GET',
-      referrerPolicy: 'no-referrer-when-downgrade',
+      method: "GET",
+      referrerPolicy: "no-referrer-when-downgrade",
       headers,
       ...otherOptions,
       signal: controller.signal,

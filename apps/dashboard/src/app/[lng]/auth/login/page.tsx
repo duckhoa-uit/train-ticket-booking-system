@@ -1,22 +1,21 @@
-'use client';
+"use client";
 
-import { zodResolver } from '@hookform/resolvers/zod';
-import { cn } from '@ttbs/ui';
-import Link from 'next/link';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { useState } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
-import { z } from 'zod';
+import { zodResolver } from "@hookform/resolvers/zod";
+import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useState } from "react";
+import { FormProvider, useForm } from "react-hook-form";
+import { z } from "zod";
 
-import { WEBAPP_URL } from '@ttbs/lib/constants';
-import { getSafeRedirectUrl } from '@ttbs/lib/get-safe-redirect-url';
-import { useClientTranslation } from '@ttbs/i18n';
-import { collectPageParameters, telemetryEventTypes, useTelemetry } from '@ttbs/lib/telemetry';
-import { Alert, Button, EmailField, PasswordField } from '@ttbs/ui';
-import { ArrowLeft, Lock } from '@ttbs/ui/components/icons';
+import { useClientTranslation } from "@ttbs/i18n";
+import { WEBAPP_URL } from "@ttbs/lib/constants";
+import { getSafeRedirectUrl } from "@ttbs/lib/get-safe-redirect-url";
+import { collectPageParameters, telemetryEventTypes, useTelemetry } from "@ttbs/lib/telemetry";
+import { cn } from "@ttbs/ui";
+import { Alert, Button, EmailField, PasswordField } from "@ttbs/ui";
 
-import AuthContainer from '@/components/ui/auth-container';
-import { I18nRouteParam } from '@/types';
+import AuthContainer from "@/components/ui/auth-container";
+import type { I18nRouteParam } from "@/types";
 
 interface LoginValues {
   email: string;
@@ -26,16 +25,16 @@ interface LoginValues {
 
 // TODO: chwa kip move =)))
 enum ErrorCode {
-  IncorrectEmailPassword = 'incorrect-email-password',
-  UserNotFound = 'user-not-found',
-  IncorrectPassword = 'incorrect-password',
-  UserMissingPassword = 'missing-password',
-  IncorrectEmailVerificationCode = 'incorrect_email_verification_code',
-  InternalServerError = 'internal-server-error',
-  NewPasswordMatchesOld = 'new-password-matches-old',
-  ThirdPartyIdentityProviderEnabled = 'third-party-identity-provider-enabled',
-  RateLimitExceeded = 'rate-limit-exceeded',
-  SocialIdentityProviderRequired = 'social-identity-provider-required',
+  IncorrectEmailPassword = "incorrect-email-password",
+  UserNotFound = "user-not-found",
+  IncorrectPassword = "incorrect-password",
+  UserMissingPassword = "missing-password",
+  IncorrectEmailVerificationCode = "incorrect_email_verification_code",
+  InternalServerError = "internal-server-error",
+  NewPasswordMatchesOld = "new-password-matches-old",
+  ThirdPartyIdentityProviderEnabled = "third-party-identity-provider-enabled",
+  RateLimitExceeded = "rate-limit-exceeded",
+  SocialIdentityProviderRequired = "social-identity-provider-required",
 }
 
 export default function Login({ params: { lng } }: I18nRouteParam) {
@@ -47,9 +46,9 @@ export default function Login({ params: { lng } }: I18nRouteParam) {
     .object({
       email: z
         .string()
-        .min(1, `${t('error_required_field')}`)
-        .email(`${t('enter_valid_email')}`),
-      password: z.string().min(1, `${t('error_required_field')}`),
+        .min(1, `${t("error_required_field")}`)
+        .email(`${t("enter_valid_email")}`),
+      password: z.string().min(1, `${t("error_required_field")}`),
     })
     // Passthrough other fields like totpCode
     .passthrough();
@@ -59,7 +58,7 @@ export default function Login({ params: { lng } }: I18nRouteParam) {
 
   const telemetry = useTelemetry();
 
-  let callbackUrl = searchParams.get('callbackUrl') || '';
+  let callbackUrl = searchParams.get("callbackUrl") || "";
 
   if (/"\//.test(callbackUrl)) callbackUrl = callbackUrl.substring(1);
 
@@ -70,16 +69,16 @@ export default function Login({ params: { lng } }: I18nRouteParam) {
 
   const safeCallbackUrl = getSafeRedirectUrl(callbackUrl);
 
-  callbackUrl = safeCallbackUrl || '';
+  callbackUrl = safeCallbackUrl || "";
 
   const LoginFooter = (
     <a href={`${WEBAPP_URL}/signup`} className="text-brand-500 font-medium">
-      {t('dont_have_an_account')}
+      {t("dont_have_an_account")}
     </a>
   );
 
   const onSubmit = async (values: LoginValues) => {
-    console.log('🚀 ~ file: page.tsx:122 ~ onSubmit ~ values:', values);
+    console.log("🚀 ~ file: page.tsx:122 ~ onSubmit ~ values:", values);
     setErrorMessage(null);
     telemetry.event(telemetryEventTypes.login, collectPageParameters());
     return;
@@ -99,23 +98,22 @@ export default function Login({ params: { lng } }: I18nRouteParam) {
   return (
     <div>
       <AuthContainer
-        title={t('login')}
-        description={t('login')}
+        title={t("login")}
+        description={t("login")}
         showLogo
-        heading={t('welcome_back')}
-        footerText={process.env.NEXT_PUBLIC_DISABLE_SIGNUP !== 'true' ? LoginFooter : null}
-      >
+        heading={t("welcome_back")}
+        footerText={LoginFooter}>
         <FormProvider {...methods}>
           <form onSubmit={methods.handleSubmit(onSubmit)} noValidate data-testid="login-form">
             <div className="space-y-6">
-              <div className={cn('space-y-6')}>
+              <div className={cn("space-y-6")}>
                 <EmailField
                   id="email"
-                  label={t('email_address')}
-                  defaultValue={searchParams?.get('email') as string}
+                  label={t("email_address")}
+                  defaultValue={searchParams?.get("email") as string}
                   placeholder="john.doe@example.comm"
                   required
-                  {...register('email')}
+                  {...register("email")}
                 />
                 <div className="relative">
                   <PasswordField
@@ -123,14 +121,13 @@ export default function Login({ params: { lng } }: I18nRouteParam) {
                     autoComplete="off"
                     required
                     className="mb-0"
-                    {...register('password')}
+                    {...register("password")}
                   />
                   <div className="absolute -top-[2px] ltr:right-0 rtl:left-0">
                     <Link
                       href="/auth/forgot-password"
                       tabIndex={-1}
-                      className="text-default text-sm font-medium"
-                    >
+                      className="text-default text-sm font-medium">
                       Forgot
                     </Link>
                   </div>
@@ -142,8 +139,7 @@ export default function Login({ params: { lng } }: I18nRouteParam) {
                 type="submit"
                 color="primary"
                 disabled={formState.isSubmitting}
-                className="w-full justify-center dark:bg-white dark:text-black"
-              >
+                className="w-full justify-center dark:bg-white dark:text-black">
                 Sign In
               </Button>
             </div>

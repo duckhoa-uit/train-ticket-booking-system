@@ -1,0 +1,9 @@
+{
+  "extends": "@ttbs/tsconfig/base.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "moduleResolution": "NodeNext",
+    "module": "NodeNext"
+  },
+  "include": ["**/*.ts"]
+}

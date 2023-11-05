@@ -15,11 +15,11 @@
     "i18next-resources-to-backend": "^1.1.4",
     "next": "^13.5.6",
     "react-i18next": "^13.3.0",
-    "zod": "^3.22.4",
+    "zod": "^3.21.1",
     "react-cookie": "^6.1.1"
   },
   "devDependencies": {
-    "@ttbs/eslint-config-custom": "workspace:*",
+    "@ttbs/config": "workspace:*",
     "@ttbs/tsconfig": "workspace:*",
     "@types/react": "18.2.5",
     "dotenv-cli": "^7.3.0",

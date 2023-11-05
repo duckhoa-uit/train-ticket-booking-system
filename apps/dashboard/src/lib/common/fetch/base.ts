@@ -1,19 +1,14 @@
-// import { getAccessToken } from 'lib/gotrue';
-import isUndefined from 'lodash/isUndefined';
-import { SupaResponse } from '@/types/base';
+import type { ApiResponse } from "@/types/base";
 
-export function handleError<T>(e: any, requestId: string): SupaResponse<T> {
-  const message = e?.message ? `An error has occurred: ${e.message}` : 'An error has occurred';
+export function handleError<T>(e: any, requestId: string): ApiResponse<T> {
+  const message = e?.message ? `An error has occurred: ${e.message}` : "An error has occurred";
   const error = { code: 500, message, requestId };
-  return { error } as unknown as SupaResponse<T>;
+  return { error } as unknown as ApiResponse<T>;
 }
 
-export async function handleResponse<T>(
-  response: Response,
-  requestId: string
-): Promise<SupaResponse<T>> {
-  const contentType = response.headers.get('Content-Type');
-  if (contentType === 'application/octet-stream') return response as any;
+export async function handleResponse<T>(response: Response, requestId: string): Promise<ApiResponse<T>> {
+  const contentType = response.headers.get("Content-Type");
+  if (contentType === "application/octet-stream") return response as any;
 
   try {
     const resTxt = await response.text();
@@ -25,7 +20,7 @@ export async function handleResponse<T>(
       return resTxt as any;
     }
   } catch (e) {
-    return handleError(response, requestId) as SupaResponse<T>;
+    return handleError(response, requestId) as ApiResponse<T>;
   }
 }
 
@@ -33,7 +28,7 @@ export async function handleHeadResponse<T>(
   response: Response,
   requestId: string,
   headers: string[]
-): Promise<SupaResponse<T>> {
+): Promise<ApiResponse<T>> {
   try {
     const res = {} as any;
     headers.forEach((header: string) => {
@@ -41,14 +36,14 @@ export async function handleHeadResponse<T>(
     });
     return res;
   } catch (e) {
-    return handleError(response, requestId) as SupaResponse<T>;
+    return handleError(response, requestId) as ApiResponse<T>;
   }
 }
 
 export async function handleResponseError<T = unknown>(
   response: Response,
   requestId: string
-): Promise<SupaResponse<T>> {
+): Promise<ApiResponse<T>> {
   let resJson: Record<string, any>;
 
   const resTxt = await response.text();
@@ -58,7 +53,7 @@ export async function handleResponseError<T = unknown>(
     resJson = {};
   }
 
-  if (resJson.error && typeof resJson.error === 'string') {
+  if (resJson.error && typeof resJson.error === "string") {
     if (resJson.error_description) {
       const error = {
         code: response.status,
@@ -66,48 +61,48 @@ export async function handleResponseError<T = unknown>(
         description: resJson.error_description,
         requestId,
       };
-      return { error } as unknown as SupaResponse<T>;
+      return { error } as unknown as ApiResponse<T>;
     } else {
       const error = { code: response.status, message: resJson.error, requestId };
-      return { error } as unknown as SupaResponse<T>;
+      return { error } as unknown as ApiResponse<T>;
     }
   } else if (resJson.message) {
     const error = { code: response.status, message: resJson.message, requestId };
-    return { error } as unknown as SupaResponse<T>;
+    return { error } as unknown as ApiResponse<T>;
   } else if (resJson.msg) {
     const error = { code: response.status, message: resJson.msg, requestId };
-    return { error } as unknown as SupaResponse<T>;
+    return { error } as unknown as ApiResponse<T>;
   } else if (resJson.error && resJson.error.message) {
-    return { error: { code: response.status, ...resJson.error } } as unknown as SupaResponse<T>;
+    return { error: { code: response.status, ...resJson.error } } as unknown as ApiResponse<T>;
   } else {
     const message = resTxt ?? `An error has occurred: ${response.status}`;
     const error = { code: response.status, message, requestId };
-    return { error } as unknown as SupaResponse<T>;
+    return { error } as unknown as ApiResponse<T>;
   }
 }
 
 export async function constructHeaders(requestId: string, optionHeaders?: { [prop: string]: any }) {
-  let headers: { [prop: string]: any } = {
-    'Content-Type': 'application/json',
-    Accept: 'application/json',
-    'X-Request-Id': requestId,
+  const headers: { [prop: string]: any } = {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    "X-Request-Id": requestId,
     ...optionHeaders,
   };
 
-  const hasAuthHeader = !isUndefined(optionHeaders) && 'Authorization' in (optionHeaders ?? {});
+  const hasAuthHeader = optionHeaders !== undefined && "Authorization" in (optionHeaders ?? {});
   if (!hasAuthHeader) {
     // const accessToken = await getAccessToken();
-    const accessToken = '';
+    const accessToken = "";
     if (accessToken) headers.Authorization = `Bearer ${accessToken}`;
   }
 
   return headers;
 }
 
-export function isResponseOk<T>(response: SupaResponse<T> | undefined): response is T {
+export function isResponseOk<T>(response: ApiResponse<T> | undefined): response is T {
   return (
     response !== undefined &&
     response !== null &&
-    !(typeof response === 'object' && 'error' in response && Boolean(response.error))
+    !(typeof response === "object" && "error" in response && Boolean(response.error))
   );
 }

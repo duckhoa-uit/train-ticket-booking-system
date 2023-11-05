@@ -1,5 +1,5 @@
 {
-  "name": "@ttbs/eslint-config-custom",
+  "name": "@ttbs/eslint-plugin-eslint",
   "license": "MIT",
   "version": "0.0.0",
   "private": true,

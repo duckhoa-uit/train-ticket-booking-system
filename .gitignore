@@ -34,3 +34,9 @@ yarn-error.log*
 
 # vercel
 .vercel
+
+# Prisma generated files
+packages/prisma/zod/*.ts
+packages/prisma/enums
+
+dist/

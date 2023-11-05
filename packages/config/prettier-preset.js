@@ -1,4 +1,8 @@
 module.exports = {
+  /**
+   * Using prettier v2 instead v3:
+   * @see https://github.com/tailwindlabs/prettier-plugin-tailwindcss/issues/176#issuecomment-1621926950
+   */
   bracketSpacing: true,
   bracketSameLine: true,
   singleQuote: false,

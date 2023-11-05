@@ -1,35 +1,24 @@
-import { createClient } from 'redis';
+import { createClient } from "redis";
 
-
-
-
+import { env } from "@/env";
 
 const redisClient = createClient({
-  // url: process.env.REDIS_URL,
-  url: `redis://${process.env.REDIS_HOST}:${process.env.REDIS_PORT}`,
+  url: `redis://${env.REDIS_HOST}:${env.REDIS_PORT}`,
   socket: {
-    // host: process.env.REDIS_HOST,
-    // port: parseInt(process.env.REDIS_PORT ?? '6379'),
     connectTimeout: 50000,
   },
-})
+});
 const connectRedis = async () => {
-  if (redisClient.isOpen) return
+  if (redisClient.isOpen) return;
 
   try {
-    await redisClient.connect()
-    console.log('Redis client connect successfully')
-    redisClient.set('try', 'Hello Welcome to Express with Prisma')
+    await redisClient.connect();
+    console.log("Redis client connect successfully");
+    redisClient.set("try", "Hello Welcome to Express with Prisma");
   } catch (error) {
-    console.log(
-      process.env.REDIS_HOST,
-      parseInt(process.env.REDIS_PORT ?? '6379'),
-      process.env.REDIS_PASSWORD,
-      error
-    )
-    setTimeout(connectRedis, 5000)
+    setTimeout(connectRedis, 5000);
   }
-}
+};
 
 // ;(async () => {
 //   await connectRedis()
@@ -39,6 +28,6 @@ const connectRedis = async () => {
 // process.on('SIGINT', async () => {
 //   await redisClient.disconnect()
 // })
-connectRedis()
+connectRedis();
 
-export default redisClient
+export default redisClient;

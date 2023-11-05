@@ -1,5 +1,14 @@
 {
   "extends": "@ttbs/tsconfig/react-library.json",
-  "include": ["."],
+  "compilerOptions": {
+    "resolveJsonModule": true
+  },
+  "include": [
+    "../../apps/www/next-env.d.ts",
+    "../types/*.d.ts",
+    "../types/next-auth.d.ts",
+    "**/*.ts",
+    "**/*.tsx"
+  ],
   "exclude": ["dist", "build", "node_modules"]
 }

@@ -1,24 +1,22 @@
-import {
-  Prisma,
-  User
-} from '@prisma/client'
+import { Prisma, User } from "@prisma/client";
 
-import { UserCreateInput } from '@/schemas/user.schema'
-import AppError from '@/utils/app-error'
+import { UserCreateInput } from "@/schemas/user.schema";
+import AppError from "@/utils/app-error";
+
 // import { forgotPasswordEmail, pluckAddresses, sendEmail, verifyEmail } from '@/utils/email'
-import prisma from '../libs/prisma'
-import { hashPassword } from './auth.service'
+import prisma from "../libs/prisma";
+import { hashPassword } from "./auth.service";
 
 const generateVerificationToken = async function (
   userId: string,
   email: string,
   extraTokenData?: Record<any, any>
 ) {
-  const user = await findUniqueUser({ id: userId })
-  if (!user) throw new AppError(404, "Can't find user")
+  const user = await findUniqueUser({ id: userId });
+  if (!user) throw new AppError(404, "Can't find user");
 
-  const _email: string | undefined | null = email
-// TODO: update this after init schema
+  const _email: string | undefined | null = email;
+  // TODO: update this after init schema
 
   // if (!email) {
   //   const emailRecord = (user.emails || []).find((e) => !e.verified)
@@ -30,28 +28,28 @@ const generateVerificationToken = async function (
   // }
 
   // make sure we have a valid email
-// TODO: update this after init schema
+  // TODO: update this after init schema
   // if (!_email || !pluckAddresses(user.emails).includes(email)) {
   //   throw new AppError(404, 'No such email for user.')
   // }
 
-// TODO: update this after init schema
-  const token = 'Random.secret()'
+  // TODO: update this after init schema
+  const token = "Random.secret()";
   const tokenRecord = {
     token,
     // TODO(Meteor): This should probably be renamed to "email" to match reset token record.
     address: email,
     when: new Date(),
-  }
+  };
 
   if (extraTokenData) {
-    Object.assign(tokenRecord, extraTokenData)
+    Object.assign(tokenRecord, extraTokenData);
   }
 
   await prisma.user.update({
     where: { id: user.id },
     data: {
-// TODO: update this after init schema
+      // TODO: update this after init schema
       // services: {
       //   ...user.services,
       //   email: {
@@ -59,18 +57,14 @@ const generateVerificationToken = async function (
       //   },
       // },
     },
-  })
+  });
 
-  return { email, user, token }
-}
+  return { email, user, token };
+};
 
-const generateResetToken = async function (
-  user: User,
-  email: string,
-  extraTokenData?: Record<any, any>
-) {
-  const _email: string | undefined | null = email
-// TODO: update this after init schema
+const generateResetToken = async function (user: User, email: string, extraTokenData?: Record<any, any>) {
+  const _email: string | undefined | null = email;
+  // TODO: update this after init schema
   // if (!email) {
   //   const emailRecord = (user.emails || []).find((e) => !e.verified)
   //   _email = (emailRecord || {}).address
@@ -81,27 +75,27 @@ const generateResetToken = async function (
   // }
 
   // make sure we have a valid email
-// TODO: update this after init schema
+  // TODO: update this after init schema
 
   // if (!_email || !pluckAddresses(user.emails).includes(email)) {
   //   throw new AppError(404, 'No such email for user.')
   // }
 
-  const token = 'Random.secret()'
+  const token = "Random.secret()";
   const tokenRecord = {
     token,
     email: email,
     when: new Date(),
-  }
+  };
 
   if (extraTokenData) {
-    Object.assign(tokenRecord, extraTokenData)
+    Object.assign(tokenRecord, extraTokenData);
   }
 
   await prisma.user.update({
     where: { id: user.id },
     data: {
-// TODO: update this after init schema
+      // TODO: update this after init schema
       // services: {
       //   ...user.services,
       //   password: {
@@ -110,19 +104,19 @@ const generateResetToken = async function (
       //   },
       // },
     },
-  })
+  });
 
-  return { email, user, token }
-}
+  return { email, user, token };
+};
 
 export const sendVerificationEmail = async function (
   userId: string,
   email: string,
   extraTokenData?: Record<string, any>
 ) {
-  const { token, user } = await generateVerificationToken(userId, email, extraTokenData)
+  const { token, user } = await generateVerificationToken(userId, email, extraTokenData);
 
-// TODO: update this after init schema
+  // TODO: update this after init schema
   // sendEmail(
   //   verifyEmail({
   //     name: user.profile?.fullName ?? 'User',
@@ -130,16 +124,16 @@ export const sendVerificationEmail = async function (
   //     token: token,
   //   })
   // )
-}
+};
 
 export const sendForgotPasswordEmail = async function (
   user: User,
   email: string,
   extraTokenData?: Record<string, any>
 ) {
-  const { token } = await generateResetToken(user, email, extraTokenData)
+  const { token } = await generateResetToken(user, email, extraTokenData);
 
-// TODO: update this after init schema
+  // TODO: update this after init schema
   // sendEmail(
   //   forgotPasswordEmail({
   //     name: user.profile?.fullName ?? 'User',
@@ -147,11 +141,12 @@ export const sendForgotPasswordEmail = async function (
   //     token: token,
   //   })
   // )
-}
+};
 
 export const createUser = async (input: UserCreateInput) => {
-  const hashedPassword = await hashPassword(input.password)
+  const hashedPassword = await hashPassword(input.password);
 
+  // TODO: update this function
   const newUser = {
     profile: {
       fullName: input.name,
@@ -179,54 +174,53 @@ export const createUser = async (input: UserCreateInput) => {
       },
     },
     username: input.username,
-  }
+  };
 
   return (await prisma.user.create({
     data: {
-      ...newUser,
+      email: input.email,
     },
-  })) as User
-}
+  })) as User;
+};
 
 export async function updateUser(id: string, payload: Prisma.UserUpdateInput) {
   return await prisma.user.update({
     where: { id },
     data: payload,
-  })
+  });
 }
 export async function resetPassword(_token: string, password: string) {
-  if (_token == null || _token == '') {
-    throw new Error(`Token ${_token} isn't valid.`)
+  if (_token == null || _token == "") {
+    throw new Error(`Token ${_token} isn't valid.`);
   }
 
   // Verify token and check if the user exist
   const jsonUser = await prisma.user.aggregateRaw({
     pipeline: [
       {
-        $match: { 'services.password.reset.token': _token },
+        $match: { "services.password.reset.token": _token },
       },
     ],
-  })
+  });
 
   if (!jsonUser[0]) {
-    throw new Error(`Token ${_token} isn't valid.`)
+    throw new Error(`Token ${_token} isn't valid.`);
   }
 
   // To do: Json User might not be the same as Object User in the future, so we need to change this dirty approach ( ͡° ͜ʖ ͡°)
-  const jsonString = JSON.stringify(jsonUser[0])
-  const user = JSON.parse(jsonString)
+  const jsonString = JSON.stringify(jsonUser[0]);
+  const user = JSON.parse(jsonString);
 
   if (!user) {
-    throw new Error(`Token ${_token} isn't valid.`)
+    throw new Error(`Token ${_token} isn't valid.`);
   }
 
   // If no error, set new password.
-  const newPassword = await hashPassword(password)
+  const newPassword = await hashPassword(password);
   return prisma.user.update({
     where: { id: user._id },
     data: {
-// TODO: update this after init schema
-
+      // TODO: update this after init schema
       // services: {
       //   ...user.services,
       //   password: {
@@ -234,20 +228,18 @@ export async function resetPassword(_token: string, password: string) {
       //   },
       // },
     },
-  })
+  });
 }
 
 export const findUniqueUser = async (where: Prisma.UserWhereInput, select?: Prisma.UserSelect) => {
-  return  (await prisma.user.findFirst({
+  return (await prisma.user.findFirst({
     where,
     select,
-  })) as User
-}
-
+  })) as User;
+};
 
 export const getMe = async (id: string) => {
   return (await prisma.user.findFirst({
     where: { id },
-  })) as User
-
-}
+  })) as User;
+};

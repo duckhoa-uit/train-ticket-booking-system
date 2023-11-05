@@ -3,22 +3,31 @@
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "prepare": "husky install",
+    "pre-commit": "lint-staged",
     "build": "turbo run build",
+    "build:dashboard": "turbo run build --filter=dashboard",
+    "build:web": "turbo run build --filter=www",
+    "build:api": "turbo run build --filter=api",
     "dev": "turbo run dev --parallel",
     "dev:dashboard": "turbo run dev --filter=dashboard --parallel",
+    "dev:web": "turbo run dev --filter=www --parallel",
+    "dev:api": "turbo run dev --filter=api --parallel",
     "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "type-check": "turbo run type-check"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.6.7",
     "@commitlint/config-conventional": "^17.6.7",
     "@total-typescript/ts-reset": "^0.5.1",
     "@ttbs/tsconfig": "workspace:*",
+    "@types/node": "20.8.1",
     "eslint": "^8.51.0",
     "husky": "^8.0.3",
     "lint-staged": "^13.2.3",
-    "prettier": "^3.0.3",
-    "turbo": "latest"
+    "prettier": "^2.8.0",
+    "turbo": "latest",
+    "typescript": "5.2.2"
   },
   "packageManager": "pnpm@8.6.10",
   "name": "train-ticket-booking",
@@ -26,5 +35,8 @@
     "@types/node": "^20.5.2",
     "@types/react": "18.2.5",
     "@types/react-dom": "^18.2.3"
+  },
+  "prisma": {
+    "schema": "packages/prisma/schema.prisma"
   }
 }

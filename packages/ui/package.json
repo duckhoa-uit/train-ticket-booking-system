@@ -6,10 +6,11 @@
   "license": "MIT",
   "scripts": {
     "lint": "eslint .",
-    "generate:component": "turbo gen react-component"
+    "generate:component": "turbo gen react-component",
+    "type-check": "tsc --pretty --noEmit"
   },
   "devDependencies": {
-    "@ttbs/eslint-config-custom": "workspace:*",
+    "@ttbs/config": "workspace:*",
     "@ttbs/tsconfig": "workspace:*",
     "@ttbs/types": "workspace:*",
     "@turbo/gen": "^1.10.12",

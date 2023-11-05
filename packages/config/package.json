@@ -6,7 +6,7 @@
   "main": "index.js",
   "license": "MIT",
   "files": [
-    "tailwind-preset.js",
+    "eslint-preset.js",
     "prettier-preset.js"
   ],
   "devDependencies": {
@@ -15,7 +15,11 @@
     "@tailwindcss/line-clamp": "^0.4.0",
     "@tailwindcss/typography": "^0.5.4",
     "@trivago/prettier-plugin-sort-imports": "^4.2.0",
-    "prettier": "^3.0.3",
+    "@ttbs/eslint-plugin-eslint": "workspace:*",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-unused-imports": "^3.0.0",
+    "eslint-plugin-you-dont-need-lodash-underscore": "^6.13.0",
+    "prettier": "^2.8.0",
     "prettier-plugin-tailwindcss": "^0.2.8",
     "tailwind-scrollbar": "^2.1.0",
     "tailwindcss": "^3.3.1",

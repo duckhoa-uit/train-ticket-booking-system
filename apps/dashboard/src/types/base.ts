@@ -19,7 +19,7 @@ export interface ResponseFailure {
   error: ResponseError;
 }
 
-export type SupaResponse<T> = T | ResponseFailure;
+export type ApiResponse<T> = T | ResponseFailure;
 
 export interface ResponseError {
   code?: number;

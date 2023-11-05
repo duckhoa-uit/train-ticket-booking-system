@@ -1,20 +1,21 @@
-import { handleError, handleResponse, handleResponseError, constructHeaders } from './base';
-import { uuidv4 } from '@/lib/helpers';
-import { SupaResponse } from '@/types/base';
+import { uuidv4 } from "@/lib/helpers";
+import type { ApiResponse } from "@/types/base";
+
+import { handleError, handleResponse, handleResponseError, constructHeaders } from "./base";
 
 export async function post<T = any>(
   url: string,
   data: { [prop: string]: any },
   options?: { [prop: string]: any }
-): Promise<SupaResponse<T>> {
+): Promise<ApiResponse<T>> {
   const requestId = uuidv4();
   try {
     const { headers: optionHeaders, abortSignal, ...otherOptions } = options ?? {};
     const headers = await constructHeaders(requestId, optionHeaders);
     const response = await fetch(url, {
-      method: 'POST',
+      method: "POST",
       body: JSON.stringify(data),
-      referrerPolicy: 'no-referrer-when-downgrade',
+      referrerPolicy: "no-referrer-when-downgrade",
       headers,
       ...otherOptions,
       signal: abortSignal,
