@@ -49,7 +49,6 @@ const Header = () => {
   ];
   //handle click outside to close menu, dropdown
   const handleClickOutsideBox = (event) => {
-    console.log(event.target);
     if (open && !ref.current.contains(event.target)) {
       setOpen(false);
     }
