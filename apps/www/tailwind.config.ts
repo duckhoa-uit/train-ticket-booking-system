@@ -1,5 +1,4 @@
-import type { Config } from 'tailwindcss';
-
+import type { Config } from "tailwindcss";
 
 const config: Config = {
   content: ["./src/components/**/*.{js,ts,jsx,tsx,mdx}", "./src/app/**/*.{js,ts,jsx,tsx,mdx}"],
@@ -14,12 +13,21 @@ const config: Config = {
       primary: "#F8F9FA",
       secondary: "#174576",
       accent: "#B57617",
+      white: "#FFF",
     },
     textColor: {
-      primaryTextColor: "#2C3640",
-      secondaryTextColor: "#F8F9FA",
+      primary: "#2C3640",
+      secondary: "#F8F9FA",
+      accent: "#B57617",
+      black: "#000",
+    },
+    borderColor: {
+      primary: "#2C3640",
+      secondary: "#174576",
+      accent: "#B57617",
+      black: "#000",
     },
   },
   plugins: [],
 };
-export default config
+export default config;
