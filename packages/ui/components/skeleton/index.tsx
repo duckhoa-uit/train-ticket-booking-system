@@ -1,6 +1,7 @@
-import React, { ComponentPropsWithoutRef, ElementType, ReactNode } from 'react';
+import type { ComponentPropsWithoutRef, ElementType, ReactNode } from "react";
+import React from "react";
 
-import { cn } from '../../lib/utils';
+import { cn } from "../../lib/utils";
 
 const SkeletonAvatar: React.FC<SkeletonBaseProps> = ({ className }) => {
   return <div className={cn(`bg-emphasis me-3 mt-1 rounded-full`, className)} />;
@@ -13,23 +14,23 @@ type AsProp<T extends ElementType = ElementType> = {
 type SkeletonProps<T extends ElementType> = {
   loading?: boolean;
   children: ReactNode;
-  waitForTranslation?: boolean;
+  // waitForTranslation?: boolean;
   loadingClassName?: string;
-} & Omit<AsProp<T>, 'children'>;
+} & Omit<AsProp<T>, "children">;
 
 const Skeleton = <T extends ElementType>({
   as: Component,
-  className = '',
+  className = "",
   children,
   loading = false,
   /**
    * Assumes that the text needs translation by default and wait for it.
    */
-  waitForTranslation = true,
+  // waitForTranslation = true,
   /**
    * Classes that you need only in loading state
    */
-  loadingClassName = '',
+  loadingClassName = "",
   ...rest
 }: SkeletonProps<T>) => {
   // loading = (waitForTranslation ? !isLocaleReady : false) || loading;
@@ -38,15 +39,11 @@ const Skeleton = <T extends ElementType>({
     <Component
       className={cn(
         loading
-          ? cn(
-              'font-size-0 bg-emphasis animate-pulse rounded-md text-transparent',
-              loadingClassName
-            )
-          : '',
+          ? cn("font-size-0 bg-emphasis animate-pulse rounded-md text-transparent", loadingClassName)
+          : "",
         className
       )}
-      {...rest}
-    >
+      {...rest}>
       {children}
     </Component>
   );
@@ -56,16 +53,18 @@ type SkeletonBaseProps = {
   className?: string;
 };
 
-const SkeletonText: React.FC<
-  SkeletonBaseProps & { invisible?: boolean; style?: React.CSSProperties }
-> = ({ className = '', invisible = false, style }) => {
+const SkeletonText: React.FC<SkeletonBaseProps & { invisible?: boolean; style?: React.CSSProperties }> = ({
+  className = "",
+  invisible = false,
+  style,
+}) => {
   return (
     <span
       style={style}
       className={cn(
         `font-size-0 bg-emphasis inline-block animate-pulse rounded-md empty:before:inline-block empty:before:content-['']`,
         className,
-        invisible ? 'invisible' : ''
+        invisible ? "invisible" : ""
       )}
     />
   );
@@ -85,8 +84,8 @@ interface SkeletonContainer {
   className?: string;
 }
 const SkeletonContainer: React.FC<SkeletonContainer> = ({ children, as, className }) => {
-  const Component = as || 'div';
-  return <Component className={cn('animate-pulse', className)}>{children}</Component>;
+  const Component = as || "div";
+  return <Component className={cn("animate-pulse", className)}>{children}</Component>;
 };
 
 export { Skeleton, SkeletonAvatar, SkeletonText, SkeletonButton, SkeletonContainer };

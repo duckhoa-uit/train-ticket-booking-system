@@ -1,5 +1,5 @@
 import config from "config";
-import crypto from "crypto";
+// import crypto from "crypto";
 import { CookieOptions, NextFunction, Request, Response } from "express";
 import { omit } from "lodash";
 
@@ -112,8 +112,8 @@ export const registerUserHandler = async (
     }
 
     // TODO: verification code
-    const verifyCode = crypto.randomBytes(32).toString("hex");
-    const verificationCode = crypto.createHash("sha256").update(verifyCode).digest("hex");
+    // const verifyCode = crypto.randomBytes(32).toString("hex");
+    // const verificationCode = crypto.createHash("sha256").update(verifyCode).digest("hex");
 
     const user = await createUser(req.body);
 

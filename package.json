@@ -14,13 +14,16 @@
     "dev:web": "turbo run dev --filter=www --parallel",
     "dev": "turbo run dev --parallel",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "lint:fix": "turbo run lint:fix",
+    "lint:report": "turbo run lint:report",
     "lint": "turbo run lint",
     "postinstall": "husky install && turbo run post-install",
     "pre-commit": "lint-staged",
     "preinstall": "npx only-allow pnpm",
     "prepare": "husky install",
     "prisma": "pnpm workspace @ttbs/prisma prisma",
-    "type-check": "turbo run type-check"
+    "type-check": "turbo run type-check",
+    "type-check:ci": "turbo run type-check:ci --log-prefix=none"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.6.7",
@@ -30,10 +33,11 @@
     "@types/node": "20.8.1",
     "dotenv": "^16.0.3",
     "dotenv-cli": "^7.3.0",
-    "eslint": "^8.51.0",
+    "eslint": "^8.53.0",
     "husky": "^8.0.3",
     "lint-staged": "^13.2.3",
     "prettier": "^2.8.0",
+    "tsc-absolute": "^1.0.1",
     "turbo": "latest",
     "typescript": "5.2.2"
   },

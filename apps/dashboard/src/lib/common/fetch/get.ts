@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { ApiResponse } from "@/types/base";
 
 import { uuidv4 } from "../../helpers";

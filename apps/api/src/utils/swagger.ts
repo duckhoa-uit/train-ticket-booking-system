@@ -1,27 +1,26 @@
-import { Request, Response, Express } from 'express';
-import swaggerJsdoc from 'swagger-jsdoc';
-import swaggerUi from 'swagger-ui-express';
-import { version } from '../../package.json';
+import swaggerJsdoc from "swagger-jsdoc";
+
+import { version } from "../../package.json";
 
 const options: swaggerJsdoc.Options = {
   definition: {
-    openapi: '3.0.0',
+    openapi: "3.0.0",
     info: {
-      title: 'Iyyara merchant API Docs',
+      title: "Iyyara merchant API Docs",
       version,
     },
     components: {
       securitySchemes: {
         bearerAuth: {
-          type: 'http',
-          scheme: 'bearer',
-          bearerFormat: 'JWT',
+          type: "http",
+          scheme: "bearer",
+          bearerFormat: "JWT",
         },
       },
     },
     externalDocs: {
       description: "docs.json",
-      url: "/api/docs.json"
+      url: "/api/docs.json",
     },
     security: [
       {
@@ -29,7 +28,7 @@ const options: swaggerJsdoc.Options = {
       },
     ],
   },
-  apis: ['./src/routes/*.ts', './src/schemas/*.ts'],
+  apis: ["./src/routes/*.ts", "./src/schemas/*.ts"],
 };
 
 export const swaggerSpec = swaggerJsdoc(options);

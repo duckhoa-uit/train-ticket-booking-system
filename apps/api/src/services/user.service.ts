@@ -1,3 +1,4 @@
+/* eslint-disable no-empty-pattern */
 import { hashPassword } from "@ttbs/lib/password";
 import { Prisma, User } from "@ttbs/prisma";
 // import { forgotPasswordEmail, pluckAddresses, sendEmail, verifyEmail } from '@/utils/email'
@@ -6,15 +7,11 @@ import prisma from "@ttbs/prisma";
 import { UserCreateInput } from "@/schemas/user.schema";
 import AppError from "@/utils/app-error";
 
-const generateVerificationToken = async function (
-  userId: string,
-  email: string,
-  extraTokenData?: Record<any, any>
-) {
+const generateVerificationToken = async function (userId: string, email: string) {
   const user = await findUniqueUser({ id: userId });
   if (!user) throw new AppError(404, "Can't find user");
 
-  const _email: string | undefined | null = email;
+  // const _email: string | undefined | null = email;
   // TODO: update this after init schema
 
   // if (!email) {
@@ -34,16 +31,6 @@ const generateVerificationToken = async function (
 
   // TODO: update this after init schema
   const token = "Random.secret()";
-  const tokenRecord = {
-    token,
-    // TODO(Meteor): This should probably be renamed to "email" to match reset token record.
-    address: email,
-    when: new Date(),
-  };
-
-  if (extraTokenData) {
-    Object.assign(tokenRecord, extraTokenData);
-  }
 
   await prisma.user.update({
     where: { id: user.id },
@@ -61,8 +48,8 @@ const generateVerificationToken = async function (
   return { email, user, token };
 };
 
-const generateResetToken = async function (user: User, email: string, extraTokenData?: Record<any, any>) {
-  const _email: string | undefined | null = email;
+const generateResetToken = async function (user: User, email: string) {
+  // const _email: string | undefined | null = email;
   // TODO: update this after init schema
   // if (!email) {
   //   const emailRecord = (user.emails || []).find((e) => !e.verified)
@@ -81,15 +68,6 @@ const generateResetToken = async function (user: User, email: string, extraToken
   // }
 
   const token = "Random.secret()";
-  const tokenRecord = {
-    token,
-    email: email,
-    when: new Date(),
-  };
-
-  if (extraTokenData) {
-    Object.assign(tokenRecord, extraTokenData);
-  }
 
   await prisma.user.update({
     where: { id: user.id },
@@ -108,12 +86,8 @@ const generateResetToken = async function (user: User, email: string, extraToken
   return { email, user, token };
 };
 
-export const sendVerificationEmail = async function (
-  userId: string,
-  email: string,
-  extraTokenData?: Record<string, any>
-) {
-  const { token, user } = await generateVerificationToken(userId, email, extraTokenData);
+export const sendVerificationEmail = async function (userId: string, email: string) {
+  const {} = await generateVerificationToken(userId, email);
 
   // TODO: update this after init schema
   // sendEmail(
@@ -125,12 +99,8 @@ export const sendVerificationEmail = async function (
   // )
 };
 
-export const sendForgotPasswordEmail = async function (
-  user: User,
-  email: string,
-  extraTokenData?: Record<string, any>
-) {
-  const { token } = await generateResetToken(user, email, extraTokenData);
+export const sendForgotPasswordEmail = async function (user: User, email: string) {
+  const {} = await generateResetToken(user, email);
 
   // TODO: update this after init schema
   // sendEmail(
@@ -146,39 +116,15 @@ export const createUser = async (input: UserCreateInput) => {
   const hashedPassword = await hashPassword(input.password);
 
   // TODO: update this function
-  const newUser = {
-    profile: {
-      fullName: input.name,
-      appSettings: {
-        showOnboarding: true,
-        showProfileAlert: true,
-      },
-    },
-    ...(input.role ? { roles: [input.role] } : {}),
-    emails: [
-      {
-        address: input.email.toLowerCase(),
-        verified: true, //FIXME: change to false after implementing verification email
-      },
-    ],
-    services: {
-      password: {
-        bcrypt: hashedPassword,
-      },
-      email: {
-        verificationTokens: [],
-      },
-      resume: {
-        loginTokens: [],
-      },
-    },
+  const _newUser = {
+    email: input.email.toLowerCase(),
+    name: input.name,
     username: input.username,
+    password: hashedPassword,
   };
 
   return (await prisma.user.create({
-    data: {
-      email: input.email,
-    },
+    data: _newUser,
   })) as User;
 };
 
@@ -200,6 +146,7 @@ export async function resetPassword(_token: string, password: string) {
   return prisma.user.update({
     where: { id: "user._id" },
     data: {
+      password: newPassword,
       // TODO: update this after init schema
       // services: {
       //   ...user.services,

@@ -2,7 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { z } from "zod";
@@ -10,7 +10,7 @@ import { z } from "zod";
 import { useClientTranslation } from "@ttbs/i18n";
 import { WEBAPP_URL } from "@ttbs/lib/constants";
 import { getSafeRedirectUrl } from "@ttbs/lib/get-safe-redirect-url";
-import { collectPageParameters, telemetryEventTypes, useTelemetry } from "@ttbs/lib/telemetry";
+// import { collectPageParameters, telemetryEventTypes, useTelemetry } from "@ttbs/lib/telemetry";
 import { cn } from "@ttbs/ui";
 import { Alert, Button, EmailField, PasswordField } from "@ttbs/ui";
 
@@ -24,24 +24,24 @@ interface LoginValues {
 }
 
 // TODO: chwa kip move =)))
-enum ErrorCode {
-  IncorrectEmailPassword = "incorrect-email-password",
-  UserNotFound = "user-not-found",
-  IncorrectPassword = "incorrect-password",
-  UserMissingPassword = "missing-password",
-  IncorrectEmailVerificationCode = "incorrect_email_verification_code",
-  InternalServerError = "internal-server-error",
-  NewPasswordMatchesOld = "new-password-matches-old",
-  ThirdPartyIdentityProviderEnabled = "third-party-identity-provider-enabled",
-  RateLimitExceeded = "rate-limit-exceeded",
-  SocialIdentityProviderRequired = "social-identity-provider-required",
-}
+// enum ErrorCode {
+//   IncorrectEmailPassword = "incorrect-email-password",
+//   UserNotFound = "user-not-found",
+//   IncorrectPassword = "incorrect-password",
+//   UserMissingPassword = "missing-password",
+//   IncorrectEmailVerificationCode = "incorrect_email_verification_code",
+//   InternalServerError = "internal-server-error",
+//   NewPasswordMatchesOld = "new-password-matches-old",
+//   ThirdPartyIdentityProviderEnabled = "third-party-identity-provider-enabled",
+//   RateLimitExceeded = "rate-limit-exceeded",
+//   SocialIdentityProviderRequired = "social-identity-provider-required",
+// }
 
 export default function Login({ params: { lng } }: I18nRouteParam) {
   const { t } = useClientTranslation(lng);
 
   const searchParams = useSearchParams();
-  const router = useRouter();
+  // const router = useRouter();
   const formSchema = z
     .object({
       email: z
@@ -56,7 +56,7 @@ export default function Login({ params: { lng } }: I18nRouteParam) {
   const { register, formState } = methods;
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const telemetry = useTelemetry();
+  // const telemetry = useTelemetry();
 
   let callbackUrl = searchParams.get("callbackUrl") || "";
 
@@ -80,7 +80,7 @@ export default function Login({ params: { lng } }: I18nRouteParam) {
   const onSubmit = async (values: LoginValues) => {
     console.log("🚀 ~ file: page.tsx:122 ~ onSubmit ~ values:", values);
     setErrorMessage(null);
-    telemetry.event(telemetryEventTypes.login, collectPageParameters());
+    // telemetry.event(telemetryEventTypes.login, collectPageParameters());
     return;
 
     // const res = await signIn<'credentials'>('credentials', {

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import express, { Express, json, NextFunction, Request, Response } from "express";
@@ -9,6 +10,7 @@ import { indexRouter } from "@/routes/index";
 
 import AppError from "./utils/app-error";
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 (BigInt.prototype as any).toJSON = function () {
   return this.toString();
 };
@@ -47,7 +49,7 @@ app.all("*", (req: Request, res: Response, next: NextFunction) => {
 });
 
 // GLOBAL ERROR HANDLER
-app.use((err: AppError, req: Request, res: Response, next: NextFunction) => {
+app.use((err: AppError, _: Request, res: Response, __: NextFunction) => {
   err.status = err.status || "error";
   err.statusCode = err.statusCode || 500;
 

@@ -1,17 +1,18 @@
+"use client";
+
 // eslint-disable-next-line no-restricted-imports
-'use client';
+import noop from "lodash/noop";
+import { usePathname } from "next/navigation";
+import React, { useEffect, useState } from "react";
+import { Toaster } from "sonner";
 
-import { noop } from 'lodash';
-import { usePathname } from 'next/navigation';
-import React, { useEffect, useState } from 'react';
-import { Toaster } from 'sonner';
+import { useClientTranslation } from "@ttbs/i18n";
+import { APP_NAME } from "@ttbs/lib/constants";
 
-import { APP_NAME } from '@ttbs/lib/constants';
-import { useClientTranslation } from '@ttbs/i18n';
-import { Button } from '../components/button';
-import { StepCard } from '../components/card/step-card';
-import { Steps } from '../components/form';
-import { SkeletonText } from '../components/skeleton';
+import { Button } from "../components/button";
+import { StepCard } from "../components/card/step-card";
+import { Steps } from "../components/form";
+import { SkeletonText } from "../components/skeleton";
 
 export function WizardLayout({
   children,
@@ -23,15 +24,14 @@ export function WizardLayout({
 } & { maxSteps?: number; currentStep?: number; isOptionalCallback?: () => void }) {
   const { t, ready: isLocaleReady } = useClientTranslation();
 
-  const [meta, setMeta] = useState({ title: '', subtitle: ' ' });
+  const [meta, setMeta] = useState({ title: "", subtitle: " " });
   const pathname = usePathname();
   const { title, subtitle } = meta;
 
   useEffect(() => {
     setMeta({
       title: window.document.title,
-      subtitle:
-        window.document.querySelector('meta[name="description"]')?.getAttribute('content') || '',
+      subtitle: window.document.querySelector('meta[name="description"]')?.getAttribute("content") || "",
     });
   }, [pathname]);
 
@@ -48,7 +48,7 @@ export function WizardLayout({
                 {isLocaleReady ? (
                   <>
                     <p className="font-cal mb-3 text-[28px] font-medium leading-7">
-                      {title.replace(` | ${APP_NAME}`, '')}&nbsp;
+                      {title.replace(` | ${APP_NAME}`, "")}&nbsp;
                     </p>
                     <p className="text-subtle font-sans text-sm font-normal">{subtitle}&nbsp;</p>
                   </>
@@ -67,7 +67,7 @@ export function WizardLayout({
         {isOptionalCallback && (
           <div className="mt-4 flex justify-center">
             <Button color="minimal" onClick={isOptionalCallback}>
-              {t('ill_do_this_later')}
+              {t("ill_do_this_later")}
             </Button>
           </div>
         )}

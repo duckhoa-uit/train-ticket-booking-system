@@ -8,7 +8,13 @@
     "REDIS_PORT",
     "REDIS_HOST",
     "NEXT_PUBLIC_DEBUG",
-    "NEXT_PUBLIC_API_URL"
+    "NEXT_PUBLIC_API_URL",
+    "NEXT_PUBLIC_APP_NAME",
+    "NEXT_PUBLIC_VERCEL_URL",
+    "RAILWAY_STATIC_URL",
+    "HEROKU_APP_NAME",
+    "RENDER_EXTERNAL_URL",
+    "NEXT_PUBLIC_WEBAPP_URL"
   ],
   "pipeline": {
     "@ttbs/api#dev": {
@@ -47,13 +53,25 @@
       "dependsOn": ["^build"],
       "outputs": ["dist/**", ".next/**", "!.next/cache/**"]
     },
-    "lint": {},
+    "lint": {
+      "cache": false
+    },
+    "lint:fix": {
+      "cache": false
+    },
+    "lint:report": {
+      "cache": false,
+      "outputs": ["lint-results"]
+    },
     "dev": {
       "cache": false,
       "persistent": true,
       "dotEnv": [".env.prod", ".env"]
     },
     "type-check": {
+      "cache": false
+    },
+    "type-check:ci": {
       "cache": false
     },
     "post-install": {

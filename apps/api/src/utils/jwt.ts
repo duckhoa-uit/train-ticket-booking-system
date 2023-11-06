@@ -2,8 +2,6 @@ import jwt, { SignOptions } from "jsonwebtoken";
 
 import { env } from "@ttbs/env";
 
-import { SHA256 } from "./sha";
-
 const privateKeys = {
   accessTokenPrivateKey: env.JWT_ACCESS_TOKEN_PRIVATE_KEY,
   refreshTokenPrivateKey: env.JWT_REFRESH_TOKEN_PRIVATE_KEY,

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { ApiResponse } from "@/types/base";
 
 export function handleError<T>(e: any, requestId: string): ApiResponse<T> {

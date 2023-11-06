@@ -1,9 +1,8 @@
-import { isSupportedCountry } from 'libphonenumber-js';
-import { useState, useEffect } from 'react';
-import PhoneInput from 'react-phone-input-2';
-import 'react-phone-input-2/lib/style.css';
+import { useState, useEffect } from "react";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
 
-import { cn } from '../lib/utils';
+import { cn } from "../lib/utils";
 
 export type PhoneInputProps = {
   value?: string;
@@ -16,12 +15,12 @@ export type PhoneInputProps = {
   onChange: (value: string) => void;
 };
 
-function BasePhoneInput({ name, className = '', onChange, ...rest }: PhoneInputProps) {
+function BasePhoneInput({ name, className = "", onChange, ...rest }: PhoneInputProps) {
   useEffect(() => {
     if (!rest.value) {
       return;
     }
-    const formattedValue = rest.value.trim().replace(/^\+?/, '+');
+    const formattedValue = rest.value.trim().replace(/^\+?/, "+");
     onChange(formattedValue);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -42,32 +41,32 @@ function BasePhoneInput({ name, className = '', onChange, ...rest }: PhoneInputP
         onChange(`+${value}`);
       }}
       containerClass={cn(
-        'hover:border-emphasis dark:focus:border-emphasis border-default !bg-default rounded-md border focus-within:outline-none focus-within:ring-2 focus-within:ring-brand-default disabled:cursor-not-allowed',
+        "hover:border-emphasis dark:focus:border-emphasis border-default !bg-default rounded-md border focus-within:outline-none focus-within:ring-2 focus-within:ring-brand-default disabled:cursor-not-allowed",
         className
       )}
       inputClass="text-sm focus:ring-0 !bg-default text-default"
       buttonClass="text-emphasis !bg-default hover:!bg-emphasis"
       searchClass="!text-default !bg-default hover:!bg-emphasis"
       dropdownClass="!text-default !bg-default"
-      inputStyle={{ width: 'inherit', border: 0 }}
+      inputStyle={{ width: "inherit", border: 0 }}
       searchStyle={{
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-        padding: '6px 12px',
-        gap: '8px',
-        width: '296px',
-        height: '28px',
-        marginLeft: '-4px',
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        padding: "6px 12px",
+        gap: "8px",
+        width: "296px",
+        height: "28px",
+        marginLeft: "-4px",
       }}
-      dropdownStyle={{ width: 'max-content' }}
+      dropdownStyle={{ width: "max-content" }}
     />
   );
 }
 
 // TODO: update this
 const useDefaultCountry = () => {
-  const [defaultCountry, setDefaultCountry] = useState('vn');
+  const [defaultCountry] = useState("vn");
   // trpc.viewer.public.countryCode.useQuery(undefined, {
   //   refetchOnWindowFocus: false,
   //   refetchOnReconnect: false,
