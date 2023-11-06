@@ -1,11 +1,11 @@
 import { Prisma, User } from "@prisma/client";
 
+import { hashPassword } from "@ttbs/lib/password";
+// import { forgotPasswordEmail, pluckAddresses, sendEmail, verifyEmail } from '@/utils/email'
+import prisma from "@ttbs/prisma";
+
 import { UserCreateInput } from "@/schemas/user.schema";
 import AppError from "@/utils/app-error";
-
-// import { forgotPasswordEmail, pluckAddresses, sendEmail, verifyEmail } from '@/utils/email'
-import prisma from "../libs/prisma";
-import { hashPassword } from "./auth.service";
 
 const generateVerificationToken = async function (
   userId: string,

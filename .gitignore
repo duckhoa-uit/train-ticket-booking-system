@@ -39,4 +39,4 @@ yarn-error.log*
 packages/prisma/zod/*.ts
 packages/prisma/enums
 
-dist
+dist/

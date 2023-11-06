@@ -1,11 +1,47 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "globalDependencies": ["**/.env.*local"],
-  "globalEnv": ["CI", "NODE_ENV", "NEXT_PUBLIC_DEBUG", "NEXT_PUBLIC_API_URL"],
+  "globalEnv": [
+    "CI",
+    "NODE_ENV",
+    "API_PORT",
+    "REDIS_PORT",
+    "REDIS_HOST",
+    "NEXT_PUBLIC_DEBUG",
+    "NEXT_PUBLIC_API_URL"
+  ],
   "pipeline": {
+    "@ttbs/api#dev": {
+      "cache": false,
+      "dependsOn": ["@ttbs/env#build", "@ttbs/prisma#dx"]
+    },
+    "@ttbs/prisma#dx": {
+      "cache": false,
+      "dependsOn": ["@ttbs/prisma#db-migrate"]
+    },
+    "@ttbs/prisma#db-seed": {
+      "cache": false,
+      "dependsOn": ["@ttbs/prisma#db-migrate"]
+    },
+    "@ttbs/prisma#db-migrate": {
+      "cache": false,
+      "dependsOn": ["@ttbs/prisma#db-up"],
+      "inputs": ["./schema.prisma", "./migrations/**/*.sql"]
+    },
+    "@ttbs/prisma#db-up": {
+      "cache": false
+    },
     "@ttbs/prisma#build": {
       "cache": false,
       "dependsOn": ["post-install"]
+    },
+    "@ttbs/prisma#post-install": {
+      "cache": false,
+      "outputs": ["dist/**", "build/**"]
+    },
+    "@ttbs/prisma#db-reset": {
+      "cache": false,
+      "outputs": ["dist/**", "build/**"]
     },
     "build": {
       "dependsOn": ["^build"],
@@ -14,7 +50,8 @@
     "lint": {},
     "dev": {
       "cache": false,
-      "persistent": true
+      "persistent": true,
+      "dotEnv": [".env.prod", ".env"]
     },
     "type-check": {
       "cache": false
@@ -23,6 +60,8 @@
       "dependsOn": [],
       "outputs": ["../../node_modules/@prisma/client/**"],
       "inputs": ["./schema.prisma", "./prisma/schema.prisma"]
-    }
-  }
+    },
+    "db-seed": {}
+  },
+  "globalDotEnv": [".env.prod", ".env"]
 }

@@ -1,6 +1,6 @@
 # Update this file into mongoDB
 
-# this file is a helper to run Cal.com locally
+# this file is a helper to run locally
 # starts a postgres instance on port 5450 to use as a local db
 version: "3.6"
 services:
@@ -12,7 +12,7 @@ services:
     volumes:
       - db_data:/var/lib/postgresql/data
     environment:
-      POSTGRES_DB: "cal-saml"
+      POSTGRES_DB: "ttbs-local"
       POSTGRES_PASSWORD: ""
       POSTGRES_HOST_AUTH_METHOD: trust
     healthcheck:

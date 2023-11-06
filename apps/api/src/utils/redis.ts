@@ -1,6 +1,6 @@
 import { createClient } from "redis";
 
-import { env } from "@/env";
+import { env } from "@ttbs/env";
 
 const redisClient = createClient({
   url: `redis://${env.REDIS_HOST}:${env.REDIS_PORT}`,

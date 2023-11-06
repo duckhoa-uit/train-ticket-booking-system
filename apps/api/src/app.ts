@@ -3,9 +3,10 @@ import cors from "cors";
 import express, { Express, json, NextFunction, Request, Response } from "express";
 import path from "path";
 
+import { env } from "@ttbs/env";
+
 import { indexRouter } from "@/routes/index";
 
-import { env } from "./env";
 import AppError from "./utils/app-error";
 
 (BigInt.prototype as any).toJSON = function () {

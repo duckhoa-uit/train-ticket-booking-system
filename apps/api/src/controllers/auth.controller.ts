@@ -4,12 +4,13 @@ import { CookieOptions, NextFunction, Request, Response } from "express";
 import { omit } from "lodash";
 
 import { env } from "@ttbs/env";
+import { comparePasswords } from "@ttbs/lib/password";
 import { Prisma, User } from "@ttbs/prisma/client";
 
 import { AuthorizedRequest } from "@/middleware";
 import { RefreshTokenSchema, UserLoginInput } from "@/schemas/auth.schema";
 import { UserCreateInput } from "@/schemas/user.schema";
-import { comparePasswords, logout, signTokens } from "@/services/auth.service";
+import { logout, signTokens } from "@/services/auth.service";
 import { createUser, findUniqueUser } from "@/services/user.service";
 import AppError from "@/utils/app-error";
 import { signJwt, verifyJwt } from "@/utils/jwt";
@@ -21,18 +22,6 @@ const cookiesOptions: CookieOptions = {
 };
 
 if (env.NODE_ENV === "production") cookiesOptions.secure = true;
-
-const accessTokenCookieOptions: CookieOptions = {
-  ...cookiesOptions,
-  expires: new Date(Date.now() + config.get<number>("auth.accessTokenExpiresIn") * 60 * 1000),
-  maxAge: config.get<number>("auth.accessTokenExpiresIn") * 60 * 1000,
-};
-
-const refreshTokenCookieOptions: CookieOptions = {
-  ...cookiesOptions,
-  expires: new Date(Date.now() + config.get<number>("auth.refreshTokenExpiresIn") * 60 * 1000),
-  maxAge: config.get<number>("auth.refreshTokenExpiresIn") * 60 * 1000,
-};
 
 // TODO: need to update
 export const excludedFields = ["services", "verificationCode"] as const;

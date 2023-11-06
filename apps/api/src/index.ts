@@ -1,7 +1,8 @@
-import { app } from "./app";
-import { env } from "./env";
+import { env } from "@ttbs/env";
 
-const port = env.PORT;
+import { app } from "./app";
+
+const port = env.API_PORT;
 
 // start server on { port }
 app.listen(port, () => {
