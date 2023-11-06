@@ -599,7 +599,7 @@ importers:
         specifier: ^0.6.2
         version: 0.6.2(@prisma/client@5.5.2)
       '@prisma/generator-helper':
-        specifier: ^5.4.2
+        specifier: ^5.5.2
         version: 5.5.2
       '@ttbs/lib':
         specifier: '*'
