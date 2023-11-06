@@ -11,22 +11,17 @@ export async function createUser({
     password: string;
     username: string;
     name: string;
-    completedOnboarding?: boolean;
-    timeZone?: string;
     role?: UserRole;
-    theme?: "dark" | "light";
   };
 }) {
   const userData = {
     ...user,
     password: await hashPassword(user.password),
     emailVerified: new Date(),
-    completedOnboarding: user.completedOnboarding ?? true,
-    locale: "en",
   };
 
   const theUser = await prisma.user.upsert({
-    where: { email_username: { email: user.email, username: user.username } },
+    where: { email: user.email },
     update: userData,
     create: userData,
   });

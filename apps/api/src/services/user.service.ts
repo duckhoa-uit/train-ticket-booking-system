@@ -1,6 +1,5 @@
-import { Prisma, User } from "@prisma/client";
-
 import { hashPassword } from "@ttbs/lib/password";
+import { Prisma, User } from "@ttbs/prisma";
 // import { forgotPasswordEmail, pluckAddresses, sendEmail, verifyEmail } from '@/utils/email'
 import prisma from "@ttbs/prisma";
 
@@ -194,31 +193,12 @@ export async function resetPassword(_token: string, password: string) {
     throw new Error(`Token ${_token} isn't valid.`);
   }
 
-  // Verify token and check if the user exist
-  const jsonUser = await prisma.user.aggregateRaw({
-    pipeline: [
-      {
-        $match: { "services.password.reset.token": _token },
-      },
-    ],
-  });
-
-  if (!jsonUser[0]) {
-    throw new Error(`Token ${_token} isn't valid.`);
-  }
-
-  // To do: Json User might not be the same as Object User in the future, so we need to change this dirty approach ( ͡° ͜ʖ ͡°)
-  const jsonString = JSON.stringify(jsonUser[0]);
-  const user = JSON.parse(jsonString);
-
-  if (!user) {
-    throw new Error(`Token ${_token} isn't valid.`);
-  }
+  // TODO: update after define schema
 
   // If no error, set new password.
   const newPassword = await hashPassword(password);
   return prisma.user.update({
-    where: { id: user._id },
+    where: { id: "user._id" },
     data: {
       // TODO: update this after init schema
       // services: {

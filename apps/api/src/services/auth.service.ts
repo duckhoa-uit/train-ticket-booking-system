@@ -1,6 +1,7 @@
-import { User } from "@prisma/client";
 import config from "config";
 import { Response } from "express";
+
+import { User } from "@ttbs/prisma";
 
 import { signJwt } from "@/utils/jwt";
 import redisClient from "@/utils/redis";

@@ -1,6 +1,7 @@
-import { UserRole } from '@prisma/client'
-import { ParsedQs } from 'qs'
-import { z } from 'zod'
+import { ParsedQs } from "qs";
+import { z } from "zod";
+
+import { UserRole } from "@ttbs/prisma";
 
 /**
  * @openapi
@@ -50,7 +51,7 @@ export const userCreateSchema = z.object({
     merchantId: z.string().optional().nullable(),
     listingId: z.string().optional().nullable(),
   }),
-})
+});
 
 export const userUpdateSchema = z.object({
   body: z.object({
@@ -58,29 +59,29 @@ export const userUpdateSchema = z.object({
     password: z.string().min(8).max(50).optional(),
     email: z.string().email().optional(),
   }),
-})
+});
 
 export const userIdParamsSchema = z.object({
   params: z.object({
     id: z.string(),
   }),
-})
+});
 export const userPhoneParamsSchema = z.object({
   params: z.object({
     phone: z.string(),
   }),
-})
+});
 export const userEmailParamsSchema = z.object({
   params: z.object({
     email: z.string(),
   }),
-})
+});
 
 export const tokenParamsSchema = z.object({
   query: z.object({
     token: z.string(),
   }),
-})
+});
 
 export const userFilterParam = userCreateSchema.shape.body.pick({}).extend({
   // start_date: z.coerce.date(),
@@ -88,8 +89,8 @@ export const userFilterParam = userCreateSchema.shape.body.pick({}).extend({
   name_search: z.string().optional(),
   sort_field: z.string().optional(),
   sort_direction: z.string().optional(),
-})
-export type userFilterSchema = z.infer<typeof userFilterParam>
+});
+export type userFilterSchema = z.infer<typeof userFilterParam>;
 
 export const userGetAllQuery = z.object({
   query: z
@@ -98,13 +99,13 @@ export const userGetAllQuery = z.object({
       limit: z.coerce.number(),
     })
     .extend(userFilterParam.shape),
-})
+});
 
 export const userResetPasswordSchema = z.object({
   body: z.object({
     password: z.string().min(8).max(50),
   }),
-})
+});
 
 export const forgotPasswordSchema = z.object({
   body: z.object({
@@ -112,13 +113,13 @@ export const forgotPasswordSchema = z.object({
     phone: z.string().min(5).max(50).optional(),
     extraTokenData: z.any().optional(),
   }),
-})
+});
 
 export const userRewardIdBodyInputSchema = z.object({
   body: z.object({
     rewardId: z.string(),
   }),
-})
+});
 
 export const userPaymentConfirmBodyInputSchema = z.object({
   body: z.object({
@@ -146,22 +147,22 @@ export const userPaymentConfirmBodyInputSchema = z.object({
       })
       .optional(),
   }),
-})
+});
 
-export const userReturn = userUpdateSchema.shape.body.omit({ password: true })
+export const userReturn = userUpdateSchema.shape.body.omit({ password: true });
 
-export type UserCreateInput = z.infer<typeof userCreateSchema>['body']
-export type UserUpdateInput = z.infer<typeof userUpdateSchema>['body']
-export type UserReturn = z.infer<typeof userReturn>
-export type UserIdParamsInput = z.infer<typeof userIdParamsSchema>['params']
-export type TokenParamsInput = z.infer<typeof tokenParamsSchema>['query']
-export type UserGetAllQuery = z.infer<typeof userGetAllQuery>['query'] & ParsedQs
-export type UserResetPasswordInput = z.infer<typeof userResetPasswordSchema>['body']
-export type UserForgotPasswordInput = z.infer<typeof forgotPasswordSchema>['body']
-export type UserRewardIdBodyInput = z.infer<typeof userRewardIdBodyInputSchema>['body']
-export type UserPhoneParamsInput = z.infer<typeof userPhoneParamsSchema>['params']
-export type UserEmailParamsInput = z.infer<typeof userEmailParamsSchema>['params']
-export type UserPaymentConfirmBodyInput = z.infer<typeof userPaymentConfirmBodyInputSchema>['body']
+export type UserCreateInput = z.infer<typeof userCreateSchema>["body"];
+export type UserUpdateInput = z.infer<typeof userUpdateSchema>["body"];
+export type UserReturn = z.infer<typeof userReturn>;
+export type UserIdParamsInput = z.infer<typeof userIdParamsSchema>["params"];
+export type TokenParamsInput = z.infer<typeof tokenParamsSchema>["query"];
+export type UserGetAllQuery = z.infer<typeof userGetAllQuery>["query"] & ParsedQs;
+export type UserResetPasswordInput = z.infer<typeof userResetPasswordSchema>["body"];
+export type UserForgotPasswordInput = z.infer<typeof forgotPasswordSchema>["body"];
+export type UserRewardIdBodyInput = z.infer<typeof userRewardIdBodyInputSchema>["body"];
+export type UserPhoneParamsInput = z.infer<typeof userPhoneParamsSchema>["params"];
+export type UserEmailParamsInput = z.infer<typeof userEmailParamsSchema>["params"];
+export type UserPaymentConfirmBodyInput = z.infer<typeof userPaymentConfirmBodyInputSchema>["body"];
 
 /**
  * @openapi

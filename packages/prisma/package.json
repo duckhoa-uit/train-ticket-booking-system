@@ -5,16 +5,16 @@
   "scripts": {
     "build": "tsup",
     "clean": "rimraf .turbo node_modules dist",
-    "db-deploy": "npx prisma migrate deploy",
-    "db-migrate": "npx prisma migrate dev",
+    "db-deploy": "pnpm prisma migrate deploy",
+    "db-migrate": "pnpm prisma migrate dev",
     "db-reset": "run-s db-nuke db-setup",
-    "db-seed": "npx prisma db seed",
+    "db-seed": "pnpm prisma db seed",
     "db-setup": "run-s db-up db-deploy db-seed",
-    "db-studio": "npx prisma studio",
+    "db-studio": "pnpm prisma studio",
     "db-up": "docker compose up -d || docker-compose up -d",
     "dx": "pnpm db-setup",
-    "generate-schemas": "npx prisma generate && npx prisma format",
-    "post-install": "pnpm generate-schemas",
+    "generate-schemas": "prisma generate && prisma format",
+    "post-install": "pnpm generate-schemas && pnpm build",
     "prebuild": "npm run generate-schemas",
     "predev": "npm run generate-schemas"
   },
@@ -25,10 +25,11 @@
     "typescript": "^5.2.2"
   },
   "dependencies": {
-    "@prisma/client": "^5.4.2",
+    "@prisma/client": "^5.5.2",
     "@prisma/extension-accelerate": "^0.6.2",
     "@prisma/generator-helper": "^5.4.2",
     "@ttbs/lib": "*",
+    "@ttbs/tsconfig": "workspace:*",
     "ts-node": "^10.9.1",
     "zod": "^3.21.1",
     "zod-prisma-types": "^2.8.1"

@@ -5,7 +5,7 @@ import { omit } from "lodash";
 
 import { env } from "@ttbs/env";
 import { comparePasswords } from "@ttbs/lib/password";
-import { Prisma, User } from "@ttbs/prisma/client";
+import { Prisma, User } from "@ttbs/prisma";
 
 import { AuthorizedRequest } from "@/middleware";
 import { RefreshTokenSchema, UserLoginInput } from "@/schemas/auth.schema";
