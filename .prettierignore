@@ -15,4 +15,3 @@ public
 .eslintignore
 packages/prisma/zod
 packages/prisma/enums
-apps/web/public/embed

@@ -1,0 +1,20 @@
+name: Production Build (without database)
+
+on:
+  workflow_call:
+
+env:
+  DATABASE_URL: ${{ secrets.CI_DATABASE_URL }}
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/dangerous-git-checkout
+      - uses: ./.github/actions/pnpm-install
+      - uses: ./.github/actions/cache-build

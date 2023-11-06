@@ -3,4 +3,3 @@ node_modules
 **/**/.next
 **/**/public
 packages/prisma/zod
-apps/web/public/embed

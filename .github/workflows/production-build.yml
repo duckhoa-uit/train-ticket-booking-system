@@ -1,0 +1,29 @@
+name: Production Build
+
+on:
+  workflow_call:
+
+env:
+  DATABASE_URL: ${{ secrets.CI_DATABASE_URL }}
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+
+jobs:
+  build:
+    name: Build
+    runs-on: buildjet-4vcpu-ubuntu-2204
+    timeout-minutes: 30
+    services:
+      postgres:
+        image: postgres:12.1
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_DB: ci
+        ports:
+          - 5432:5432
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/dangerous-git-checkout
+      - uses: ./.github/actions/pnpm-install
+      - uses: ./.github/actions/cache-db
+      - uses: ./.github/actions/cache-build
