@@ -1,9 +1,8 @@
-
 import SearchSection from "./Components/SearchSection/SearchSection";
 
 export default function Home() {
   return (
-    <main className=" min-h-screen">
+    <main className="z-0 min-h-screen">
       <SearchSection />
     </main>
   );
