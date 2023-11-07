@@ -7,14 +7,14 @@ const Footer = () => {
   const aboutArray = about.links;
   const supportArray = support.links;
   return (
-    <section className="h-auto bg-secondary p-5 text-secondary">
+    <section className="bg-secondary text-secondary h-auto p-5">
       <div className="text-center lg:flex lg:justify-around">
         <div className="m-5 box-content">
           <h3 className="f mb-3 font-bold">{about.title}</h3>
           <ul className=" leading-10">
             {aboutArray.map((item) => {
               return (
-                <li className="hover:cursor-pointer hover:text-gray-50">
+                <li key={item.link} className="hover:cursor-pointer hover:text-gray-50">
                   <a href={item.link}>{item.name}</a>
                 </li>
               );
@@ -23,10 +23,10 @@ const Footer = () => {
         </div>
         <div className="m-5">
           <h3 className="mb-3 font-bold">{support.title}</h3>
-          <ul className="leading-10 text-">
+          <ul className="text- leading-10">
             {supportArray.map((item) => {
               return (
-                <li className="hover:cursor-pointer hover:text-gray-50">
+                <li key={item.link} className="hover:cursor-pointer hover:text-gray-50">
                   <a href={item.link}>{item.name}</a>
                 </li>
               );
