@@ -44,7 +44,7 @@ runs:
       uses: buildjet/setup-node@v3
       with:
         node-version: ${{ inputs.node_version }}
-        cache: 'pnpm'
+        cache: pnpm
 
     - name: ⚙️ Enable Corepack
       if: ${{ inputs.enable-corepack == 'true' }}
@@ -73,7 +73,7 @@ runs:
       run: |
         echo "YEAR_MONTH=$(/bin/date -u "+%Y%m")" >> $GITHUB_OUTPUT
 
-    - uses: actions/cache@v3
+    - uses: buildjet/cache@v3
       name: Setup pnpm cache
       with:
         path: ${{ steps.pnpm-config.outputs.STORE_PATH }}
