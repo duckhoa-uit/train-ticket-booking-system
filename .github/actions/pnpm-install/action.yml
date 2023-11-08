@@ -43,7 +43,7 @@ runs:
     - name: Use Node ${{ inputs.node_version }}
       uses: buildjet/setup-node@v3
       with:
-        version: ${{ inputs.node_version }}
+        node-version: ${{ inputs.node_version }}
         cache: 'pnpm'
 
     - name: ⚙️ Enable Corepack
