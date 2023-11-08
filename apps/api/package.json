@@ -95,6 +95,5 @@
     "typescript": "^5.2.2",
     "vitest": "^0.33.0",
     "vitest-mock-extended": "^1.1.4"
-  },
-  "packageManager": "^npm@8.1.0"
+  }
 }

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { Prisma } from "@prisma/client";
 import { PrismaClient as PrismaClientWithoutExtension } from "@prisma/client";
 import { withAccelerate } from "@prisma/extension-accelerate";
@@ -48,4 +49,4 @@ export type PrismaClient = typeof prismaWithClientExtensions;
 export default prisma;
 
 export * from "./selects";
-export * from "@prisma/client";
+export * from "./client";
