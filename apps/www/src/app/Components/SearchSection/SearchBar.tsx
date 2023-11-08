@@ -1,5 +1,6 @@
 "use client";
 
+import type { ChangeEvent} from "react";
 import React, { useRef, useState } from "react";
 
 import { useOnClickOutside } from "@ttbs/lib";
@@ -28,9 +29,23 @@ const SearchBar = () => {
     if (type == "depart") {
       setDepartPlace(item);
       setDropDownDepart(false);
+      //typesafe
+      //need to cast first
+      (document.getElementById("depart") as HTMLInputElement).value = departPlace;
     } else if (type == "arrival") {
       setArrivalPlace(item);
       setDropDownArrival(false);
+      //typesafe
+      //need to cast first
+      (document.getElementById("arrival") as HTMLInputElement).value = arrivalPlace;
+    }
+  };
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.id == "depart") {
+      setDepartPlace(e.target.value);
+    } else if (e.target.id == "arrival") {
+      setArrivalPlace(e.target.value);
     }
   };
 
@@ -50,7 +65,8 @@ const SearchBar = () => {
               onClick={() => {
                 setDropDownDepart(!dropdownDepart);
               }}
-              value={departPlace}
+              onChange={() => handleChange}
+              defaultValue={departPlace}
             />
             <InputDropDown type="depart" dropdown={dropdownDepart} handleClick={handleClickDropdownItem} />
           </div>
@@ -61,10 +77,11 @@ const SearchBar = () => {
             <Input
               className="border-primary border-2"
               id="arrival"
+              defaultValue={arrivalPlace}
+              onChange={() => handleChange}
               onClick={() => {
                 setDropDownArrival(!dropdownArrival);
               }}
-              value={arrivalPlace}
             />
             <InputDropDown type="arrival" dropdown={dropdownArrival} handleClick={handleClickDropdownItem} />
           </div>
