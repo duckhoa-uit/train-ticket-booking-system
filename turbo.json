@@ -19,7 +19,7 @@
   "pipeline": {
     "@ttbs/api#dev": {
       "cache": false,
-      "dependsOn": ["@ttbs/env#build", "@ttbs/prisma#dx"]
+      "dependsOn": ["@ttbs/env#build", "@ttbs/lib#build", "@ttbs/prisma#dx"]
     },
     "@ttbs/prisma#dx": {
       "cache": false,
@@ -83,6 +83,13 @@
     "deploy": {
       "cache": false,
       "dependsOn": ["@ttbs/web#build", "@ttbs/dashboard#build", "@ttbs/api#build"]
+    },
+    "@ttbs/api#start": {
+      "cache": false,
+      "dependsOn": []
+    },
+    "start": {
+      "outputs": ["dist/**", "build/**"]
     }
   },
   "globalDotEnv": [".env.prod", ".env"]

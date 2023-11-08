@@ -68,7 +68,7 @@ export const forgotPasswordHandler = async (
       return next(new AppError(400, `User with email ${req.body.email} not found`));
     }
 
-    sendForgotPasswordEmail(user, req.body.email, req.body.extraTokenData);
+    sendForgotPasswordEmail(user, req.body.email);
 
     res.status(200).json({
       status: "success",

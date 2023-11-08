@@ -3,10 +3,18 @@
   "private": true,
   "sideEffects": false,
   "version": "0.0.0",
-  "main": "./index.ts",
-  "types": "./index.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist/**"
+  ],
+  "exports": {
+    ".": "./dist/index.js",
+    "./*": "./dist/*.js"
+  },
   "license": "MIT",
   "scripts": {
+    "build": "tsup",
     "lint": "eslint . --ext .ts,.js,.tsx,.jsx",
     "lint:fix": "eslint . --ext .ts,.js,.tsx,.jsx --fix",
     "lint:report": "eslint . --format json --output-file ../../lint-results/lib.json"
@@ -22,6 +30,7 @@
   "devDependencies": {
     "@ttbs/tsconfig": "workspace:*",
     "@types/bcrypt": "^5.0.0",
-    "@types/react": "^18.2.5"
+    "@types/react": "^18.2.5",
+    "tsup": "^7.2.0"
   }
 }

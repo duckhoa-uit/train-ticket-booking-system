@@ -6,7 +6,7 @@ import path from "path";
 
 import { env } from "@ttbs/env";
 
-import { indexRouter } from "@/routes/index";
+import { indexRouter } from "@/routes";
 
 import AppError from "./utils/app-error";
 

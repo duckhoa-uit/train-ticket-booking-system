@@ -103,5 +103,5 @@
     "skipLibCheck": true /* Skip type checking all .d.ts files. */
   },
   // include only the src folder
-  "include": ["./src/**/*", "../../packages/lib/dayjs.ts"]
+  "include": ["./src/**/*"]
 }
