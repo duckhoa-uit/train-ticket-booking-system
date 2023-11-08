@@ -44,7 +44,6 @@ runs:
       uses: buildjet/setup-node@v3
       with:
         node-version: ${{ inputs.node_version }}
-        cache: pnpm
 
     - name: ⚙️ Enable Corepack
       if: ${{ inputs.enable-corepack == 'true' }}
