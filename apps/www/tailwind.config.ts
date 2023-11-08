@@ -13,6 +13,7 @@ const config: Config = {
     colors: {
       primary: "#F8F9FA",
       secondary: "#174576",
+      lightblue: "#1890ff",
       accent: "#B57617",
       white: "#FFF",
     },

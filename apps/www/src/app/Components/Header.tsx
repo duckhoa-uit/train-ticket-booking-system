@@ -93,7 +93,7 @@ const Header = () => {
       </div>
       <ul
         ref={listRef}
-        className={` text-primary absolute z-0 mr-5 flex flex-col justify-around gap-2 rounded-md transition-all duration-500 ease-in-out md:static md:flex-1 md:flex-row md:justify-end md:gap-2 md:p-2 ${
+        className={` text-primary absolute z-20 mr-5 flex flex-col justify-around gap-2 rounded-md transition-all duration-500 ease-in-out md:static md:flex-1 md:flex-row md:justify-end md:gap-2 md:p-2 ${
           open ? " border-primary right-0 top-24 border-2 bg-white" : "right-[-500px] top-20"
         }`}>
         {/* combine map function with ternary operator */}

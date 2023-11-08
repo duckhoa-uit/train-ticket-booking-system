@@ -1,26 +1,72 @@
 "use client";
 
-import React from "react";
+import React, { useRef, useState } from "react";
 
-import { DatePicker, Input, Label, TextAreaField } from "@ttbs/ui";
+import { useOnClickOutside } from "@ttbs/lib";
+import { DatePicker, Input, Label } from "@ttbs/ui";
+
+import InputDropDown from "../InputDropDown";
 
 const SearchBar = () => {
   const current = new Date("2022-03-25");
+  const [dropdownDepart, setDropDownDepart] = useState(false);
+  const [dropdownArrival, setDropDownArrival] = useState(false);
+  const [departPlace, setDepartPlace] = useState<string>("");
+  const [arrivalPlace, setArrivalPlace] = useState<string>("");
+  const departRef = useRef<HTMLInputElement>(null);
+  const arrivalRef = useRef<HTMLInputElement>(null);
+  const handleClickOutside = (e: MouseEvent) => {
+    if (!departRef.current?.contains(e.target as Node)) {
+      setDropDownDepart(false);
+    }
+    if (!arrivalRef.current?.contains(e.target as Node)) {
+      setDropDownArrival(false);
+    }
+  };
+
+  const handleClickDropdownItem = (item: string, type: string) => {
+    if (type == "depart") {
+      setDepartPlace(item);
+      setDropDownDepart(false);
+    } else if (type == "arrival") {
+      setArrivalPlace(item);
+      setDropDownArrival(false);
+    }
+  };
+
+  useOnClickOutside(departRef, handleClickOutside);
+  useOnClickOutside(arrivalRef, handleClickOutside);
   return (
-    <div className="bg-primary mx-auto h-3/5 w-auto rounded-lg p-5 lg:w-4/5">
+    <div className="bg-primary relative mx-auto h-3/5 w-auto rounded-lg p-5 lg:w-4/5">
       <form action="" className="flex flex-col items-center lg:flex-row">
         <div className="text-primary flex w-auto flex-col items-center gap-2 p-2 md:flex-row lg:w-4/5 lg:grow">
-          <div className="lg:flex-1">
+          <div className=" lg:flex-1" ref={departRef}>
             <Label htmlFor="depart" className="self-start font-semibold">
               Nơi khởi hành
             </Label>
-            <Input className="border-primary border-2 " id="depart" />
+            <Input
+              className="border-primary border-2"
+              id="depart"
+              onClick={() => {
+                setDropDownDepart(!dropdownDepart);
+              }}
+              value={departPlace}
+            />
+            <InputDropDown type="depart" dropdown={dropdownDepart} handleClick={handleClickDropdownItem} />
           </div>
-          <div className="lg:flex-1">
-            <Label htmlFor="arrival" className="self-start font-semibold">
+          <div className="lg:flex-1" ref={arrivalRef}>
+            <Label htmlFor="depart" className="self-start font-semibold">
               Nơi đến
             </Label>
-            <Input id="arrival" className="border-primary border-2" />
+            <Input
+              className="border-primary border-2"
+              id="arrival"
+              onClick={() => {
+                setDropDownArrival(!dropdownArrival);
+              }}
+              value={arrivalPlace}
+            />
+            <InputDropDown type="arrival" dropdown={dropdownArrival} handleClick={handleClickDropdownItem} />
           </div>
           <div className="w-full lg:flex-1">
             <Label htmlFor="arrival" className="self-start font-semibold">
@@ -33,7 +79,6 @@ const SearchBar = () => {
           Tìm kiếm
         </button>
       </form>
-      <TextAreaField name="j" />
     </div>
   );
 };
