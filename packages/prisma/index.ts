@@ -1,18 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { Prisma } from "@prisma/client";
 import { PrismaClient as PrismaClientWithoutExtension } from "@prisma/client";
 import { withAccelerate } from "@prisma/extension-accelerate";
 
 import { exampleMiddleware } from "./middleware";
 
-const prismaOptions: Prisma.PrismaClientOptions = {};
-
-if (!!process.env.NEXT_PUBLIC_DEBUG) prismaOptions.log = ["query", "error", "warn"];
-
-const prismaWithoutClientExtensions = new PrismaClientWithoutExtension(prismaOptions);
-
-export const customPrisma = (options?: Prisma.PrismaClientOptions) =>
-  new PrismaClientWithoutExtension({ ...prismaOptions, ...options }).$extends(withAccelerate());
+const prismaWithoutClientExtensions = new PrismaClientWithoutExtension(
+  !!process.env.NEXT_PUBLIC_DEBUG ? { log: ["query", "error", "warn"] } : { log: [] }
+);
 
 // If any changed on middleware server restart is required
 // TODO: Migrate it to $extends
@@ -48,5 +42,5 @@ if (process.env.NODE_ENV !== "production") {
 export type PrismaClient = typeof prismaWithClientExtensions;
 export default prisma;
 
-export * from "./selects";
 export * from "./client";
+export * from "./selects";
