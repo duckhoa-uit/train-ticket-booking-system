@@ -23,7 +23,8 @@
     "prepare": "husky install",
     "prisma": "pnpm workspace @ttbs/prisma prisma",
     "type-check": "turbo run type-check",
-    "type-check:ci": "turbo run type-check:ci --log-prefix=none"
+    "type-check:ci": "turbo run type-check:ci --log-prefix=none",
+    "_syncPnpm": "pnpm sync-dependencies-meta-injected"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.6.7",
@@ -36,12 +37,13 @@
     "eslint": "^8.53.0",
     "husky": "^8.0.3",
     "lint-staged": "^13.2.3",
+    "pnpm-sync-dependencies-meta-injected": "^0.0.10",
     "prettier": "^2.8.0",
     "tsc-absolute": "^1.0.1",
     "turbo": "latest",
     "typescript": "5.2.2"
   },
-  "packageManager": "pnpm@8.6.10",
+  "packageManager": "pnpm@8.10.2",
   "name": "train-ticket-booking",
   "resolutions": {
     "@types/node": "^20.5.2",

@@ -50,7 +50,7 @@
       "outputs": ["dist/**", "build/**"]
     },
     "build": {
-      "dependsOn": ["^build"],
+      "dependsOn": ["_syncPnpm"],
       "outputs": ["dist/**", ".next/**", "!.next/cache/**"]
     },
     "lint": {
@@ -90,6 +90,10 @@
     },
     "start": {
       "outputs": ["dist/**", "build/**"]
+    },
+    "_syncPnpm": {
+      "dependsOn": ["^build"],
+      "cache": false
     }
   },
   "globalDotEnv": [".env.prod", ".env"]
