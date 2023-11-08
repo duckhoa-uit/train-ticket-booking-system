@@ -2,7 +2,7 @@
 
 import React from "react";
 
-import { DatePicker, Input, Label } from "@ttbs/ui";
+import { DatePicker, Input, Label, TextAreaField } from "@ttbs/ui";
 
 const SearchBar = () => {
   const current = new Date("2022-03-25");
@@ -33,6 +33,7 @@ const SearchBar = () => {
           Tìm kiếm
         </button>
       </form>
+      <TextAreaField name="j" />
     </div>
   );
 };
