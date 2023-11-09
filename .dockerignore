@@ -1,5 +1,7 @@
-node_modules
+**/node_modules
+**/dist
+**/.turbo
+**/.next
 .git
 .gitignore
 *.md
-dist
