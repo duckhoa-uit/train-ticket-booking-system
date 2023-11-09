@@ -32,7 +32,6 @@ jobs:
           context: .
           file: ./docker/Dockerfile
           push: true
-          target: api
           tags: khoavhd/ttbs-api:latest
 
   deploy:
