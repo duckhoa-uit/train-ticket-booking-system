@@ -15,7 +15,7 @@ WORKDIR /app
 COPY --from=sourcer /app/out/full/ .
 COPY --from=sourcer /app/out/pnpm-lock.yaml ./pnpm-lock.yaml
 COPY --from=sourcer /app/turbo.json ./turbo.json
-COPY --from=sourcer /app/.env.prod ./packages/prisma/.env
+# COPY --from=sourcer /app/.env.prod ./packages/prisma/.env
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 
 FROM base AS builder
