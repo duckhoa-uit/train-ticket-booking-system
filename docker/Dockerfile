@@ -1,4 +1,7 @@
 FROM --platform=linux/amd64 node:20-slim AS base
+RUN apt-get update -y
+RUN apt-get install -y openssl
+
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 RUN corepack enable
@@ -10,7 +13,6 @@ COPY . .
 RUN turbo prune --scope=@ttbs/api --docker
 
 FROM base AS installer
-RUN apt-get update -y && apt-get install -y openssl
 WORKDIR /app
 COPY --from=sourcer /app/out/full/ .
 COPY --from=sourcer /app/out/pnpm-lock.yaml ./pnpm-lock.yaml

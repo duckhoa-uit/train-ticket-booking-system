@@ -13,13 +13,14 @@ services:
     networks:
       - ttbs-api
 
-  express:
+  api:
     links:
       - redis
     image: khoavhd/ttbs-api:latest
     depends_on:
       - redis
-    # env_file: .env.prod
+    env_file:
+      - .env.prod
     environment:
       - NODE_ENV=production
       - REDIS_URL=redis://redis
