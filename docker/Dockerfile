@@ -22,7 +22,7 @@ FROM base AS builder
 WORKDIR /app
 COPY --from=installer /app/ .
 # COPY --from=sourcer /app/out/full/ .
-COPY --from=sourcer /app/.env.prod ./packages/prisma/.env
+# COPY --from=sourcer /app/.env.prod ./packages/prisma/.env
 # COPY .gitignore .gitignore
 RUN pnpm build:api
 
