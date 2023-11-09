@@ -1,0 +1,39 @@
+# docker-compose.yml
+version: "3"
+services:
+  redis:
+    image: redis:alpine
+    container_name: ttbs-redis
+    restart: unless-stopped
+    # env_file: .env.prod
+    ports:
+      - ${REDIS_PORT:-6378}:6379
+    volumes:
+      - redisDB:/data
+    networks:
+      - ttbs-api
+
+  express:
+    links:
+      - redis
+    image: khoavhd/ttbs-api:latest
+    depends_on:
+      - redis
+    # env_file: .env.prod
+    environment:
+      - NODE_ENV=production
+      - REDIS_URL=redis://redis
+    ports:
+      - ${API_PORT:-8081}:${API_PORT:-8081}
+    restart: unless-stopped
+    container_name: ttbs-api
+    networks:
+      - ttbs-api
+
+volumes:
+  redisDB:
+    driver: local
+
+networks:
+  ttbs-api:
+    driver: bridge

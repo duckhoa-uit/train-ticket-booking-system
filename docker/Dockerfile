@@ -1,4 +1,4 @@
-FROM node:20-slim AS base
+FROM --platform=linux/amd64 node:20-slim AS base
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 RUN corepack enable
@@ -31,9 +31,9 @@ WORKDIR /app
 
 COPY --from=builder /app/ .
 COPY --from=builder /app/apps/api/config ./apps/api/dist/config
-COPY --from=sourcer /app/.env.prod ./.env
+# COPY --from=sourcer /app/.env.prod ./.env
 
 ENV NODE_ENV=production
 ENV NODE_CONFIG_DIR=./apps/api/dist/config
-EXPOSE 8081
-CMD [ "node", "--env-file=.env", "apps/api/dist/src/index.js" ]
+# EXPOSE 8081
+CMD [ "node", "apps/api/dist/src/index.js" ]
