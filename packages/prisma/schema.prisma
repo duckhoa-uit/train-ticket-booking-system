@@ -8,7 +8,6 @@ datasource db {
 
 generator client {
   provider = "prisma-client-js"
-  output   = "../../node_modules/.prisma/client"
 }
 
 // Follow this instruction instead this property: https://www.npmjs.com/package/zod-prisma-types#custom-imports
