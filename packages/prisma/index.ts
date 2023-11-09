@@ -42,5 +42,5 @@ if (process.env.NODE_ENV !== "production") {
 export type PrismaClient = typeof prismaWithClientExtensions;
 export default prisma;
 
-export * from "./client";
+export * from "@prisma/client";
 export * from "./selects";
