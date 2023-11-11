@@ -1,10 +1,16 @@
 import type { FC } from "react";
 import React from "react";
 
-import type { dropdownInputProp } from ".";
+// import type { DropdownInputProps } from ".";
 import { provinces } from "./SearchSection/provinces";
 
-const InputDropDown: FC<dropdownInputProp> = (prop): JSX.Element => {
+interface DropdownInputProps {
+  dropdown: boolean;
+  type: "depart" | "arrival";
+  handleClick: (name: string, typeInput: string) => void;
+}
+
+const InputDropDown: FC<DropdownInputProps> = (prop) => {
   return (
     <div className="relative w-full">
       <ul

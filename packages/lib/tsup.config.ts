@@ -14,6 +14,7 @@ export default defineConfig({
     "index.ts",
     "password.ts",
     "slugify.ts",
+    "hooks/index.ts",
   ],
   format: ["cjs", "esm"],
   minify: isProduction,

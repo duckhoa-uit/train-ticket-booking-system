@@ -3,14 +3,11 @@
 import Image from "next/image";
 import React, { useRef, useState } from "react";
 
-import { useOnClickOutside } from "@ttbs/lib";
+import { useOnClickOutside } from "@ttbs/lib/hooks";
 
 const Header = () => {
-  const [flag, setFlag] = useState(0);
   const [open, setOpen] = useState(false);
   const [dropdown, setDropdown] = useState(false);
-  const navRef = useRef<HTMLButtonElement>(null);
-  const itemRef = useRef<HTMLLIElement>(null);
   const listRef = useRef<HTMLUListElement>(null);
   const links = [
     {
@@ -58,6 +55,9 @@ const Header = () => {
     if (open && target.id !== "btn-menu") {
       setOpen(false);
     }
+    if (dropdown && target.id !== "dropdown-ticket") {
+      setDropdown(false);
+    }
   };
 
   useOnClickOutside(listRef, handleClickOutsideBox);
@@ -73,8 +73,8 @@ const Header = () => {
   // });
 
   return (
-    <nav className="text-secondary relative m-3 flex flex-col items-center bg-white capitalize md:flex-row md:justify-between md:align-middle">
-      <div className="md: mr-7 flex w-full items-center justify-between md:w-auto">
+    <nav className="text-secondary relative m-3 flex max-w-7xl flex-col items-center bg-white capitalize md:mx-auto md:flex-row md:justify-around md:align-middle md:text-sm">
+      <div className=" flex w-full items-center justify-between gap-3 px-2 md:w-auto">
         <a href="#">
           <Image src="/logoipsum.svg" width={200} height={200} alt="logoipsum" />
         </a>
@@ -102,50 +102,52 @@ const Header = () => {
             <li key={link.link} className="">
               <div className="">
                 <a
-                  className="hover:bg-primary box-border block flex-auto px-8 py-3 text-center transition duration-300 ease-in-out hover:cursor-pointer md:px-9 md:py-3 "
+                  className="hover:bg-primary box-border block flex-auto px-8 py-3 text-center transition duration-300 ease-in-out hover:cursor-pointer md:p-2 md:px-2 md:py-2 "
                   href={link.link}>
                   {link.name}
                 </a>
               </div>
             </li>
           ) : (
-            <li
-              ref={itemRef}
-              key={link.link}
-              className="hover:bg-primary relative box-border  block px-8 py-3 text-center transition duration-300 ease-in-out hover:cursor-pointer md:px-9 md:py-3"
-              onClick={() => {
-                setDropdown(!dropdown);
-              }}>
-              <span>{link.name}</span>
+            <div className="relative w-full md:max-w-max md:px-5">
+              <li
+                key={link.link}
+                className="hover:bg-primary box-border flex flex-col px-8 py-3 text-center transition duration-300 ease-in-out hover:cursor-pointer md:px-5 md:py-2 lg:px-10"
+                onClick={() => {
+                  setDropdown(!dropdown);
+                }}>
+                <div>{link.name}</div>
+              </li>
               <div
-                className={`absolute inset-0 top-10 block transition-all duration-300 ease-in-out ${
-                  dropdown ? "top-20 opacity-100" : "hidden opacity-0"
+                id="dropdown-ticket"
+                className={`block transition-all duration-300 ease-in-out md:absolute ${
+                  dropdown ? "inset-x-0 top-10 min-w-full opacity-100" : "hidden opacity-0"
                 }`}>
-                <ul className=" border-primary rounded-md bg-white py-2 text-sm md:border-2">
+                <ul className=" border-primary w-full rounded-md bg-white py-2 text-sm md:border-2">
                   <li>
                     <a
-                      className=" text-primary md:hover:text-accent hover:bg-primary  md:hover:bg-bg-secondary block py-2 text-sm hover:cursor-pointer "
+                      className=" text-primary md:hover:text-accent hover:bg-primary md:hover:bg-bg-secondary block  py-2 pl-5 text-sm hover:cursor-pointer md:px-5 "
                       href="#">
                       Tìm vé
                     </a>
                   </li>
                   <li>
                     <a
-                      className="text-primary  md:hover:text-accent hover:bg-primary md:hover:bg-bg-secondary block py-2 text-sm hover:cursor-pointer"
+                      className="text-primary md:hover:text-accent hover:bg-primary  md:hover:bg-bg-secondary block py-2 pl-5 text-sm hover:cursor-pointer md:px-5"
                       href="#">
                       Trả vé
                     </a>
                   </li>
                   <li>
                     <a
-                      className="text-primary  md:hover:text-accent hover:bg-primary md:hover:bg-bg-secondary block py-2 text-sm hover:cursor-pointer"
+                      className="text-primary md:hover:text-accent hover:bg-primary  md:hover:bg-bg-secondary block py-2 pl-5 text-sm hover:cursor-pointer md:px-5"
                       href="#">
                       Kiểm tra vé
                     </a>
                   </li>
                 </ul>
               </div>
-            </li>
+            </div>
           );
         })}
       </ul>
