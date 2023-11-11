@@ -20,6 +20,8 @@ jobs:
     runs-on: buildjet-4vcpu-ubuntu-2204
     permissions:
       pull-requests: read
+      contents: read
+
     outputs:
       web: ${{ steps.filter.outputs.web }}
       dashboard: ${{ steps.filter.outputs.dashboard }}
