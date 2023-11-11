@@ -1,9 +1,9 @@
 "use client";
 
-import type { ChangeEvent} from "react";
+import type { ChangeEvent } from "react";
 import React, { useRef, useState } from "react";
 
-import { useOnClickOutside } from "@ttbs/lib";
+import { useOnClickOutside } from "@ttbs/lib/hooks/index";
 import { DatePicker, Input, Label } from "@ttbs/ui";
 
 import InputDropDown from "../InputDropDown";
@@ -12,10 +12,12 @@ const SearchBar = () => {
   const current = new Date("2022-03-25");
   const [dropdownDepart, setDropDownDepart] = useState(false);
   const [dropdownArrival, setDropDownArrival] = useState(false);
-  const [departPlace, setDepartPlace] = useState<string>("");
-  const [arrivalPlace, setArrivalPlace] = useState<string>("");
+  const [departPlace, setDepartPlace] = useState("");
+  const [arrivalPlace, setArrivalPlace] = useState("");
+
   const departRef = useRef<HTMLInputElement>(null);
   const arrivalRef = useRef<HTMLInputElement>(null);
+
   const handleClickOutside = (e: MouseEvent) => {
     if (!departRef.current?.contains(e.target as Node)) {
       setDropDownDepart(false);
@@ -71,7 +73,7 @@ const SearchBar = () => {
             <InputDropDown type="depart" dropdown={dropdownDepart} handleClick={handleClickDropdownItem} />
           </div>
           <div className="lg:flex-1" ref={arrivalRef}>
-            <Label htmlFor="depart" className="self-start font-semibold">
+            <Label htmlFor="arrival" className="self-start font-semibold">
               Nơi đến
             </Label>
             <Input
