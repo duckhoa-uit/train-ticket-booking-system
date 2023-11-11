@@ -2,14 +2,68 @@
 
 import { useId } from "@radix-ui/react-id";
 import * as React from "react";
-import type { GroupBase, Props, SingleValue, MultiValue } from "react-select";
-import ReactSelect from "react-select";
+import type { GroupBase, Props, SingleValue, MultiValue, InputProps } from "react-select";
+import ReactSelect, { components } from "react-select";
 
 import { useClientTranslation } from "@ttbs/i18n";
 import { cn } from "@ttbs/lib/cn";
 
 import { Label } from "../inputs/Label";
 import { getReactSelectProps } from "./selectTheme";
+
+const InputComponent = <Option, IsMulti extends boolean, Group extends GroupBase<Option>>({
+  inputClassName,
+  ...props
+}: InputProps<Option, IsMulti, Group>) => {
+  return (
+    <components.Input
+      // disables our default form focus hightlight on the react-select input element
+      inputClassName={cn("focus:ring-0 focus:ring-offset-0", inputClassName)}
+      {...props}
+    />
+  );
+};
+export function UnstyledSelect<
+  Option,
+  IsMulti extends boolean = false,
+  Group extends GroupBase<Option> = GroupBase<Option>
+>({ ...props }: SelectProps<Option, IsMulti, Group>) {
+  return (
+    <ReactSelect
+      {...props}
+      isSearchable={false}
+      theme={(theme) => ({ ...theme, borderRadius: 0, border: "none" })}
+      components={{
+        IndicatorSeparator: () => null,
+        Input: InputComponent,
+      }}
+      styles={{
+        container: (provided) => ({
+          ...provided,
+          width: "100%",
+        }),
+        control: (provided) => ({
+          ...provided,
+          backgroundColor: " transparent",
+          border: "none",
+          boxShadow: "none",
+        }),
+        option: (provided, state) => ({
+          ...provided,
+          color: state.isSelected ? "var(--brand-text-color)" : "black",
+          ":active": {
+            backgroundColor: state.isSelected ? "" : "var(--brand-color)",
+            color: "var(--brand-text-color)",
+          },
+        }),
+        indicatorSeparator: () => ({
+          display: "hidden",
+          color: "black",
+        }),
+      }}
+    />
+  );
+}
 
 export type SelectProps<
   Option,

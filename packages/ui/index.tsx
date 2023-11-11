@@ -86,6 +86,7 @@ export { Meta, MetaProvider, useMeta } from "./components/meta";
 
 export { default as AddressInput } from "./components/form/inputs/AddressInput/AddressInputLazy";
 export { default as PhoneInput } from "./components/form/inputs/PhoneInput/PhoneInputLazy";
+export { UnstyledSelect } from "./components/form/select";
 
 export { RadioGroup, Radio, Group, RadioField } from "./components/form/radio-area";
 

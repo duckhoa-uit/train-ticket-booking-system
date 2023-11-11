@@ -1,3 +1,3 @@
-export { SelectWithValidation, SelectField, Select } from "./Select";
+export { SelectWithValidation, SelectField, Select, UnstyledSelect } from "./Select";
 
 export { getReactSelectProps } from "./selectTheme";
