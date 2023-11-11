@@ -1,8 +1,8 @@
-import * as RadioGroupPrimitive from '@radix-ui/react-radio-group';
-import type { ReactNode } from 'react';
-import React from 'react';
+import * as RadioGroupPrimitive from "@radix-ui/react-radio-group";
+import type { ReactNode } from "react";
+import React from "react";
 
-import { cn } from '../../lib/utils';
+import { cn } from "@ttbs/lib/cn";
 
 export const Group = (props: RadioGroupPrimitive.RadioGroupProps & { children: ReactNode }) => (
   <RadioGroupPrimitive.Root {...props}>{props.children}</RadioGroupPrimitive.Root>
@@ -11,10 +11,9 @@ export const Radio = (props: RadioGroupPrimitive.RadioGroupItemProps & { childre
   <RadioGroupPrimitive.Item
     {...props}
     className={cn(
-      'hover:bg-subtle border-default dark:checked:bg-brand-default dark:bg-darkgray-100 dark:hover:bg-subtle dark:checked:hover:bg-brand-default focus:ring-brand-default hover:border-emphasis me-1.5 mt-0.5 h-4 w-4 flex-shrink-0 rounded-full border text-[--ttbs-brand] focus:border-0 focus:ring-1',
-      props.disabled && 'opacity-60'
-    )}
-  >
+      "hover:bg-subtle border-default dark:checked:bg-brand-default dark:bg-darkgray-100 dark:hover:bg-subtle dark:checked:hover:bg-brand-default focus:ring-brand-default hover:border-emphasis me-1.5 mt-0.5 h-4 w-4 flex-shrink-0 rounded-full border text-[--ttbs-brand] focus:border-0 focus:ring-1",
+      props.disabled && "opacity-60"
+    )}>
     {props.children}
   </RadioGroupPrimitive.Item>
 );
@@ -22,18 +21,15 @@ export const Indicator = ({ disabled }: { disabled?: boolean }) => (
   <RadioGroupPrimitive.Indicator
     className={cn(
       "after:bg-default dark:after:bg-brand-accent relative flex h-full w-full items-center justify-center rounded-full bg-black after:h-[6px] after:w-[6px] after:rounded-full after:content-['']",
-      disabled ? 'after:bg-muted' : 'bg-brand-default'
+      disabled ? "after:bg-muted" : "bg-brand-default"
     )}
   />
 );
 
-export const Label = (props: JSX.IntrinsicElements['label'] & { disabled?: boolean }) => (
+export const Label = (props: JSX.IntrinsicElements["label"] & { disabled?: boolean }) => (
   <label
     {...props}
-    className={cn(
-      'text-emphasis ms-2 w-full text-sm font-medium leading-5',
-      props.disabled && 'text-subtle'
-    )}
+    className={cn("text-emphasis ms-2 w-full text-sm font-medium leading-5", props.disabled && "text-subtle")}
   />
 );
 
@@ -50,7 +46,7 @@ export const RadioField = ({
   value: string;
   className?: string;
 }) => (
-  <div className={cn('flex items-start', className)}>
+  <div className={cn("flex items-start", className)}>
     <Radio value={value} disabled={disabled} id={id}>
       <Indicator disabled={disabled} />
     </Radio>

@@ -1,4 +1,4 @@
-import { cn } from '../../../lib/utils';
+import { cn } from "@ttbs/lib/cn";
 
 type Props = {
   steps: number;
@@ -17,10 +17,7 @@ function FormStep({ currentStep, steps }: Props) {
           console.log({ j, currentStep });
           return (
             <div
-              className={cn(
-                'h-1 w-full rounded-sm',
-                currentStep - 1 >= j ? 'bg-black' : 'bg-gray-400'
-              )}
+              className={cn("h-1 w-full rounded-sm", currentStep - 1 >= j ? "bg-black" : "bg-gray-400")}
               key={j}
             />
           );

@@ -7,6 +7,7 @@ export default defineConfig({
   dts: true,
   entry: [
     "constants.ts",
+    "cn.ts",
     "dayjs.ts",
     "errors.ts",
     "get-safe-redirect-url.ts",

@@ -8,10 +8,10 @@ import { FormProvider, useForm } from "react-hook-form";
 import { z } from "zod";
 
 import { useClientTranslation } from "@ttbs/i18n";
+// import { collectPageParameters, telemetryEventTypes, useTelemetry } from "@ttbs/lib/telemetry";
+import { cn } from "@ttbs/lib/cn";
 import { WEBAPP_URL } from "@ttbs/lib/constants";
 import { getSafeRedirectUrl } from "@ttbs/lib/get-safe-redirect-url";
-// import { collectPageParameters, telemetryEventTypes, useTelemetry } from "@ttbs/lib/telemetry";
-import { cn } from "@ttbs/ui";
 import { Alert, Button, EmailField, PasswordField } from "@ttbs/ui";
 
 import AuthContainer from "@/components/ui/auth-container";

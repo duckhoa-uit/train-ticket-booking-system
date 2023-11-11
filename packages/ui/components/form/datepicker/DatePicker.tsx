@@ -1,10 +1,11 @@
-import 'react-calendar/dist/Calendar.css';
-import 'react-date-picker/dist/DatePicker.css';
+import "react-calendar/dist/Calendar.css";
 // import PrimitiveDatePicker from 'react-date-picker/dist/entry.nostyle';
-import PrimitiveDatePicker from 'react-date-picker';
+import PrimitiveDatePicker from "react-date-picker";
+import "react-date-picker/dist/DatePicker.css";
 
-import { Calendar } from '../../icons';
-import { cn } from '../../../lib/utils';
+import { cn } from "@ttbs/lib/cn";
+
+import { Calendar } from "../../icons";
 
 type Props = {
   date: Date;
@@ -22,7 +23,7 @@ const DatePicker = ({ minDate, disabled, date, onDatesChange, className }: Props
   return (
     <PrimitiveDatePicker
       className={cn(
-        'focus:ring-primary-500 focus:border-primary-500 border-default rounded-md border p-1 pl-2 shadow-sm sm:text-sm',
+        "focus:ring-primary-500 focus:border-primary-500 border-default rounded-md border p-1 pl-2 shadow-sm sm:text-sm",
         className
       )}
       calendarClassName="rounded-md dark:text-black"

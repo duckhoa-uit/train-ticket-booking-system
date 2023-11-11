@@ -21,6 +21,14 @@
       "cache": false,
       "dependsOn": ["@ttbs/env#build", "@ttbs/lib#build", "@ttbs/prisma#dx"]
     },
+    "@ttbs/web#dev": {
+      "cache": false,
+      "dependsOn": ["@ttbs/env#build", "@ttbs/lib#build", "@ttbs/prisma#dx"]
+    },
+    "@ttbs/dashboard#dev": {
+      "cache": false,
+      "dependsOn": ["@ttbs/env#build", "@ttbs/lib#build", "@ttbs/prisma#dx"]
+    },
     "@ttbs/prisma#dx": {
       "cache": false,
       "dependsOn": ["@ttbs/prisma#db-migrate"]

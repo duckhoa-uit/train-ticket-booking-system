@@ -1,4 +1,4 @@
-import { cn } from '@ttbs/ui';
+import { cn } from "@ttbs/lib/cn";
 
 interface Props {
   title: string;
@@ -15,10 +15,8 @@ export default function AuthContainer(props: React.PropsWithChildren<Props>) {
       {/* <HeadSeo title={props.title} description={props.description} />
       {props.showLogo && <Logo small inline={false} className="mx-auto mb-auto" />} */}
 
-      <div className={cn(props.showLogo ? 'text-center' : '', 'sm:mx-auto sm:w-full sm:max-w-md')}>
-        {props.heading && (
-          <h2 className="font-cal text-emphasis text-center text-3xl">{props.heading}</h2>
-        )}
+      <div className={cn(props.showLogo ? "text-center" : "", "sm:mx-auto sm:w-full sm:max-w-md")}>
+        {props.heading && <h2 className="font-cal text-emphasis text-center text-3xl">{props.heading}</h2>}
       </div>
       {props.loading && (
         <div className="bg-muted absolute z-50 flex h-screen w-full items-center">

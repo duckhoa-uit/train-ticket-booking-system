@@ -10,7 +10,7 @@ import { useClientTranslation } from "@ttbs/i18n";
 import { APP_NAME } from "@ttbs/lib/constants";
 
 import { Button } from "../components/button";
-import { StepCard } from "../components/card/step-card";
+import { StepCard } from "../components/card";
 import { Steps } from "../components/form";
 import { SkeletonText } from "../components/skeleton";
 

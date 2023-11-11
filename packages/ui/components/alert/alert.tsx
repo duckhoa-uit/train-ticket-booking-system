@@ -1,6 +1,8 @@
 import type { ReactNode } from "react";
 import { forwardRef } from "react";
 
+import { cn } from "@ttbs/lib/cn";
+
 import {
   CheckCircle2,
   Info,
@@ -8,7 +10,6 @@ import {
   AlertTriangle,
   type LucideIcon as IconType,
 } from "../../components/icons";
-import { cn } from "../../lib/utils";
 
 export interface AlertProps {
   title?: ReactNode;

@@ -1,8 +1,9 @@
-import { cn } from '../../lib/utils';
-import { Avatar } from './Avatar';
+import { cn } from "@ttbs/lib/cn";
+
+import { Avatar } from "./Avatar";
 
 export type AvatarGroupProps = {
-  size: 'sm' | 'lg';
+  size: "sm" | "lg";
   items: {
     image: string;
     title?: string;
@@ -26,14 +27,14 @@ export const AvatarGroup = function AvatarGroup(props: AvatarGroupProps) {
   if (!displayedAvatars.length) return <></>;
 
   return (
-    <ul className={cn('flex items-center', props.className)}>
+    <ul className={cn("flex items-center", props.className)}>
       {displayedAvatars.map((item, idx) => (
         <li key={idx} className="-mr-[4px] inline-block">
           <Avatar
             className="border-subtle"
             imageSrc={item.image}
             title={item.title}
-            alt={item.alt || ''}
+            alt={item.alt || ""}
             size={props.size}
             href={item.href}
           />
@@ -42,16 +43,14 @@ export const AvatarGroup = function AvatarGroup(props: AvatarGroupProps) {
       {numTruncatedAvatars > 0 && (
         <li
           className={cn(
-            'bg-inverted relative -mr-[4px] mb-1 inline-flex justify-center overflow-hidden rounded-full',
-            props.size === 'sm' ? 'min-w-6 h-6' : 'min-w-16 h-16'
-          )}
-        >
+            "bg-inverted relative -mr-[4px] mb-1 inline-flex justify-center overflow-hidden rounded-full",
+            props.size === "sm" ? "min-w-6 h-6" : "min-w-16 h-16"
+          )}>
           <span
             className={cn(
-              'text-inverted m-auto px-1 text-center',
-              props.size === 'sm' ? 'text-[12px]' : 'text-2xl'
-            )}
-          >
+              "text-inverted m-auto px-1 text-center",
+              props.size === "sm" ? "text-[12px]" : "text-2xl"
+            )}>
             +{numTruncatedAvatars}
           </span>
         </li>

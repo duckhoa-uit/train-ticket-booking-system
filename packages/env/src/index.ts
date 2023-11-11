@@ -26,7 +26,7 @@ export const env = createEnv({
   },
   clientPrefix: "NEXT_PUBLIC_",
   client: {
-    // NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: z.string().min(1),
+    NEXT_PUBLIC_API_BASE_URI: z.string().url(),
   },
   runtimeEnv: {
     NODE_ENV: process.env["NODE_ENV"],

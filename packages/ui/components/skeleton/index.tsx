@@ -1,7 +1,7 @@
 import type { ComponentPropsWithoutRef, ElementType, ReactNode } from "react";
 import React from "react";
 
-import { cn } from "../../lib/utils";
+import { cn } from "@ttbs/lib/cn";
 
 const SkeletonAvatar: React.FC<SkeletonBaseProps> = ({ className }) => {
   return <div className={cn(`bg-emphasis me-3 mt-1 rounded-full`, className)} />;

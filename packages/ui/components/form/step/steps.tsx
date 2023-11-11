@@ -1,4 +1,4 @@
-import { cn } from '../../../lib/utils';
+import { cn } from "@ttbs/lib/cn";
 
 interface ISteps {
   maxSteps: number;
@@ -24,15 +24,12 @@ const Steps = (props: ISteps) => {
               key={`step-${index}`}
               onClick={() => navigateToStep(index)}
               className={cn(
-                'bg-inverted h-1 w-full rounded-[1px]',
-                index < currentStep - 1 ? 'cursor-pointer' : ''
+                "bg-inverted h-1 w-full rounded-[1px]",
+                index < currentStep - 1 ? "cursor-pointer" : ""
               )}
             />
           ) : (
-            <div
-              key={`step-${index}`}
-              className="bg-emphasis h-1 w-full rounded-[1px] opacity-25"
-            />
+            <div key={`step-${index}`} className="bg-emphasis h-1 w-full rounded-[1px] opacity-25" />
           );
         })}
       </div>

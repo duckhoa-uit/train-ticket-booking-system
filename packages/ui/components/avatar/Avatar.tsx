@@ -1,15 +1,15 @@
-import * as AvatarPrimitive from '@radix-ui/react-avatar';
-import * as TooltipPrimitive from '@radix-ui/react-tooltip';
-import Link from 'next/link';
+import * as AvatarPrimitive from "@radix-ui/react-avatar";
+import * as TooltipPrimitive from "@radix-ui/react-tooltip";
+import Link from "next/link";
 
-import { AVATAR_FALLBACK } from '@ttbs/lib/constants';
+import { cn } from "@ttbs/lib/cn";
+import { AVATAR_FALLBACK } from "@ttbs/lib/constants";
 
-import { Tooltip } from '../tooltip';
-import { cn } from '../../lib/utils';
+import { Tooltip } from "../tooltip";
 
 export type AvatarProps = {
   className?: string;
-  size?: 'xxs' | 'xs' | 'xsm' | 'sm' | 'md' | 'mdLg' | 'lg' | 'xl';
+  size?: "xxs" | "xs" | "xsm" | "sm" | "md" | "mdLg" | "lg" | "xl";
   imageSrc?: string | null;
   title?: string;
   alt: string;
@@ -18,50 +18,42 @@ export type AvatarProps = {
   accepted?: boolean;
   asChild?: boolean; // Added to ignore the outer span on the fallback component - messes up styling
   indicator?: React.ReactNode;
-  'data-testid'?: string;
 };
 
 const sizesPropsBySize = {
-  xxs: 'w-3.5 h-3.5 min-w-3.5 min-h-3.5', // 14px
-  xs: 'w-4 h-4 min-w-4 min-h-4 max-h-4', // 16px
-  xsm: 'w-5 h-5 min-w-5 min-h-5', // 20px
-  sm: 'w-6 h-6 min-w-6 min-h-6', // 24px
-  md: 'w-8 h-8 min-w-8 min-h-8', // 32px
-  mdLg: 'w-10 h-10 min-w-10 min-h-10', //40px
-  lg: 'w-16 h-16 min-w-16 min-h-16', // 64px
-  xl: 'w-24 h-24 min-w-24 min-h-24', // 96px
+  xxs: "w-3.5 h-3.5 min-w-3.5 min-h-3.5", // 14px
+  xs: "w-4 h-4 min-w-4 min-h-4 max-h-4", // 16px
+  xsm: "w-5 h-5 min-w-5 min-h-5", // 20px
+  sm: "w-6 h-6 min-w-6 min-h-6", // 24px
+  md: "w-8 h-8 min-w-8 min-h-8", // 32px
+  mdLg: "w-10 h-10 min-w-10 min-h-10", //40px
+  lg: "w-16 h-16 min-w-16 min-h-16", // 64px
+  xl: "w-24 h-24 min-w-24 min-h-24", // 96px
 } as const;
 
 export function Avatar(props: AvatarProps) {
-  const { imageSrc, size = 'md', alt, title, href, indicator } = props;
-  const rootClass = cn('aspect-square rounded-full', sizesPropsBySize[size]);
+  const { imageSrc, size = "md", alt, title, href, indicator } = props;
+  const rootClass = cn("aspect-square rounded-full", sizesPropsBySize[size]);
   let avatar = (
     <AvatarPrimitive.Root
-      data-testid={props?.['data-testid']}
       className={cn(
-        'bg-emphasis item-center relative inline-flex aspect-square justify-center rounded-full',
-        indicator ? 'overflow-visible' : 'overflow-hidden',
+        "bg-emphasis item-center relative inline-flex aspect-square justify-center rounded-full",
+        indicator ? "overflow-visible" : "overflow-hidden",
         props.className,
         sizesPropsBySize[size]
-      )}
-    >
+      )}>
       <>
         <AvatarPrimitive.Image
           src={imageSrc ?? undefined}
           alt={alt}
-          className={cn('aspect-square rounded-full', sizesPropsBySize[size])}
+          className={cn("aspect-square rounded-full", sizesPropsBySize[size])}
         />
         <AvatarPrimitive.Fallback
           delayMs={600}
           asChild={props.asChild}
-          className="flex h-full items-center justify-center"
-        >
+          className="flex h-full items-center justify-center">
           <>
-            {props.fallback ? (
-              props.fallback
-            ) : (
-              <img src={AVATAR_FALLBACK} alt={alt} className={rootClass} />
-            )}
+            {props.fallback ? props.fallback : <img src={AVATAR_FALLBACK} alt={alt} className={rootClass} />}
           </>
         </AvatarPrimitive.Fallback>
         {indicator}
