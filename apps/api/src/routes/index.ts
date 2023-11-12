@@ -4,6 +4,7 @@ import swaggerUi from "swagger-ui-express";
 import { swaggerSpec } from "@/utils/swagger";
 
 import { authRouter } from "./auth.router";
+import { routeRouter } from "./route.router";
 import { stationRouter } from "./station.route";
 import { userRouter } from "./user.router";
 
@@ -13,6 +14,7 @@ indexRouter.use("/users", userRouter);
 indexRouter.use("/auth", authRouter);
 indexRouter.use("/stations", stationRouter);
 
+indexRouter.use("/route", routeRouter);
 indexRouter.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // Docs in JSON format
