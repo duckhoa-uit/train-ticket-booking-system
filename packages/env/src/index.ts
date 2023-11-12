@@ -30,6 +30,7 @@ export const env = createEnv({
   },
   runtimeEnv: {
     NODE_ENV: process.env["NODE_ENV"],
+    NEXT_PUBLIC_API_BASE_URI: process.env["NEXT_PUBLIC_API_BASE_URI"],
     DATABASE_URL: process.env["DATABASE_URL"],
     JWT_ACCESS_TOKEN_PRIVATE_KEY: process.env["JWT_ACCESS_TOKEN_PRIVATE_KEY"],
     JWT_ACCESS_TOKEN_PUBLIC_KEY: process.env["JWT_ACCESS_TOKEN_PUBLIC_KEY"],
