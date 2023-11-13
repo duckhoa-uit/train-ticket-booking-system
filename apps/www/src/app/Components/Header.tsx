@@ -89,7 +89,7 @@ const Header = () => {
         {/* //link with useRef */}
         <div>
           <BurgerMenu
-            className="z-10 box-border w-16 rounded hover:cursor-pointer md:hidden"
+            className="z-10 box-border flex w-10 rounded hover:cursor-pointer md:hidden md:w-12"
             // onClick={() => {
             //     setOpen(!open);
             //   }}
@@ -103,7 +103,7 @@ const Header = () => {
       <ul
         ref={listRef}
         className={` text-primary absolute z-20 mr-5 flex flex-col justify-around gap-2 rounded-md transition-all duration-500 ease-in-out md:static md:flex-1 md:flex-row md:justify-end md:gap-2 md:p-2 ${
-          open ? " border-primary right-0 top-24 border-2 bg-white" : "right-[-500px] top-20"
+          open ? " border-r-accent right-0 top-24 border bg-white" : "right-[-500px] top-20"
         }`}>
         {/* combine map function with ternary operator */}
         {links.map((link) => {
@@ -132,7 +132,7 @@ const Header = () => {
                 className={`block transition-all duration-300 ease-in-out md:absolute ${
                   dropdown ? "inset-x-0 top-10 min-w-full opacity-100" : "hidden opacity-0"
                 }`}>
-                <ul className=" border-primary w-full rounded-md bg-white py-2 text-sm md:border-2">
+                <ul className=" border-primary w-full rounded-md bg-white py-2 text-sm md:border">
                   <li>
                     <a
                       className=" text-primary md:hover:text-accent hover:bg-primary md:hover:bg-bg-secondary block  py-2 pl-5 text-sm hover:cursor-pointer md:px-5 "

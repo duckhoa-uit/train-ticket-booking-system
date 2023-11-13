@@ -62,7 +62,7 @@ const SearchBar = () => {
               Nơi khởi hành
             </Label>
             <Input
-              className="border-primary border-2"
+              className="border-primary border-1"
               id="depart"
               onClick={() => {
                 setDropDownDepart(!dropdownDepart);
@@ -77,7 +77,7 @@ const SearchBar = () => {
               Nơi đến
             </Label>
             <Input
-              className="border-primary border-2"
+              className="border-primary border-1"
               id="arrival"
               defaultValue={arrivalPlace}
               onChange={() => handleChange}
@@ -91,10 +91,13 @@ const SearchBar = () => {
             <Label htmlFor="arrival" className="self-start font-semibold">
               Ngày khởi hành
             </Label>
-            <DatePicker className="border-primary w-full border-2" date={current} />
+            <DatePicker
+              className="border-primary w-full border-none font-normal outline-none"
+              date={current}
+            />
           </div>
         </div>
-        <button className=" bg-accent my-3 w-full rounded-md px-3 py-3 text-center font-medium lg:w-auto lg:flex-1">
+        <button className=" bg-accent text-secondary my-3 w-full rounded-md px-3 py-3 text-center font-medium lg:w-auto lg:flex-1">
           Tìm kiếm
         </button>
       </form>

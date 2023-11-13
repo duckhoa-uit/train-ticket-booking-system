@@ -14,8 +14,8 @@ const InputDropDown: FC<DropdownInputProps> = (prop) => {
   return (
     <div className="relative w-full">
       <ul
-        className={` border-primary  absolute inset-0 z-10 mx-auto mt-1 h-60
-             w-full overflow-y-auto rounded-lg border-2 bg-white px-1 py-2 transition-all duration-100 ${
+        className={` border-primary  border-1 absolute inset-0 z-10 mx-auto mt-1
+             h-60 w-full overflow-y-auto rounded-lg border-solid bg-white px-1 py-2 transition-all duration-100 ${
                prop.dropdown ? "block" : "hidden"
              }`}>
         {provinces.map((item) => {
