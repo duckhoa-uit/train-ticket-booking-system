@@ -5,6 +5,8 @@ import React, { useRef, useState } from "react";
 
 import { useOnClickOutside } from "@ttbs/lib/hooks";
 
+import BurgerMenu from "./burger-menu/burger-menu";
+
 const Header = () => {
   const [open, setOpen] = useState(false);
   const [dropdown, setDropdown] = useState(false);
@@ -49,10 +51,16 @@ const Header = () => {
       link: "#",
     },
   ];
+  const burgerMenu = ["btn-menu", "btn-menu--2"];
+  function handleClickMenuIcon() {
+    setOpen(!open);
+  }
   //handle click outside to close menu, dropdown
   const handleClickOutsideBox = (e: MouseEvent) => {
     const target = e.target as HTMLButtonElement;
-    if (open && target.id !== "btn-menu") {
+    const parent = target.parentElement as HTMLElement;
+    console.log(parent.id);
+    if (open && !burgerMenu.includes(parent.id)) {
       setOpen(false);
     }
     if (dropdown && target.id !== "dropdown-ticket") {
@@ -80,15 +88,16 @@ const Header = () => {
         </a>
         {/* //link with useRef */}
         <div>
-          <button
-            // ref={navRef}
-            onClick={() => {
-              setOpen(!open);
-            }}
+          <BurgerMenu
+            className="z-10 box-border w-16 rounded hover:cursor-pointer md:hidden"
+            // onClick={() => {
+            //     setOpen(!open);
+            //   }}
+            // id="btn-menu"
+            handleClick={handleClickMenuIcon}
             id="btn-menu"
-            className="bg-accent text-secondary z-10 box-border rounded p-5 transition-all duration-300 hover:cursor-pointer md:hidden">
-            MENU
-          </button>
+            openState={open}
+          />
         </div>
       </div>
       <ul
