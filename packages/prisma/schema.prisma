@@ -25,9 +25,14 @@ generator enums {
 }
 
 enum UserRole {
-  ADMIN @map("admin")
-  USER  @map("user")
-  STAFF @map("staff")
+  ADMIN
+  USER
+  STAFF
+}
+
+enum CarriageStatus {
+  HAS_SEAT
+  FULL
 }
 
 model User {
@@ -45,7 +50,193 @@ model User {
   @@map("users")
 }
 
-model Hi {
-  id   String  @id @default(cuid())
-  name String?
+model Station {
+  id          Int     @id @default(autoincrement())
+  code        String  @unique
+  name        String
+  description String?
+
+  journeyStations JourneyStation[]
+
+  pricingDeparts  Pricing[] @relation("pricingDeparts") @ignore
+  pricingArrivals Pricing[] @relation("pricingArrivals") @ignore
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("stations")
+}
+
+model SeatType {
+  id          Int    @id @default(autoincrement())
+  name        String
+  floors      Int    @default(1) //1 for bed, >1 for chair
+  seatsPerRow Int
+
+  carriages Carriage[]
+  pricings  Pricing[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("seat-types")
+}
+
+model Seat {
+  id         Int       @id @default(autoincrement())
+  carriageId Int
+  carriage   Carriage? @relation(fields: [carriageId], references: [id], onDelete: Cascade)
+  order      Int
+
+  ticket Ticket[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("seats")
+}
+
+model Carriage {
+  id            Int            @id @default(autoincrement())
+  seatTypeId    Int
+  seatType      SeatType       @relation(fields: [seatTypeId], references: [id], onDelete: Cascade)
+  trainId       Int
+  train         Train          @relation(fields: [trainId], references: [id], onDelete: Cascade)
+  code          String         @unique
+  name          String
+  note          String?
+  status        CarriageStatus @default(HAS_SEAT)
+  order         Int
+  numOfCabins   Int?           @default(1)
+  seatsPerCabin Int
+  seats         Seat[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("carriages")
+}
+
+model Train {
+  id        Int        @id @default(autoincrement())
+  code      String     @unique
+  name      String
+  carriages Carriage[]
+
+  trips   Trip[]
+  tickets Ticket[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("trains")
+}
+
+model Journey {
+  id   Int    @id @default(autoincrement())
+  name String
+
+  journeyStations JourneyStation[]
+  trips           Trip[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("journeys")
+}
+
+model JourneyStation {
+  id        Int     @id @default(autoincrement())
+  journeyId Int
+  journey   Journey @relation(fields: [journeyId], references: [id], onDelete: Cascade)
+  stationId Int
+  station   Station @relation(fields: [stationId], references: [id], onDelete: Cascade)
+  order     Int
+
+  tripTimelines TripTimeline[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([journeyId, stationId])
+  @@map("journey-schedules")
+}
+
+model Trip {
+  id          Int      @id @default(autoincrement())
+  name        String?
+  journeyId   Int
+  journey     Journey  @relation(fields: [journeyId], references: [id], onDelete: Cascade)
+  trainId     Int
+  train       Train    @relation(fields: [trainId], references: [id], onDelete: Cascade)
+  arrivalDate DateTime
+  departDate  DateTime
+
+  pricings  Pricing[]
+  timelines TripTimeline[]
+  tickets   Ticket[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([journeyId, trainId, arrivalDate])
+  @@unique([journeyId, trainId, departDate])
+  @@map("trips")
+}
+
+model TripTimeline {
+  id               Int            @id @default(autoincrement())
+  tripId           Int
+  trip             Trip           @relation(fields: [tripId], references: [id], onDelete: Cascade)
+  journeyStationId Int
+  journeyStation   JourneyStation @relation(fields: [journeyStationId], references: [id], onDelete: Cascade)
+  arrivalDate      DateTime
+  departDate       DateTime
+
+  ticketsFrom Ticket[] @relation(name: "fromTimeline")
+  ticketsTo   Ticket[] @relation(name: "toTimeline")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("trip-timelines")
+}
+
+model Pricing {
+  id               Int      @id @default(autoincrement())
+  tripId           Int
+  trip             Trip     @relation(fields: [tripId], references: [id], onDelete: Cascade)
+  seatTypeId       Int
+  seatType         SeatType @relation(fields: [seatTypeId], references: [id], onDelete: Cascade)
+  departStationId  Int
+  departStation    Station  @relation(name: "pricingDeparts", fields: [departStationId], references: [id], onDelete: Cascade)
+  arrivalStationId Int
+  arrivalStation   Station  @relation(name: "pricingArrivals", fields: [arrivalStationId], references: [id], onDelete: Cascade)
+  amount           Int
+
+  tickets Ticket[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([tripId, departStationId, arrivalStationId, seatTypeId])
+  @@map("pricings")
+}
+
+model Ticket {
+  id             Int          @id @default(autoincrement())
+  arrivalDate    DateTime
+  tripId         Int
+  trip           Trip         @relation(fields: [tripId], references: [id], onDelete: Cascade)
+  trainId        Int
+  train          Train        @relation(fields: [trainId], references: [id], onDelete: Cascade)
+  seatId         Int
+  seat           Seat         @relation(fields: [seatId], references: [id], onDelete: Cascade)
+  fromTimelineId Int
+  fromTineline   TripTimeline @relation(name: "fromTimeline", fields: [fromTimelineId], references: [id], onDelete: Cascade)
+  toTimelineId   Int
+  toTineline     TripTimeline @relation(name: "toTimeline", fields: [toTimelineId], references: [id], onDelete: Cascade)
+  priceId        Int
+  price          Pricing      @relation(fields: [priceId], references: [id])
+  // TODO:
 }
