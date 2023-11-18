@@ -6,7 +6,7 @@ export default defineConfig({
   clean: true,
   dts: true,
   entry: [
-    "constants.ts",
+    "constants/index.ts",
     "cn.ts",
     "dayjs.ts",
     "errors.ts",
