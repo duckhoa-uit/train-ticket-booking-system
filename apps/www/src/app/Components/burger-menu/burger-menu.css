@@ -1,0 +1,42 @@
+
+.burger-menu .line{
+    transition:
+    y 300ms ease-in,
+    /* add delay 300ms to run y first */
+    rotate 300ms ease-in 300ms,
+    opacity 1s
+    ;
+    transform-origin: center;
+}
+.activeIcon {
+  y: 45px;
+}
+
+.topRotate {
+  rotate: -45deg;
+}
+
+.bottomRotate {
+  rotate: 45deg;
+}
+
+.burger-menu :is(.top, .bottom) {
+  /* y: xac dinh chinh xac toa do 45 */
+  /* y: 45px; */
+  /* translate: tu toa do goc + them 20 px */
+  /* transform: translateY(20px); */
+
+}
+
+.burger-menu :is(.top) {
+  /* rotate: -45deg; */
+}
+
+.burger-menu :is(.bottom) {
+  /* chieu duong la chieu kim dong ho */
+  /* rotate: 45deg; */
+}
+
+.burger-menu:hover :is(.middle) {
+    /* opacity: 0; */
+}

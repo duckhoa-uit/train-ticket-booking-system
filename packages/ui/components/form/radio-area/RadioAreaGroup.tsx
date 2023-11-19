@@ -1,3 +1,5 @@
+"use client";
+
 import { useId } from "@radix-ui/react-id";
 import * as RadioGroupPrimitive from "@radix-ui/react-radio-group";
 import type { ReactNode } from "react";

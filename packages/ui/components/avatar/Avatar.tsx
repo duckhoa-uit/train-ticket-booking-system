@@ -1,3 +1,5 @@
+"use client";
+
 import * as AvatarPrimitive from "@radix-ui/react-avatar";
 import * as TooltipPrimitive from "@radix-ui/react-tooltip";
 import Link from "next/link";

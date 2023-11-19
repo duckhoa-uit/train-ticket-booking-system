@@ -1,3 +1,5 @@
+"use client";
+
 import * as SliderPrimitive from "@radix-ui/react-slider";
 import type { FormEvent } from "react";
 import { useCallback, useEffect, useState } from "react";

@@ -1,3 +1,5 @@
+"use client";
+
 import type { GroupBase, InputProps, OptionProps } from "react-select";
 import { components as reactSelectComponents } from "react-select";
 

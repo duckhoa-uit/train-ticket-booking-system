@@ -381,6 +381,12 @@ importers:
 
   apps/www:
     dependencies:
+      '@ttbs/i18n':
+        specifier: workspace:*
+        version: link:../../packages/i18n
+      '@ttbs/lib':
+        specifier: workspace:*
+        version: link:../../packages/lib
       '@ttbs/ui':
         specifier: workspace:*
         version: link:../../packages/ui

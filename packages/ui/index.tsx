@@ -108,3 +108,5 @@ export {
 } from "./components/command";
 
 export { Popover, PopoverContent, PopoverTrigger } from "./components/popover";
+
+export { TailwindIndicator } from "./components/tailwind-indicator";
