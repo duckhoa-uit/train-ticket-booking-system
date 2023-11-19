@@ -1,12 +1,6 @@
-
-.burger-menu .line{
-    transition:
-    y 300ms ease-in,
-    /* add delay 300ms to run y first */
-    rotate 300ms ease-in 300ms,
-    opacity 1s
-    ;
-    transform-origin: center;
+.burger-menu .line {
+  transition: y 200ms ease-in, /* add delay 300ms to run y first */ rotate 200ms ease-in, opacity 0.4s;
+  transform-origin: center;
 }
 .activeIcon {
   y: 45px;
@@ -25,7 +19,6 @@
   /* y: 45px; */
   /* translate: tu toa do goc + them 20 px */
   /* transform: translateY(20px); */
-
 }
 
 .burger-menu :is(.top) {
@@ -38,5 +31,5 @@
 }
 
 .burger-menu:hover :is(.middle) {
-    /* opacity: 0; */
+  /* opacity: 0; */
 }

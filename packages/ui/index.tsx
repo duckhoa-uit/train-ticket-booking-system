@@ -110,3 +110,9 @@ export {
 export { Popover, PopoverContent, PopoverTrigger } from "./components/popover";
 
 export { TailwindIndicator } from "./components/tailwind-indicator";
+
+export * from "./components/sheet";
+
+export * from "./components/navigation-menu";
+
+export * from "./components/collapsible";

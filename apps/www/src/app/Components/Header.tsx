@@ -1,170 +1,191 @@
 "use client";
 
 import Image from "next/image";
-import React, { useRef, useState } from "react";
+import Link from "next/link";
+import React, { useState } from "react";
 
-import { useOnClickOutside } from "@ttbs/lib/hooks";
+import { useMediaQuery } from "@ttbs/lib";
+import { cn } from "@ttbs/lib/cn";
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+  Sheet,
+  SheetContent,
+  navigationMenuTriggerStyle,
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@ttbs/ui";
+import { ChevronDown } from "@ttbs/ui/components/icons";
 
 import BurgerMenu from "./burger-menu/burger-menu";
 
+type NavItem = { title: string; description?: string } & (
+  | { href: string }
+  | { children: { title: string; href: string; description?: string }[] }
+);
+const NAVIGATION_ITEMS: NavItem[] = [
+  {
+    title: "thông tin đặt chỗ",
+    href: "/booking-information",
+  },
+  {
+    title: "Vé",
+    href: "/tickets",
+    children: [
+      {
+        title: "Tìm vé",
+        href: "/search",
+      },
+      {
+        title: "trả vé",
+        href: "/return-ticket",
+      },
+      {
+        title: "kiểm tra vé",
+        href: "/check-ticket",
+      },
+    ],
+  },
+  {
+    title: "khuyến mãi",
+    href: "/promotions",
+  },
+  {
+    title: "các quy định",
+    href: "/rules",
+  },
+  {
+    title: "hướng dẫn",
+    href: "/guide",
+  },
+  {
+    title: "liên hệ",
+    href: "/contact",
+  },
+];
+
 const Header = () => {
-  const [open, setOpen] = useState(false);
-  const [dropdown, setDropdown] = useState(false);
-  const listRef = useRef<HTMLUListElement>(null);
-  const links = [
-    {
-      name: "thông tin đặt chỗ",
-      link: "#",
-    },
-    {
-      name: "Vé",
-      link: "#",
-      links: [
-        {
-          name: "Tìm vé",
-          link: "#",
-        },
-        {
-          name: "trả vé",
-          link: "#",
-        },
-        {
-          name: "kiểm tra vé",
-          link: "#",
-        },
-      ],
-    },
-    {
-      name: "khuyến mãi",
-      link: "#",
-    },
-    {
-      name: "các quy định",
-      link: "#",
-    },
-    {
-      name: "hướng dẫn",
-      link: "#",
-    },
-    {
-      name: "liên hệ",
-      link: "#",
-    },
-  ];
-  const burgerMenu = ["btn-menu", "btn-menu--2"];
+  const [openMobileMenu, setOpenMobileMenu] = useState(false);
+  const isMobileOrTablet = useMediaQuery("(max-width: 768px)");
+
   function handleClickMenuIcon() {
-    setOpen(!open);
+    setOpenMobileMenu(!openMobileMenu);
   }
-  //handle click outside to close menu, dropdown
-  const handleClickOutsideBox = (e: MouseEvent) => {
-    const target = e.target as HTMLButtonElement;
-    const parent = target.parentElement as HTMLElement;
-    console.log(parent.id);
-    if (open && !burgerMenu.includes(parent.id)) {
-      setOpen(false);
-    }
-    if (dropdown && target.id !== "dropdown-ticket") {
-      setDropdown(false);
-    }
-  };
-
-  useOnClickOutside(listRef, handleClickOutsideBox);
-
-  //document only be used on client side
-  // useEffect(() => {
-  //   document.addEventListener("mousedown", handleClickOutsideBox);
-
-  // cần có remove ?
-  //   return () => {
-  //     document.removeEventListener("mousedown", handleClickOutsideBox);
-  //   }
-  // });
 
   return (
-    <nav className="text-subtle relative m-3 flex max-w-7xl flex-col items-center bg-white capitalize md:mx-auto md:flex-row md:justify-around md:align-middle md:text-sm">
+    <header className="text-subtle relative m-3 flex max-w-7xl flex-col items-center bg-white capitalize md:mx-auto md:flex-row md:justify-around md:align-middle md:text-sm">
       <div className=" flex w-full items-center justify-between gap-3 px-2 md:w-auto">
         <a href="#">
           <Image src="/logoipsum.svg" width={200} height={40} alt="logoipsum" />
         </a>
-        {/* //link with useRef */}
         <div>
           <BurgerMenu
             className="z-10 box-border flex w-10 rounded hover:cursor-pointer md:hidden md:w-12"
-            // onClick={() => {
-            //     setOpen(!open);
-            //   }}
-            // id="btn-menu"
             handleClick={handleClickMenuIcon}
             id="btn-menu"
-            openState={open}
+            openState={openMobileMenu}
           />
         </div>
       </div>
-      <ul
-        ref={listRef}
-        className={`text-emphasis absolute z-20 mr-5 flex flex-col justify-around gap-2 rounded-md transition-all duration-500 ease-in-out md:static md:flex-1 md:flex-row md:justify-end md:gap-2 md:p-2 ${
-          open ? " border-r-accent right-0 top-24 border bg-white" : "right-[-500px] top-20"
-        }`}>
-        {/* combine map function with ternary operator */}
-        {links.map((link) => {
-          return link.name !== "Vé" ? (
-            <li key={link.link} className="">
-              <div className="">
-                <a
-                  className="hover:bg-muted box-border block flex-auto rounded px-8 py-3 text-center transition duration-300 ease-in-out hover:cursor-pointer md:p-2 md:px-2 md:py-2"
-                  href={link.link}>
-                  {link.name}
-                </a>
-              </div>
-            </li>
-          ) : (
-            <div className="relative w-full md:max-w-max md:px-5">
-              <li
-                key={link.link}
-                className="hover:bg-muted box-border flex flex-col rounded px-8 py-3 text-center transition duration-300 ease-in-out hover:cursor-pointer md:px-5 md:py-2 lg:px-10"
-                onClick={() => {
-                  setDropdown(!dropdown);
-                }}>
-                <div>{link.name}</div>
-              </li>
-              <div
-                id="dropdown-ticket"
-                className={`block transition-all duration-300 ease-in-out md:absolute ${
-                  dropdown ? "inset-x-0 top-10 min-w-full opacity-100" : "hidden opacity-0"
-                }`}>
-                <ul className=" border-primary w-full rounded-md bg-white py-2 text-sm md:border">
-                  <li>
-                    <a
-                      className=" text-emphasis md:hover:text-accent hover:bg-muted md:hover:bg-subtle block  py-2 pl-5 text-sm hover:cursor-pointer md:px-5 "
-                      href="#">
-                      Tìm vé
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      className="text-emphasis md:hover:text-accent hover:bg-muted  md:hover:bg-subtle block py-2 pl-5 text-sm hover:cursor-pointer md:px-5"
-                      href="#">
-                      Trả vé
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      className="text-emphasis md:hover:text-accent hover:bg-muted  md:hover:bg-subtle block py-2 pl-5 text-sm hover:cursor-pointer md:px-5"
-                      href="#">
-                      Kiểm tra vé
-                    </a>
-                  </li>
-                </ul>
-              </div>
+      {isMobileOrTablet ? (
+        <Sheet open={openMobileMenu} onOpenChange={setOpenMobileMenu}>
+          <SheetContent position="right" size="default" className="w-1/2 min-w-[250px]">
+            <div className="flex w-full flex-col items-center">
+              <Navigation isMobileOrTablet />
             </div>
-          );
-        })}
-      </ul>
-      {/* <div>
-        <Image src={"/langs.svg"} width={50} height={50} alt="language" />
-      </div> */}
-    </nav>
+          </SheetContent>
+        </Sheet>
+      ) : (
+        <ul
+          className={cn(
+            `text-emphasis static z-20 mr-5 hidden flex-1 flex-row justify-end gap-2 rounded-md p-2 transition-all duration-500 ease-in-out md:flex `
+          )}>
+          <Navigation />
+        </ul>
+      )}
+    </header>
   );
 };
+
+const Navigation = ({ isMobileOrTablet }: { isMobileOrTablet?: boolean }) => (
+  <NavigationMenu orientation={isMobileOrTablet ? "vertical" : "horizontal"} className="capitalize">
+    <NavigationMenuList className={cn(isMobileOrTablet ? "flex-col" : null)}>
+      {NAVIGATION_ITEMS.map((nav, idx) => {
+        if ("children" in nav) {
+          if (isMobileOrTablet)
+            return (
+              <Collapsible key={`${nav.title}_${idx}`} className="flex flex-col items-center">
+                <CollapsibleTrigger>
+                  <NavigationMenuItem className="flex items-center">
+                    {nav.title}{" "}
+                    <ChevronDown
+                      className="relative top-[1px] ml-1 h-3 w-3 transition duration-200 group-data-[state=open]:rotate-180"
+                      aria-hidden="true"
+                    />
+                  </NavigationMenuItem>
+                </CollapsibleTrigger>
+                <CollapsibleContent>
+                  {nav.children.map((navItem) => (
+                    <ListItem key={navItem.title} title={navItem.title} href={navItem.href}>
+                      {navItem.description}
+                    </ListItem>
+                  ))}
+                </CollapsibleContent>
+              </Collapsible>
+            );
+
+          return (
+            <NavigationMenuItem key={`${nav.title}_${idx}`}>
+              <NavigationMenuTrigger>{nav.title}</NavigationMenuTrigger>
+              <NavigationMenuContent>
+                <ul className="grid w-[200px] grid-cols-1 gap-3 p-4">
+                  {nav.children.map((navItem) => (
+                    <ListItem key={navItem.title} title={navItem.title} href={navItem.href}>
+                      {navItem.description}
+                    </ListItem>
+                  ))}
+                </ul>
+              </NavigationMenuContent>
+            </NavigationMenuItem>
+          );
+        }
+        return (
+          <NavigationMenuItem key={`${nav.href}_${idx}`}>
+            <Link href={nav.href} legacyBehavior passHref>
+              <NavigationMenuLink className={navigationMenuTriggerStyle()}>{nav.title}</NavigationMenuLink>
+            </Link>
+          </NavigationMenuItem>
+        );
+      })}
+    </NavigationMenuList>
+  </NavigationMenu>
+);
+
+const ListItem = React.forwardRef<React.ElementRef<"a">, React.ComponentPropsWithoutRef<"a">>(
+  ({ className, title, children, ...props }, ref) => {
+    return (
+      <li>
+        <NavigationMenuLink asChild>
+          <a
+            ref={ref}
+            className={cn(
+              "hover:bg-muted hover:text-muted-foreground focus:bg-muted focus:text-muted-foreground block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors",
+              className
+            )}
+            {...props}>
+            <div className="text-sm font-medium leading-none">{title}</div>
+            <p className="text-muted-foreground line-clamp-2 text-sm leading-snug">{children}</p>
+          </a>
+        </NavigationMenuLink>
+      </li>
+    );
+  }
+);
+ListItem.displayName = "ListItem";
 
 export default Header;
