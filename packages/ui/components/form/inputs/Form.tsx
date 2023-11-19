@@ -1,16 +1,17 @@
-import type { ReactElement, Ref } from 'react';
-import React, { forwardRef } from 'react';
-import type { FieldValues, SubmitHandler, UseFormReturn } from 'react-hook-form';
-import { FormProvider } from 'react-hook-form';
+"use client";
 
-import { getErrorFromUnknown } from '@ttbs/lib/errors';
+import type { ReactElement, Ref } from "react";
+import React, { forwardRef } from "react";
+import type { FieldValues, SubmitHandler, UseFormReturn } from "react-hook-form";
+import { FormProvider } from "react-hook-form";
+import { toast } from "sonner";
 
-import { toast } from 'sonner';
+import { getErrorFromUnknown } from "@ttbs/lib/errors";
 
 type FormProps<T extends object> = {
   form: UseFormReturn<T>;
   handleSubmit: SubmitHandler<T>;
-} & Omit<JSX.IntrinsicElements['form'], 'onSubmit'>;
+} & Omit<JSX.IntrinsicElements["form"], "onSubmit">;
 
 const PlainForm = <T extends FieldValues>(props: FormProps<T>, ref: Ref<HTMLFormElement>) => {
   const { form, handleSubmit, ...passThrough } = props;
@@ -29,8 +30,7 @@ const PlainForm = <T extends FieldValues>(props: FormProps<T>, ref: Ref<HTMLForm
               toast.error(`${getErrorFromUnknown(err).message}`);
             });
         }}
-        {...passThrough}
-      >
+        {...passThrough}>
         {props.children}
       </form>
     </FormProvider>

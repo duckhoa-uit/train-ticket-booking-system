@@ -81,10 +81,10 @@ const Header = () => {
   // });
 
   return (
-    <nav className="text-secondary relative m-3 flex max-w-7xl flex-col items-center bg-white capitalize md:mx-auto md:flex-row md:justify-around md:align-middle md:text-sm">
+    <nav className="text-subtle relative m-3 flex max-w-7xl flex-col items-center bg-white capitalize md:mx-auto md:flex-row md:justify-around md:align-middle md:text-sm">
       <div className=" flex w-full items-center justify-between gap-3 px-2 md:w-auto">
         <a href="#">
-          <Image src="/logoipsum.svg" width={200} height={200} alt="logoipsum" />
+          <Image src="/logoipsum.svg" width={200} height={40} alt="logoipsum" />
         </a>
         {/* //link with useRef */}
         <div>
@@ -102,7 +102,7 @@ const Header = () => {
       </div>
       <ul
         ref={listRef}
-        className={` text-primary absolute z-20 mr-5 flex flex-col justify-around gap-2 rounded-md transition-all duration-500 ease-in-out md:static md:flex-1 md:flex-row md:justify-end md:gap-2 md:p-2 ${
+        className={`text-emphasis absolute z-20 mr-5 flex flex-col justify-around gap-2 rounded-md transition-all duration-500 ease-in-out md:static md:flex-1 md:flex-row md:justify-end md:gap-2 md:p-2 ${
           open ? " border-r-accent right-0 top-24 border bg-white" : "right-[-500px] top-20"
         }`}>
         {/* combine map function with ternary operator */}
@@ -111,7 +111,7 @@ const Header = () => {
             <li key={link.link} className="">
               <div className="">
                 <a
-                  className="hover:bg-primary box-border block flex-auto px-8 py-3 text-center transition duration-300 ease-in-out hover:cursor-pointer md:p-2 md:px-2 md:py-2 "
+                  className="hover:bg-muted box-border block flex-auto rounded px-8 py-3 text-center transition duration-300 ease-in-out hover:cursor-pointer md:p-2 md:px-2 md:py-2"
                   href={link.link}>
                   {link.name}
                 </a>
@@ -121,7 +121,7 @@ const Header = () => {
             <div className="relative w-full md:max-w-max md:px-5">
               <li
                 key={link.link}
-                className="hover:bg-primary box-border flex flex-col px-8 py-3 text-center transition duration-300 ease-in-out hover:cursor-pointer md:px-5 md:py-2 lg:px-10"
+                className="hover:bg-muted box-border flex flex-col rounded px-8 py-3 text-center transition duration-300 ease-in-out hover:cursor-pointer md:px-5 md:py-2 lg:px-10"
                 onClick={() => {
                   setDropdown(!dropdown);
                 }}>
@@ -135,21 +135,21 @@ const Header = () => {
                 <ul className=" border-primary w-full rounded-md bg-white py-2 text-sm md:border">
                   <li>
                     <a
-                      className=" text-primary md:hover:text-accent hover:bg-primary md:hover:bg-bg-secondary block  py-2 pl-5 text-sm hover:cursor-pointer md:px-5 "
+                      className=" text-emphasis md:hover:text-accent hover:bg-muted md:hover:bg-subtle block  py-2 pl-5 text-sm hover:cursor-pointer md:px-5 "
                       href="#">
                       Tìm vé
                     </a>
                   </li>
                   <li>
                     <a
-                      className="text-primary md:hover:text-accent hover:bg-primary  md:hover:bg-bg-secondary block py-2 pl-5 text-sm hover:cursor-pointer md:px-5"
+                      className="text-emphasis md:hover:text-accent hover:bg-muted  md:hover:bg-subtle block py-2 pl-5 text-sm hover:cursor-pointer md:px-5"
                       href="#">
                       Trả vé
                     </a>
                   </li>
                   <li>
                     <a
-                      className="text-primary md:hover:text-accent hover:bg-primary  md:hover:bg-bg-secondary block py-2 pl-5 text-sm hover:cursor-pointer md:px-5"
+                      className="text-emphasis md:hover:text-accent hover:bg-muted  md:hover:bg-subtle block py-2 pl-5 text-sm hover:cursor-pointer md:px-5"
                       href="#">
                       Kiểm tra vé
                     </a>

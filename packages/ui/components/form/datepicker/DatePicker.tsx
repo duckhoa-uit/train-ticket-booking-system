@@ -6,6 +6,7 @@ import "react-date-picker/dist/DatePicker.css";
 import { cn } from "@ttbs/lib/cn";
 
 import { Calendar } from "../../icons";
+import "./DatePicker.css";
 
 type Props = {
   date: Date;
@@ -22,11 +23,8 @@ type Value = ValuePiece | [ValuePiece, ValuePiece];
 const DatePicker = ({ minDate, disabled, date, onDatesChange, className }: Props) => {
   return (
     <PrimitiveDatePicker
-      className={cn(
-        "focus:ring-primary-500 focus:border-primary-500 border-default rounded-md border p-1 pl-2 shadow-sm sm:text-sm",
-        className
-      )}
-      calendarClassName="rounded-md dark:text-black bg-primary"
+      className={cn("focus:ring-primary-500 h-9 sm:text-sm", className)}
+      calendarClassName="border rounded-md dark:text-black bg-primary border-default hover:border-emphasis"
       clearIcon={null}
       calendarIcon={<Calendar className="text-subtle h-5 w-5 rounded-md" />}
       value={date}

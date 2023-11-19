@@ -2,7 +2,7 @@ import type { FC } from "react";
 import React from "react";
 
 // import type { DropdownInputProps } from ".";
-import { provinces } from "./SearchSection/provinces";
+import { provinces } from "@ttbs/lib/constants";
 
 interface DropdownInputProps {
   dropdown: boolean;

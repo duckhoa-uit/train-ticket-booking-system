@@ -1,4 +1,7 @@
+/* eslint-disable no-restricted-imports */
 // eslint-disable-next-line no-restricted-imports
+"use client";
+
 import { noop } from "lodash";
 import { useRouter, useSearchParams } from "next/navigation";
 import type { Dispatch, SetStateAction } from "react";
@@ -7,6 +10,12 @@ import { useEffect, useState } from "react";
 import { cn } from "@ttbs/lib/cn";
 
 import { Button, Steps } from "../../..";
+
+/* eslint-disable no-restricted-imports */
+// eslint-disable-next-line no-restricted-imports
+
+/* eslint-disable no-restricted-imports */
+// eslint-disable-next-line no-restricted-imports
 
 type DefaultStep = {
   title: string;

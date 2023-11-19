@@ -110,7 +110,6 @@ module.exports = {
         "booker-width": "var(--ttbs-border-booker-width, 1px)",
       },
       fontFamily: {
-        cal: ["var(--font-cal)", ...fontFamily.serif],
         sans: ["var(--font-inter)", ...fontFamily.sans],
         mono: ["Roboto Mono", "monospace"],
       },

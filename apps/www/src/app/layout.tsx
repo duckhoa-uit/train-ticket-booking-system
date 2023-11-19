@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
-import { LangProvider } from "@ttbs/i18n";
+import { TailwindIndicator } from "@ttbs/ui";
 
 import Footer from "./Components/Footer/Footer";
 import Header from "./Components/Header";
@@ -17,12 +17,13 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} min-w-[320px]] overflow-x-hidden`}>
-        <LangProvider lang="en">
-          <Header />
-          {children}
-          <Footer />
-        </LangProvider>
+      <body className={`${inter.className} overflow-x-hidden`}>
+        {/* <LangProvider lang="en"> */}
+        <Header />
+        {children}
+        <Footer />
+        {/* </LangProvider> */}
+        <TailwindIndicator />
       </body>
     </html>
   );

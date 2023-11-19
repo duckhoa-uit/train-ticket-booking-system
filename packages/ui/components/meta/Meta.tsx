@@ -1,8 +1,10 @@
-import Head from 'next/head';
-import { createContext, useContext, useState, useEffect } from 'react';
-import type { ReactNode } from 'react';
+"use client";
 
-import { APP_NAME } from '@ttbs/lib/constants';
+import Head from "next/head";
+import { createContext, useContext, useState, useEffect } from "react";
+import type { ReactNode } from "react";
+
+import { APP_NAME } from "@ttbs/lib/constants";
 
 type MetaType = {
   title: string;
@@ -13,8 +15,8 @@ type MetaType = {
 };
 
 const initialMeta: MetaType = {
-  title: '',
-  description: '',
+  title: "",
+  description: "",
   backButton: false,
   CTA: null,
   borderInShellHeader: true,
@@ -46,13 +48,7 @@ export function MetaProvider({ children }: { children: ReactNode }) {
  * elsewhere (ie. on a Heading, Title, Subtitle, etc.)
  * @example <Meta title="Password" description="Manage settings for your account passwords" />
  */
-export default function Meta({
-  title,
-  description,
-  backButton,
-  CTA,
-  borderInShellHeader,
-}: MetaType) {
+export default function Meta({ title, description, backButton, CTA, borderInShellHeader }: MetaType) {
   const { setMeta, meta } = useMeta();
 
   /* @TODO: maybe find a way to have this data on first render to prevent flicker */

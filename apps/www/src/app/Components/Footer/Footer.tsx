@@ -6,8 +6,9 @@ import { about, support } from "./item";
 const Footer = () => {
   const aboutArray = about.links;
   const supportArray = support.links;
+
   return (
-    <section className="bg-secondary text-secondary h-auto p-5">
+    <section className="h-auto bg-[#174576] p-5 text-[#F8F9FA]">
       <div className="mx-auto max-w-7xl">
         <div className="mx-auto text-center lg:flex lg:justify-between">
           <div className="md:flex md:justify-around" id="footer__left-section">

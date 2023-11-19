@@ -19,7 +19,7 @@
     "lint": "turbo run lint",
     "postinstall": "husky install && turbo run post-install",
     "pre-commit": "lint-staged",
-    "preinstall": "npx only-allow pnpm",
+    "preinstall": "npx only-allow pnpm && turbo run pre-install",
     "prepare": "husky install",
     "prisma": "pnpm workspace @ttbs/prisma prisma",
     "type-check": "turbo run type-check",

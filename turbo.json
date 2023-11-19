@@ -21,9 +21,9 @@
       "cache": false,
       "dependsOn": ["@ttbs/env#build", "@ttbs/lib#build", "@ttbs/prisma#dx"]
     },
-    "@ttbs/web#dev": {
+    "@ttbs/www#dev": {
       "cache": false,
-      "dependsOn": ["@ttbs/env#build", "@ttbs/lib#build", "@ttbs/prisma#dx"]
+      "dependsOn": ["@ttbs/env#build", "@ttbs/lib#build"]
     },
     "@ttbs/dashboard#dev": {
       "cache": false,
@@ -82,6 +82,9 @@
     "type-check:ci": {
       "cache": false
     },
+    "pre-install": {
+      "dependsOn": []
+    },
     "post-install": {
       "dependsOn": [],
       "outputs": ["../../node_modules/@prisma/client/**"],
@@ -92,7 +95,7 @@
     },
     "deploy": {
       "cache": false,
-      "dependsOn": ["@ttbs/web#build", "@ttbs/dashboard#build", "@ttbs/api#build"]
+      "dependsOn": ["@ttbs/www#build", "@ttbs/dashboard#build", "@ttbs/api#build"]
     },
     "@ttbs/api#start": {
       "cache": false,
