@@ -3,8 +3,8 @@ import { Inter } from "next/font/google";
 
 import { TailwindIndicator } from "@ttbs/ui";
 
-import Footer from "./Components/Footer/Footer";
-import Header from "./Components/Header";
+import Footer from "./components/footer/footer";
+import Header from "./components/header";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });

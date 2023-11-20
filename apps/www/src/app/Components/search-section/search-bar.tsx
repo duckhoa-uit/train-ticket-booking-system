@@ -26,6 +26,7 @@ const SearchBar = () => {
             <Label>Nơi khởi hành</Label>
             <Select
               isSearchable
+              //nên có biến options -> sẽ usable hơn
               options={provinceOpts}
               className="block h-[36px] !w-auto min-w-0 flex-none rounded-md text-sm"
               onChange={(event) => {
@@ -40,6 +41,7 @@ const SearchBar = () => {
               options={provinceOpts}
               className="block h-[36px] !w-auto min-w-0 flex-none rounded-md text-sm"
               onChange={(event) => {
+                //có value thì
                 setArrivalPlace(event?.value ?? "");
               }}
             />
