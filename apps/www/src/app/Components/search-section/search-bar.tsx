@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import React, { useState } from "react";
 
 import { cn } from "@ttbs/lib/cn";
@@ -7,7 +8,11 @@ import { Button, DatePicker, Label, Select } from "@ttbs/ui";
 
 import { provinceOpts } from "./provinces";
 
-const SearchBar = () => {
+type Props = {
+  className: string;
+};
+
+const SearchBar = (Props: Props) => {
   const current = new Date("2022-03-25");
   const [departPlace, setDepartPlace] = useState("");
   console.log("🚀 ~ file: SearchBar.tsx:13 ~ SearchBar ~ departPlace:", departPlace);
@@ -18,7 +23,8 @@ const SearchBar = () => {
     <div
       className={cn(
         "relative h-3/5 w-full p-5 lg:w-4/5",
-        "bg-default dark:bg-muted border-subtle rounded-md border px-4 py-10 sm:px-10"
+        "bg-default dark:bg-muted border-subtle rounded-md border px-4 py-10 sm:px-10",
+        Props.className
       )}>
       <form className="flex w-full flex-col items-center lg:flex-row lg:items-end">
         <div className="text-emphasis flex w-full flex-col items-center gap-2 p-2 md:flex-row lg:w-4/5 lg:grow">
@@ -26,7 +32,7 @@ const SearchBar = () => {
             <Label>Nơi khởi hành</Label>
             <Select
               isSearchable
-              //nên có biến options -> sẽ usable hơn
+              //nên có biến options -> sẽ reusable hơn
               options={provinceOpts}
               className="block h-[36px] !w-auto min-w-0 flex-none rounded-md text-sm"
               onChange={(event) => {
@@ -54,7 +60,19 @@ const SearchBar = () => {
           </div>
         </div>
         <div className="w-full p-2 lg:w-auto">
-          <Button className="w-full justify-center">Tìm kiếm</Button>
+          <Button className="w-full justify-center">
+            <Link
+              href={{
+                pathname: "/search-result",
+                query: {
+                  "depart-station": departPlace,
+                  "arrival-station": arrivalPlace,
+                  date: current.toISOString(),
+                },
+              }}>
+              Tìm kiếm
+            </Link>
+          </Button>
         </div>
       </form>
     </div>
