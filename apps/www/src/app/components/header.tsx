@@ -105,7 +105,8 @@ const Header = () => {
           <ul
             className={cn(
               `text-emphasis static z-20 mr-5 hidden flex-1 flex-row justify-end gap-2 rounded-md p-2 transition-all duration-500 ease-in-out md:flex `
-            )}>
+            )}
+          >
             <Navigation />
           </ul>
         )}
@@ -179,7 +180,8 @@ const ListItem = React.forwardRef<React.ElementRef<"a">, React.ComponentPropsWit
               "hover:bg-muted hover:text-muted-foreground focus:bg-muted focus:text-muted-foreground block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors",
               className
             )}
-            {...props}>
+            {...props}
+          >
             <div className="text-sm font-medium leading-none">{title}</div>
             <p className="text-muted-foreground line-clamp-2 text-sm leading-snug">{children}</p>
           </a>

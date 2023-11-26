@@ -18,7 +18,8 @@ const BurgerMenu: React.FC<Props> = (props) => {
     <button
       id={`${props.id}`}
       onClick={() => handleClickIcon(props)}
-      className={`${props.className} burger-menu border-button-color rounded-md bg-transparent`}>
+      className={`${props.className} burger-menu border-button-color rounded-md bg-transparent`}
+    >
       <svg id="btn-menu--2" className="z-100 w-full" viewBox="0 0 100 100">
         <rect
           className={`top line ${props.openState ? " activeIcon topRotate" : ""} `}

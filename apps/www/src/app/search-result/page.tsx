@@ -108,7 +108,8 @@ const SearchPage = () => {
                     className={`border-default hover:bg-w mb-2 flex h-max flex-col border bg-white text-black md:text-xs ${
                       activeButton === item.value && "border-attention border-2"
                     }`}
-                    onClick={() => handleClickFilter(item.value)}>
+                    onClick={() => handleClickFilter(item.value)}
+                  >
                     <p>{item.name}</p>
                     <p>{item.value}</p>
                   </Button>

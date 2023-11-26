@@ -17,7 +17,8 @@ const InputDropDown: FC<DropdownInputProps> = (prop) => {
         className={` border-primary  border-1 absolute inset-0 z-10 mx-auto mt-1
              h-60 w-full overflow-y-auto rounded-lg border-solid bg-white px-1 py-2 transition-all duration-100 ${
                prop.dropdown ? "block" : "hidden"
-             }`}>
+             }`}
+      >
         {provinces.map((item) => {
           return (
             <li
@@ -25,7 +26,8 @@ const InputDropDown: FC<DropdownInputProps> = (prop) => {
               key={item.code}
               onClick={() => {
                 prop.handleClick(item.name, prop.type);
-              }}>
+              }}
+            >
               {item.name}
             </li>
           );

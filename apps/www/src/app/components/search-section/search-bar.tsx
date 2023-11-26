@@ -25,7 +25,8 @@ const SearchBar = (Props: Props) => {
         "relative h-3/5 w-full p-5 lg:w-4/5",
         "bg-default dark:bg-muted border-subtle rounded-md border px-4 py-10 sm:px-10",
         Props.className
-      )}>
+      )}
+    >
       <form className="flex w-full flex-col items-center lg:flex-row lg:items-end">
         <div className="text-emphasis flex w-full flex-col items-center gap-2 p-2 md:flex-row lg:w-4/5 lg:grow">
           <div className="w-full lg:flex-1">
@@ -69,7 +70,8 @@ const SearchBar = (Props: Props) => {
                   "arrival-station": arrivalPlace,
                   date: current.toISOString(),
                 },
-              }}>
+              }}
+            >
               Tìm kiếm
             </Link>
           </Button>

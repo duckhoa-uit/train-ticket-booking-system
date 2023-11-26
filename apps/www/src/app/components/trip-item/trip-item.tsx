@@ -19,7 +19,8 @@ export const TripItem = ({ className }: Props) => {
           "border-emphasis bg-default hidden w-full rounded-md border p-10 md:flex md:items-center md:justify-between",
           "hover:bg-muted hover:cursor-pointer hover:shadow-sm",
           className
-        )}>
+        )}
+      >
         <div className="text-sm md:text-xl">
           <p>SE8</p>
         </div>
@@ -46,7 +47,8 @@ export const TripItem = ({ className }: Props) => {
         className={cn(
           "border-emphasis bg-default w-full rounded-md border p-4 md:hidden",
           "hover:bg-muted hover:shadow-sm"
-        )}>
+        )}
+      >
         <Card
           containerProps={{ className: `text-black` }}
           title="SE8 | Sài Gòn -> Sài Gòn"
