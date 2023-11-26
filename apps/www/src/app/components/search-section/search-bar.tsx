@@ -10,10 +10,14 @@ import { provinceOpts } from "./provinces";
 
 type Props = {
   className?: string;
+  departPlace?: string;
+  arrivalPlace?: string;
+  departDate?: string;
 };
 
 const SearchBar = (Props: Props) => {
-  const current = new Date("2022-03-25");
+  const current = new Date(Date.now());
+  // const [departDate, setDepartDate] = useState(current);
   const [departPlace, setDepartPlace] = useState("");
   // console.log("🚀 ~ file: SearchBar.tsx:13 ~ SearchBar ~ departPlace:", departPlace);
   const [arrivalPlace, setArrivalPlace] = useState("");
@@ -39,6 +43,10 @@ const SearchBar = (Props: Props) => {
               onChange={(event) => {
                 setDepartPlace(event?.value ?? "");
               }}
+              defaultValue={{
+                label: Props.departPlace ?? "",
+                value: Props.departPlace ?? "",
+              }}
             />
           </div>
           <div className="w-full lg:flex-1">
@@ -51,13 +59,23 @@ const SearchBar = (Props: Props) => {
                 //có value thì
                 setArrivalPlace(event?.value ?? "");
               }}
+              defaultValue={{
+                label: Props.arrivalPlace ?? "",
+                value: Props.arrivalPlace ?? "",
+              }}
             />
           </div>
           <div className="w-full lg:flex-1">
             <Label htmlFor="arrival" className="self-start">
               Ngày khởi hành
             </Label>
-            <DatePicker className="w-full font-normal outline-none" date={current} />
+            <DatePicker
+              className="w-full font-normal outline-none"
+              date={current}
+              onDatesChange={() => {
+                // setDepartDate(date ?? )
+              }}
+            />
           </div>
         </div>
         <div className="w-full p-2 lg:w-auto">
