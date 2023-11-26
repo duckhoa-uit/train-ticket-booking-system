@@ -120,7 +120,7 @@ export const AUTH_OPTIONS: AuthOptions = {
   pages: {
     signIn: "/auth/login",
     signOut: "/auth/logout",
-    error: "/auth/errorne", // Error code passed in query string as ?error=
+    error: "/auth/error", // Error code passed in query string as ?error=
     verifyRequest: "/auth/verify",
   },
 };
