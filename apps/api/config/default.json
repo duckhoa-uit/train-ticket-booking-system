@@ -2,6 +2,10 @@
   "redisCacheExpiresIn": 60,
   "auth": {
     "refreshTokenExpiresIn": 43200,
-    "accessTokenExpiresIn": 10080
+    "accessTokenExpiresIn": 10
+  },
+  "email": {
+    "fromSupport": "Train Ticket Booking <hi@duckhoa.dev>",
+    "templatePath": "./src/templates/emails/"
   }
 }

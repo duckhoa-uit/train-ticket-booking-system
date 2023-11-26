@@ -2,11 +2,12 @@ import { NextFunction, Request, Response } from "express";
 
 import { AuthorizedRequest } from "@/middleware";
 import {
-  TokenParamsInput,
+  ResetPasswordQueryParams,
   UserForgotPasswordInput,
   UserGetAllQuery,
   UserIdParamsInput,
   UserResetPasswordInput,
+  forgotPasswordSchema,
 } from "@/schemas/user.schema";
 import * as UserService from "@/services/user.service";
 import { findUniqueUser, resetPassword, sendForgotPasswordEmail } from "@/services/user.service";
@@ -22,29 +23,43 @@ export const updateUserHandler = async (req: Request, res: Response) => {
 export const getMeHandler = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const user = (req as AuthorizedRequest).user;
-    const userManagerAndStaff = await UserService.getMe(user.id);
+    const userDb = await UserService.getMe(user.id);
+    console.log("🚀 ~ file: user.controller.ts:29 ~ getMeHandler ~ userDb:", userDb);
 
     res.status(200).json({
       status: "success",
-      data: userManagerAndStaff ? userManagerAndStaff : user,
+      data: userDb ?? user,
     });
   } catch (err) {
     next(err);
   }
 };
 
-export const resetForgotPasswordHandler = async (
-  req: Request<{}, {}, UserResetPasswordInput, TokenParamsInput>,
+export const resetPasswordHandler = async (
+  req: Request<{}, {}, UserResetPasswordInput>,
   res: Response,
   next: NextFunction
 ) => {
   try {
-    const result = await resetPassword(req.query.token, req.body.password);
+    const { requestId, password } = req.body;
 
-    res.status(200).json({
-      status: "success",
-      data: result,
-    });
+    await resetPassword(requestId, password);
+    await UserService.expireResetPasswordRequest(requestId);
+
+    res.status(201).json({ status: "success", data: "Password reset." });
+  } catch (err) {
+    next(err);
+  }
+};
+export const checkResetPasswordHandler = async (
+  req: Request<{}, {}, {}, ResetPasswordQueryParams>,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const valid = await UserService.checkResetPasswordRequest(req.query.requestId);
+
+    res.status(201).json({ status: "success", data: !!valid });
   } catch (err) {
     next(err);
   }
@@ -55,20 +70,20 @@ export const forgotPasswordHandler = async (
   res: Response,
   next: NextFunction
 ) => {
+  const {
+    body: { email },
+  } = forgotPasswordSchema.parse(req);
+
   try {
     const user = await findUniqueUser({
-      // TODO: update this after init schema
-      // emails: {
-      //   some: {
-      //     address: req.body.email,
-      //   },
-      // },
+      email,
     });
+
     if (!user) {
-      return next(new AppError(400, `User with email ${req.body.email} not found`));
+      return next(new AppError(400, `User with email ${email} not found`));
     }
 
-    sendForgotPasswordEmail(user, req.body.email);
+    await sendForgotPasswordEmail(user);
 
     res.status(200).json({
       status: "success",

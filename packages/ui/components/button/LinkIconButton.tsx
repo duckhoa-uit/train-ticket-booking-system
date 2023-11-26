@@ -1,9 +1,9 @@
-import React from 'react';
+import React from "react";
 
-import type { SVGComponent } from '@ttbs/types/SVGComponent';
+import type { SVGComponent } from "@ttbs/types/SVGComponent";
 
 interface LinkIconButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  Icon: SVGComponent;
+  Icon: SVGComponent | React.ElementType;
 }
 
 export default function LinkIconButton(props: LinkIconButtonProps) {

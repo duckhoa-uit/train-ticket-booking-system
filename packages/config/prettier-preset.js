@@ -4,7 +4,7 @@ module.exports = {
    * @see https://github.com/tailwindlabs/prettier-plugin-tailwindcss/issues/176#issuecomment-1621926950
    */
   bracketSpacing: true,
-  bracketSameLine: true,
+  bracketSameLine: false,
   singleQuote: false,
   jsxSingleQuote: false,
   trailingComma: "es5",

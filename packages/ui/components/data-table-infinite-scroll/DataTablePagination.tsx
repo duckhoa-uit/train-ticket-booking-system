@@ -24,7 +24,8 @@ export function DataTablePagination<TData>({ table }: DataTablePaginationProps<T
             variant="icon"
             StartIcon={ChevronsLeft}
             className="hidden h-8 w-8 p-0 lg:flex"
-            onClick={() => table.setPageIndex(0)}>
+            onClick={() => table.setPageIndex(0)}
+          >
             <span className="sr-only">Go to first page</span>
           </Button>
           <Button
@@ -33,7 +34,8 @@ export function DataTablePagination<TData>({ table }: DataTablePaginationProps<T
             className="h-8 w-8 p-0"
             onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}
-            StartIcon={ChevronLeft}>
+            StartIcon={ChevronLeft}
+          >
             <span className="sr-only">Go to previous page</span>
           </Button>
           <Button
@@ -42,7 +44,8 @@ export function DataTablePagination<TData>({ table }: DataTablePaginationProps<T
             StartIcon={ChevronRight}
             className="h-8 w-8 p-0"
             disabled={!table.getCanNextPage()}
-            onClick={() => table.nextPage()}>
+            onClick={() => table.nextPage()}
+          >
             <span className="sr-only">Go to next page</span>
           </Button>
           <Button
@@ -50,7 +53,8 @@ export function DataTablePagination<TData>({ table }: DataTablePaginationProps<T
             variant="icon"
             className="hidden h-8 w-8 p-0 lg:flex"
             StartIcon={ChevronsRight}
-            onClick={() => table.setPageIndex(table.getPageCount())}>
+            onClick={() => table.setPageIndex(table.getPageCount())}
+          >
             <span className="sr-only">Go to last page</span>
           </Button>
         </div>

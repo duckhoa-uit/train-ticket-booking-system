@@ -25,3 +25,4 @@ export { provinces } from "./provinces";
 export type { Province } from "./provinces";
 
 export { CONVERT_PARAMS_TO_VN } from "./provinces";
+export { ErrorCode } from "./error-code";

@@ -1,31 +1,31 @@
-import multer from 'multer'
+import multer from "multer";
 
-// import { STORAGE_PATH } from './file'
+import { STORAGE_PATH } from "./file";
 
 export const MIME_TYPE_MAP = {
-  'image/png': 'png',
-  'image/jpeg': 'jpeg',
-  'image/jpg': 'jpg',
-  'image/webp': 'webp',
-  'application/pdf': 'pdf',
-}
-const acceptedExt = Object.values(MIME_TYPE_MAP)
-export type MimeKey = keyof typeof MIME_TYPE_MAP
+  "image/png": "png",
+  "image/jpeg": "jpeg",
+  "image/jpg": "jpg",
+  "image/webp": "webp",
+  "application/pdf": "pdf",
+};
+const acceptedExt = Object.values(MIME_TYPE_MAP);
+export type MimeKey = keyof typeof MIME_TYPE_MAP;
 
 // Multer config
 const upload = multer({
   storage: multer.diskStorage({
-    destination: 'STORAGE_PATH',
+    destination: STORAGE_PATH,
     filename(req, file, cb) {
-      const timeStamp = Date.now()
+      const timeStamp = Date.now();
       cb(
         null,
-        file.originalname.toLowerCase().split(' ').join('-') +
-          '-' +
+        file.originalname.toLowerCase().split(" ").join("-") +
+          "-" +
           timeStamp +
-          '.' +
-          file.originalname.split('.')[file.originalname.split('.').length - 1]
-      )
+          "." +
+          file.originalname.split(".")[file.originalname.split(".").length - 1]
+      );
     },
   }),
   // storage: multerS3({
@@ -46,18 +46,18 @@ const upload = multer({
   //   },
   // }),
   fileFilter: (req, file, cb) => {
-    const extension = MIME_TYPE_MAP[file.mimetype as MimeKey]
+    const extension = MIME_TYPE_MAP[file.mimetype as MimeKey];
 
     if (!acceptedExt.includes(extension)) {
-      cb(new Error('File type is not supported'))
-      return
+      cb(new Error("File type is not supported"));
+      return;
     }
 
     if (file.size > 20971520) {
-      cb(new Error('Please upload file with size equal or less than 20MB'))
+      cb(new Error("Please upload file with size equal or less than 20MB"));
     }
 
-    cb(null, true)
+    cb(null, true);
   },
-})
-export default upload
+});
+export default upload;

@@ -13,6 +13,7 @@ export async function post<T = any>(
   try {
     const { headers: optionHeaders, abortSignal, ...otherOptions } = options ?? {};
     const headers = await constructHeaders(requestId, optionHeaders);
+
     const response = await fetch(url, {
       method: "POST",
       body: JSON.stringify(data),
