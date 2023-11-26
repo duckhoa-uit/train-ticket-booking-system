@@ -10,8 +10,7 @@ type Props = {
 
 export const TripItem = ({ className }: Props) => {
   const des = `
-    <p>Hi</p>
-    <p>Hi</p>
+    Thời gian đi: 16:30 p.m | 22/10 
   `;
   return (
     <div className={cn("w-full", className)}>

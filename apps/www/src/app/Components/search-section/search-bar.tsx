@@ -9,15 +9,15 @@ import { Button, DatePicker, Label, Select } from "@ttbs/ui";
 import { provinceOpts } from "./provinces";
 
 type Props = {
-  className: string;
+  className?: string;
 };
 
 const SearchBar = (Props: Props) => {
   const current = new Date("2022-03-25");
   const [departPlace, setDepartPlace] = useState("");
-  console.log("🚀 ~ file: SearchBar.tsx:13 ~ SearchBar ~ departPlace:", departPlace);
+  // console.log("🚀 ~ file: SearchBar.tsx:13 ~ SearchBar ~ departPlace:", departPlace);
   const [arrivalPlace, setArrivalPlace] = useState("");
-  console.log("🚀 ~ file: SearchBar.tsx:15 ~ SearchBar ~ arrivalPlace:", arrivalPlace);
+  // console.log("🚀 ~ file: SearchBar.tsx:15 ~ SearchBar ~ arrivalPlace:", arrivalPlace);
 
   return (
     <div
