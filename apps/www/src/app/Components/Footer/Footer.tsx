@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React from "react";
 
-import { about, support } from "./item";
+import { about, support } from "./links";
 
 const Footer = () => {
   const aboutArray = about.links;

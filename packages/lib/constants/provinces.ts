@@ -6225,3 +6225,14 @@ export type Province<CodeName = Provinces[number]["codename"]> = {
 //   provinceCodename: T
 //   name: (typeof provincesMappedObj)[T]
 // }
+
+export function CONVERT_PARAMS_TO_VN(province: string | null): string {
+  // if (province === null) return "fail";
+  let req = "";
+  provinces.map((i) => {
+    if (province?.trim() === i.codename) {
+      req = i.name.trim();
+    }
+  });
+  return req;
+}

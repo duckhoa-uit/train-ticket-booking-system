@@ -23,3 +23,5 @@ export const AVATAR_FALLBACK = "/avatar.svg";
 
 export { provinces } from "./provinces";
 export type { Province } from "./provinces";
+
+export { CONVERT_PARAMS_TO_VN } from "./provinces";

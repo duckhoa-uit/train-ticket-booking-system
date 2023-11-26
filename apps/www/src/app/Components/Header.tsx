@@ -78,36 +78,38 @@ const Header = () => {
   }
 
   return (
-    <header className="text-subtle relative m-3 flex max-w-7xl flex-col items-center bg-white capitalize md:mx-auto md:flex-row md:justify-around md:align-middle md:text-sm">
-      <div className=" flex w-full items-center justify-between gap-3 px-2 md:w-auto">
-        <a href="#">
-          <Image src="/logoipsum.svg" width={200} height={40} alt="logoipsum" />
-        </a>
-        <div>
-          <BurgerMenu
-            className="z-10 box-border flex w-10 rounded hover:cursor-pointer md:hidden md:w-12"
-            handleClick={handleClickMenuIcon}
-            id="btn-menu"
-            openState={openMobileMenu}
-          />
+    <header className="bg-white">
+      <div className="text-subtle relative flex max-w-7xl flex-col items-center p-3 capitalize md:mx-auto md:flex-row md:justify-around md:align-middle md:text-sm">
+        <div className=" flex w-full items-center justify-between gap-3 px-2 md:w-auto">
+          <a href="#">
+            <Image src="/logoipsum.svg" width={200} height={40} alt="logoipsum" />
+          </a>
+          <div>
+            <BurgerMenu
+              className="z-10 box-border flex w-10 rounded hover:cursor-pointer md:hidden md:w-12"
+              handleClick={handleClickMenuIcon}
+              id="btn-menu"
+              openState={openMobileMenu}
+            />
+          </div>
         </div>
+        {isMobileOrTablet ? (
+          <Sheet open={openMobileMenu} onOpenChange={setOpenMobileMenu}>
+            <SheetContent position="right" size="default" className="w-1/2 min-w-[250px]">
+              <div className="flex w-full flex-col items-center">
+                <Navigation isMobileOrTablet />
+              </div>
+            </SheetContent>
+          </Sheet>
+        ) : (
+          <ul
+            className={cn(
+              `text-emphasis static z-20 mr-5 hidden flex-1 flex-row justify-end gap-2 rounded-md p-2 transition-all duration-500 ease-in-out md:flex `
+            )}>
+            <Navigation />
+          </ul>
+        )}
       </div>
-      {isMobileOrTablet ? (
-        <Sheet open={openMobileMenu} onOpenChange={setOpenMobileMenu}>
-          <SheetContent position="right" size="default" className="w-1/2 min-w-[250px]">
-            <div className="flex w-full flex-col items-center">
-              <Navigation isMobileOrTablet />
-            </div>
-          </SheetContent>
-        </Sheet>
-      ) : (
-        <ul
-          className={cn(
-            `text-emphasis static z-20 mr-5 hidden flex-1 flex-row justify-end gap-2 rounded-md p-2 transition-all duration-500 ease-in-out md:flex `
-          )}>
-          <Navigation />
-        </ul>
-      )}
     </header>
   );
 };

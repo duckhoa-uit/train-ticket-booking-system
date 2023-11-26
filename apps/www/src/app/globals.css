@@ -28,11 +28,12 @@
   --ttbs-border-booker: #e5e7eb;
   --ttbs-border-muted: #f3f4f6;
   --ttbs-border-error: #aa2e26;
+  --ttbs-border-attention: #73321b;
 
   /* Content/Text */
   --ttbs-text-emphasis: #111827;
   --ttbs-text: #374151;
-  --ttbs-text-subtle: #F8F9FA;
+  --ttbs-text-subtle: #f8f9fa;
   --ttbs-text-muted: #9ca3af;
   --ttbs-text-inverted: white;
 
@@ -45,7 +46,7 @@
   /* Brand shinanigans
       -> These will be computed for the users theme at runtime.
     */
-  --ttbs-brand: #B57617;
+  --ttbs-brand: #b57617;
   --ttbs-brand-emphasis: #a26a14;
   --ttbs-brand-text: white;
 }
@@ -96,10 +97,10 @@
 
 @layer base {
   * {
-    @apply border-default
+    @apply border-default;
   }
 }
 
-  .react-date-picker .react-date-picker__wrapper {
-    padding: 0.25rem 0.75rem;
-  }
+.react-date-picker .react-date-picker__wrapper {
+  padding: 0.25rem 0.75rem;
+}

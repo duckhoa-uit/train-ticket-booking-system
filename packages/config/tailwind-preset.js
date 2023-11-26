@@ -62,6 +62,7 @@ module.exports = {
         muted: "var(--ttbs-border-muted, #F3F4F6)",
         booker: `var(--ttbs-border-booker, ${subtleColor})`,
         error: "var(--ttbs-border-error, #AA2E26)",
+        attention: "var(--ttbs-border-attention, #73321B)",
       },
       textColor: {
         emphasis: "var(--ttbs-text-emphasis, #111827)",

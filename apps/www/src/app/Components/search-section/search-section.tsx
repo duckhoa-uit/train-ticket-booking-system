@@ -1,6 +1,6 @@
-import SearchBar from "./SearchBar";
+import SearchBar from "./search-bar";
 
-const SearchSection = () => {
+export const SearchSection = () => {
   return (
     <div className="bg-[url('/img/bg-train.jpg')] bg-cover bg-center bg-no-repeat lg:px-0 lg:py-20">
       <div className="flex h-auto w-full max-w-7xl flex-col items-center justify-center gap-3 p-10 md:mx-auto">
@@ -12,5 +12,3 @@ const SearchSection = () => {
     </div>
   );
 };
-
-export default SearchSection;
