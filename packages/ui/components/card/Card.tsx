@@ -46,7 +46,7 @@ const cvaCardTypeByVariant = cva("", {
     {
       variant: "basic",
       structure: "description",
-      className: "text-sm leading-[18px] text-subtle font-normal",
+      className: "text-sm leading-[18px] text-default font-normal",
     },
 
     // Style for ProfileCard Variant Types

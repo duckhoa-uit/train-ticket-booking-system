@@ -16,12 +16,11 @@ export const TripItem = ({ className }: Props) => {
     <div className={cn("w-full", className)}>
       <div
         className={cn(
-          "border-emphasis bg-default hidden w-full rounded-md border p-10 md:flex md:justify-between",
+          "border-emphasis bg-default hidden w-full rounded-md border p-10 md:flex md:items-center md:justify-between",
           "hover:bg-muted hover:cursor-pointer hover:shadow-sm",
           className
         )}>
-        <div className="text-lg md:text-2xl">
-          <p>Mã tàu</p>
+        <div className="text-sm md:text-xl">
           <p>SE8</p>
         </div>
         <div className="flex items-center justify-around gap-10 text-center">
