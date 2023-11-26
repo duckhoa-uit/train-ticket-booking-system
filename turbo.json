@@ -14,12 +14,13 @@
     "RAILWAY_STATIC_URL",
     "HEROKU_APP_NAME",
     "RENDER_EXTERNAL_URL",
-    "NEXT_PUBLIC_WEBAPP_URL"
+    "NEXT_PUBLIC_WEBAPP_URL",
+    "NEXT_PUBLIC_API_BASE_URI"
   ],
   "pipeline": {
     "@ttbs/api#dev": {
       "cache": false,
-      "dependsOn": ["@ttbs/env#build", "@ttbs/lib#build", "@ttbs/prisma#dx"]
+      "dependsOn": ["@ttbs/env#build", "@ttbs/lib#build"]
     },
     "@ttbs/www#dev": {
       "cache": false,
@@ -39,7 +40,7 @@
     },
     "@ttbs/prisma#db-migrate": {
       "cache": false,
-      "dependsOn": ["@ttbs/prisma#db-up"],
+      "dependsOn": [],
       "inputs": ["./schema.prisma", "./migrations/**/*.sql"]
     },
     "@ttbs/prisma#db-up": {

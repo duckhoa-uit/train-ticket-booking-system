@@ -50,6 +50,18 @@ model User {
   @@map("users")
 }
 
+model Route {
+  id             String   @id @default(cuid())
+  createdAt      DateTime @default(now())
+  depart_station String?
+  arrive_station String?
+  depart_time    String?
+  arrive_time    String?
+  depart_day     String?
+
+  @@map("routes")
+}
+
 model Station {
   id          Int     @id @default(autoincrement())
   code        String  @unique
