@@ -10,6 +10,15 @@ async function main() {
       name: "delete-me",
     },
   });
+  await createUser({
+    user: {
+      email: "admin@example.com",
+      password: "Admin@123",
+      username: "admin",
+      name: "Admin Example",
+      role: "ADMIN",
+    },
+  });
 }
 
 main()

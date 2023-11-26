@@ -14,11 +14,9 @@ import { Button, ButtonOrLink, Credits, SkeletonText, Tooltip } from "@ttbs/ui";
 import {
   ArrowLeft,
   ArrowRight,
-  BarChart,
   MoreHorizontal,
   Settings,
   Train,
-  MapPin,
   CalendarDays,
 } from "@ttbs/ui/components/icons";
 
@@ -106,34 +104,27 @@ const MORE_SEPARATOR_NAME = "more";
 
 const navigation: NavigationItemType[] = [
   {
-    name: "stations_page_title",
-    href: "/stations",
-    icon: MapPin,
-  },
-  {
     name: "journeys_page_title",
     href: "/journeys",
     icon: CalendarDays,
-    isCurrent: ({ pathname: path, item }) => {
-      // During Server rendering path is /v2/apps but on client it becomes /apps(weird..)
-      return path?.startsWith(item.href) && !path?.includes("routing-forms/");
+    isCurrent: ({ item }) => {
+      return item.href.startsWith("/journeys") || item.href.startsWith("/stations");
     },
     child: [
+      {
+        name: "stations_page_title",
+        href: "/stations",
+        // icon: MapPin,
+        isCurrent: ({ pathname: path, item }) => {
+          return path?.includes(item.href);
+        },
+      },
       {
         name: "journeys_page_title",
         href: "/journeys",
         isCurrent: ({ pathname: path, item }) => {
-          // During Server rendering path is /v2/apps but on client it becomes /apps(weird..)
-          return (
-            path?.startsWith(item.href) && !path?.includes("routing-forms/") && !path?.includes("/installed")
-          );
+          return path?.includes(item.href);
         },
-      },
-      {
-        name: "installed_apps",
-        href: "/apps/installed/calendar",
-        isCurrent: ({ pathname: path }) =>
-          path?.startsWith("/apps/installed/") || path?.startsWith("/v2/apps/installed/"),
       },
     ],
   },
@@ -141,11 +132,6 @@ const navigation: NavigationItemType[] = [
     name: MORE_SEPARATOR_NAME,
     href: "/more",
     icon: MoreHorizontal,
-  },
-  {
-    name: "insights",
-    href: "/insights",
-    icon: BarChart,
   },
 ];
 

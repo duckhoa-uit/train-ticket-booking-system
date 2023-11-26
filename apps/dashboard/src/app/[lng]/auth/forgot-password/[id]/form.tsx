@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 
+import { env } from "@ttbs/env";
 import { useClientTranslation } from "@ttbs/i18n";
 import { Button, PasswordField, Form } from "@ttbs/ui";
 
@@ -24,7 +25,10 @@ export const ResetPasswordForm = ({
   const isEmpty = passwordValue?.length === 0;
 
   const submitChangePassword = async ({ password, requestId }: { password: string; requestId: string }) => {
-    const res = await post("http://localhost:8081/api/auth/reset-password", { requestId, password });
+    const res = await post(`${env.NEXT_PUBLIC_API_BASE_URI}/api/auth/reset-password`, {
+      requestId,
+      password,
+    });
 
     if (res.error)
       return formMethods.setError("new_password", { type: "server", message: res.error.message });

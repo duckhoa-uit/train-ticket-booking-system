@@ -75,6 +75,8 @@ export async function handleResponseError<T = unknown>(
     return { error } as unknown as ApiResponse<T>;
   } else if (resJson.error && resJson.error.message) {
     return { error: { code: response.status, ...resJson.error } } as unknown as ApiResponse<T>;
+  } else if (resJson.errors) {
+    return { error: { code: response.status, errors: resJson.errors } } as unknown as ApiResponse<T>;
   } else {
     const message = resTxt ?? `An error has occurred: ${response.status}`;
     const error = { code: response.status, message, requestId };

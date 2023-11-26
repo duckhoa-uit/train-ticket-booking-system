@@ -1,9 +1,11 @@
 "use client";
 
 import { useMutation } from "@tanstack/react-query";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
+import { env } from "@ttbs/env";
 import { useClientTranslation } from "@ttbs/i18n";
 import { HttpError } from "@ttbs/lib/http-error";
 import {
@@ -15,18 +17,18 @@ import {
   DialogTrigger,
   Form,
   InputField,
-  TextAreaField,
 } from "@ttbs/ui";
 import { Plus } from "@ttbs/ui/components/icons";
 
 import { post } from "@/lib/common/fetch";
+import type { ResponseError } from "@/types";
 
 type CreateStationFormValues = {
   name: string;
-  code: string;
-  description: string;
 };
-export function NewStationButton({ name = "new-station" }: { name?: string }) {
+export function NewJourneyButton({ name = "new-journey" }: { name?: string }) {
+  const [open, setOpen] = useState(false);
+
   const { t } = useClientTranslation();
 
   const form = useForm<CreateStationFormValues>();
@@ -34,15 +36,34 @@ export function NewStationButton({ name = "new-station" }: { name?: string }) {
 
   const createMutation = useMutation({
     mutationFn: async (values: CreateStationFormValues) => {
-      const res = await post("http://localhost:8081/api/stations", values);
+      const res = await post(`${env.NEXT_PUBLIC_API_BASE_URI}/api/journeys`, {
+        ...values,
+        journeyStations: [],
+      });
 
       if (res.error) {
-        toast.error(res.error.message);
+        const respError = res.error as ResponseError;
+
+        if (Array.isArray(respError.errors)) {
+          respError.errors.forEach((err) => {
+            if (err.path && Array.isArray(err.path) && err.message) {
+              const fieldName = err.path[err.path.length - 1];
+              form.setError(fieldName as keyof CreateStationFormValues, {
+                message: err.message,
+              });
+            }
+          });
+        } else {
+          toast.error(respError.message);
+        }
       } else {
-        toast.success(t("station_created_successfully", { stationName: res.data.name }));
+        setOpen(false);
+
+        toast.success(t("journey_created_successfully", { journeyName: res.data.name }));
       }
     },
     onError(err) {
+      console.log("🚀 ~ file: new-journey-button.tsx:63 ~ onError ~ err:", err);
       if (err instanceof HttpError) {
         const message = `${err.statusCode}: ${err.message}`;
         toast.error(message);
@@ -50,14 +71,19 @@ export function NewStationButton({ name = "new-station" }: { name?: string }) {
     },
   });
 
+  const handleCloseDialog = (open: boolean) => {
+    form.reset();
+    setOpen(open);
+  };
+
   return (
-    <Dialog name={name} clearQueryParamsOnClose={["copy-station-id"]}>
+    <Dialog name={name} open={open} onOpenChange={handleCloseDialog}>
       <DialogTrigger asChild>
         <Button variant="fab" StartIcon={Plus}>
           {t("new")}
         </Button>
       </DialogTrigger>
-      <DialogContent title={t("add_new_station")}>
+      <DialogContent title={t("add_new_journey")}>
         <Form
           form={form}
           handleSubmit={(values) => {
@@ -65,32 +91,17 @@ export function NewStationButton({ name = "new-station" }: { name?: string }) {
           }}
         >
           <InputField
-            label={t("station_code")}
+            label={t("journey_name")}
             type="text"
             id="name"
             required
-            placeholder={t("default_station_code")}
-            {...register("code")}
-          />
-          <InputField
-            label={t("station_name")}
-            type="text"
-            id="name"
-            required
-            placeholder={t("default_station_name")}
+            placeholder={t("default_journey_name")}
             {...register("name")}
-          />
-          <TextAreaField
-            label={t("station_description")}
-            id="description"
-            required
-            placeholder={t("default_station_description")}
-            {...register("description")}
           />
           <DialogFooter>
             <DialogClose />
             <Button type="submit" loading={createMutation.isPending}>
-              {t("submit")}
+              {t("continue")}
             </Button>
           </DialogFooter>
         </Form>

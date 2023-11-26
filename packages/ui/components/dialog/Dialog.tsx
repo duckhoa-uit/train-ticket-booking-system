@@ -38,6 +38,7 @@ export function Dialog(props: DialogProps) {
   const shouldOpenDialog = newSearchParams.get("dialog") === name;
   if (name) {
     const clearQueryParamsOnClose = ["dialog", ...(props.clearQueryParamsOnClose || [])];
+
     dialogProps.onOpenChange = (open) => {
       if (props.onOpenChange) {
         props.onOpenChange(open);
@@ -50,8 +51,9 @@ export function Dialog(props: DialogProps) {
         clearQueryParamsOnClose.forEach((queryParam) => {
           newSearchParams.delete(queryParam);
         });
-        router.push(`${pathname}?${newSearchParams.toString()}`);
       }
+      router.push(`${pathname}?${newSearchParams.toString()}`);
+
       setDialogState(open ? DIALOG_STATE.OPEN : DIALOG_STATE.CLOSING);
     };
 
@@ -103,7 +105,8 @@ export const DialogContent = React.forwardRef<HTMLDivElement, DialogContentProps
             enableOverflow ? "overflow-auto" : "overflow-visible",
             `${props.className || ""}`
           )}
-          ref={forwardedRef}>
+          ref={forwardedRef}
+        >
           {type === "creation" && (
             <div>
               <DialogHeader title={title} subtitle={props.description} />
@@ -145,7 +148,8 @@ export function DialogHeader(props: DialogHeaderProps) {
       <h3
         data-testid="dialog-title"
         className="leading-20 text-semibold font-cal text-emphasis pb-1 text-xl"
-        id="modal-title">
+        id="modal-title"
+      >
         {props.title}
       </h3>
       {props.subtitle && <div className="text-subtle text-sm">{props.subtitle}</div>}
@@ -164,7 +168,8 @@ export function DialogFooter(props: { children: ReactNode; className?: string; s
         className={cn(
           "flex justify-end space-x-2 pb-4 pt-4 rtl:space-x-reverse",
           !props.showDivider && "pb-8"
-        )}>
+        )}
+      >
         {props.children}
       </div>
     </div>

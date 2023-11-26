@@ -43,6 +43,7 @@
   "try_again": "Try Again",
   "new_password": "New Password",
   "stations_page_title": "Stations",
+  "stations_page_subtitle": "View stations in your system",
   "default_station_name": "Ha Noi",
   "default_station_code": "HN",
   "add_new_station": "Add a new station",
@@ -52,6 +53,10 @@
   "default_station_description": "...",
   "station_created_successfully": "{{stationName}} station created successfully",
   "journeys_page_title": "Journeys",
+  "add_new_journey": "Add a new journey",
+  "journey_name": "Name",
+  "default_journey_name": "Enter name...",
+  "journey_created_successfully": "{{journeyName}} journey created successfully",
   "new": "New",
   "submit": "Submit",
   "delete": "Delete",
@@ -59,5 +64,6 @@
   "save": "Save",
   "pending": "Pending",
   "open_options": "Open options",
-  "copy_link": "Copy link to event"
+  "continue": "Continue",
+  "confirm": "Confirm"
 }

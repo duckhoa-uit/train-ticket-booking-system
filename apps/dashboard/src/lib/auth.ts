@@ -5,6 +5,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import type { Provider } from "next-auth/providers/index";
 import { cookies, headers } from "next/headers";
 
+import { env } from "@ttbs/env";
 import { ErrorCode, WEBAPP_URL } from "@ttbs/lib/constants";
 import type { UserRole } from "@ttbs/prisma/enums";
 
@@ -28,7 +29,7 @@ const providers: Provider[] = [
         console.error(`For some reason credentials are missing`);
         throw new Error(ErrorCode.InternalServerError);
       }
-      const response = await post("http://localhost:8081/api/auth/login", credentials);
+      const response = await post(`${env.NEXT_PUBLIC_API_BASE_URI}/api/auth/login`, credentials);
 
       if (response.error) {
         if (response.error.code === 404) throw new Error(ErrorCode.UserNotFound);
@@ -95,7 +96,7 @@ export const AUTH_OPTIONS: AuthOptions = {
     },
     async signIn(params) {
       const { user, account, profile } = params;
-      const response = await post("http://localhost:8081/api/auth/login/callback", {
+      const response = await post(`${env.NEXT_PUBLIC_API_BASE_URI}/api/auth/login/callback`, {
         user,
         account,
         profile,

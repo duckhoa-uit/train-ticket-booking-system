@@ -1,5 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 
+import { Prisma } from "@ttbs/prisma";
+
 import { StationCreateInput, StationIdParamInput, StationUpdateInput } from "@/schemas/station.schema";
 import { createStation, getStations, updateStation } from "@/services/station.service";
 
@@ -12,6 +14,16 @@ export const createStationHandler = async (
     const newStation = await createStation(req.body);
     return res.status(201).json({ status: "success", data: newStation });
   } catch (error) {
+    // Ref: https://www.prisma.io/docs/reference/api-reference/error-reference#error-codes
+    if (error instanceof Prisma.PrismaClientKnownRequestError) {
+      if (error.code === "P2002") {
+        res.status(409).json({
+          status: "fail",
+          message: "Code already exist, please use another",
+        });
+        return;
+      }
+    }
     return next(error);
   }
 };

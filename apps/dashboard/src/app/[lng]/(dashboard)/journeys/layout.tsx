@@ -2,9 +2,9 @@ import { useServerTranslation } from "@ttbs/i18n";
 
 import { ShellMain } from "@/components/layout/common";
 
-import { NewStationButton } from "./_components/new-station-button";
+import { NewJourneyButton } from "./_components/new-journey-button";
 
-export default async function StationsLayout({
+export default async function JourneysLayout({
   children,
   params: { lng },
 }: {
@@ -16,13 +16,7 @@ export default async function StationsLayout({
   const { t } = await useServerTranslation(lng);
 
   return (
-    <ShellMain
-      withoutSeo
-      heading={t("stations_page_title")}
-      hideHeadingOnMobile
-      subtitle={t("stations_page_subtitle")}
-      CTA={<NewStationButton />}
-    >
+    <ShellMain withoutSeo heading={t("journeys_page_title")} hideHeadingOnMobile CTA={<NewJourneyButton />}>
       {children}
     </ShellMain>
   );

@@ -1,7 +1,8 @@
 {
   "extends": "@ttbs/tsconfig/react-library.json",
   "compilerOptions": {
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "downlevelIteration": true
   },
   "include": [
     "../../apps/www/next-env.d.ts",

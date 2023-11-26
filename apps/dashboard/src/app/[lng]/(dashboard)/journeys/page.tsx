@@ -3,20 +3,20 @@
 import { useQuery } from "@tanstack/react-query";
 
 import { env } from "@ttbs/env";
-import type { Station } from "@ttbs/prisma";
+import type { Journey } from "@ttbs/prisma";
 
 import { get } from "@/lib/common/fetch";
 
-import { StationsTable } from "./_components/stations-table";
+import { JourneysTable } from "./_components/journeys-table";
 import { searchParamsSchema } from "./search-params-schema";
 
-interface StationsPageProps {
+interface JourneysPageProps {
   searchParams: {
     [key: string]: string | string[] | undefined;
   };
 }
 
-export default function Stations({ searchParams }: StationsPageProps) {
+export default function Journeys({ searchParams }: JourneysPageProps) {
   const { page, per_page, sort } = searchParamsSchema.parse(searchParams);
 
   // Fallback page for invalid page numbers
@@ -30,20 +30,18 @@ export default function Stations({ searchParams }: StationsPageProps) {
   // Column and order to sort by
   // Spliting the sort string by "." to get the column and order
   // Example: "title.desc" => ["title", "desc"]
-  const [column, order] = (sort?.split(".") as [keyof Station | undefined, "asc" | "desc" | undefined]) ?? [
+  const [column, order] = (sort?.split(".") as [keyof Journey | undefined, "asc" | "desc" | undefined]) ?? [
     "title",
     "desc",
   ];
 
-  // const statuses = (status?.split(".") as Station["status"][]) ?? []
-
-  const stationsQuery = useQuery({
-    queryKey: ["stations", limit, offset, column, order],
+  const journeysQuery = useQuery({
+    queryKey: ["journeys", limit, offset, column, order],
     queryFn: async () => {
-      const res = await get(`${env.NEXT_PUBLIC_API_BASE_URI}/api/stations`);
+      const res = await get(`${env.NEXT_PUBLIC_API_BASE_URI}/api/journeys`);
       return res.data;
     },
   });
 
-  return <StationsTable data={stationsQuery.data ?? []} pageCount={1} />;
+  return <JourneysTable data={journeysQuery.data ?? []} pageCount={1} />;
 }

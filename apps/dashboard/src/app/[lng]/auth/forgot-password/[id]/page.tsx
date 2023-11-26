@@ -1,3 +1,4 @@
+import { env } from "@ttbs/env";
 import { useServerTranslation } from "@ttbs/i18n";
 
 import AuthContainer from "@/components/ui/auth-container";
@@ -14,7 +15,7 @@ export default async function Page({ params: { lng, id: requestId } }: Props) {
   const { t } = await useServerTranslation(lng);
 
   const isRequestExpiredReq = await get(
-    `http://localhost:8081/api/auth/reset-password/check?requestId=${requestId}`
+    `${env.NEXT_PUBLIC_API_BASE_URI}/api/auth/reset-password/check?requestId=${requestId}`
   );
 
   return (

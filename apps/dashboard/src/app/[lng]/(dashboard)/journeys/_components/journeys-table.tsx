@@ -6,40 +6,40 @@ import * as React from "react";
 import { toast } from "sonner";
 
 import { env } from "@ttbs/env";
-import type { Station } from "@ttbs/prisma";
+import type { Journey } from "@ttbs/prisma";
 import {
-  DataTable,
   Button,
-  DataTableColumnHeader,
   Checkbox,
+  DataTable,
+  DataTableColumnHeader,
   Dropdown,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuPortal,
   DropdownMenuShortcut,
   DropdownMenuTrigger,
-  DropdownMenuPortal,
 } from "@ttbs/ui";
 import { MoreHorizontal } from "@ttbs/ui/components/icons";
 
 import { delete_ } from "@/lib/common/fetch";
 
-import { StationsTableFloatingBar } from "./stations-table-floating-bar";
+import { JourneysTableFloatingBar } from "./journeys-table-floating-bar";
 
-interface StationsTableProps {
-  data: Station[];
+interface JourneysTableProps {
+  data: Journey[];
   pageCount: number;
 }
 
-export function StationsTable({ data, pageCount }: StationsTableProps) {
+export function JourneysTable({ data, pageCount }: JourneysTableProps) {
   const [isPending, startTransition] = React.useTransition();
   const [selectedRowIds, setSelectedRowIds] = React.useState<number[]>([]);
 
-  const deleteStationMutation = useMutation({
-    mutationFn: (id: number) => delete_(`${env.NEXT_PUBLIC_API_BASE_URI}/api/stations/${id}`),
+  const deleteJourneyMutation = useMutation({
+    mutationFn: (id: number) => delete_(`${env.NEXT_PUBLIC_API_BASE_URI}/api/journeys/${id}`),
   });
 
   // Memoize the columns so they don't re-render on every render
-  const columns = React.useMemo<ColumnDef<Station, unknown>[]>(
+  const columns = React.useMemo<ColumnDef<Journey, unknown>[]>(
     () => [
       {
         id: "select",
@@ -71,29 +71,9 @@ export function StationsTable({ data, pageCount }: StationsTableProps) {
         enableHiding: false,
       },
       {
-        accessorKey: "code",
-        header: ({ column }) => <DataTableColumnHeader column={column} title="Code" />,
-        cell: ({ row }) => <div className="w-[80px]">{row.getValue("code")}</div>,
-        enableSorting: false,
-        enableHiding: false,
-      },
-      {
         accessorKey: "name",
         header: ({ column }) => <DataTableColumnHeader column={column} title="Name" />,
         cell: ({ row }) => <div className="w-[160px]">{row.getValue("name")}</div>,
-        enableSorting: false,
-        enableHiding: false,
-      },
-      {
-        accessorKey: "description",
-        header: ({ column }) => (
-          <DataTableColumnHeader column={column} title="Description" className="text-left" />
-        ),
-        cell: ({ row }) => (
-          <div className="flex space-x-2">
-            <span className="max-w-[500px] truncate font-medium">{row.getValue("description")}</span>
-          </div>
-        ),
         enableSorting: false,
         enableHiding: false,
       },
@@ -149,11 +129,10 @@ export function StationsTable({ data, pageCount }: StationsTableProps) {
                     startTransition(() => {
                       row.toggleSelected(false);
 
-                      toast.promise(deleteStationMutation.mutateAsync(row.original.id), {
+                      toast.promise(deleteJourneyMutation.mutateAsync(row.original.id), {
                         loading: "Deleting...",
-                        success: () => "Station deleted successfully.",
-                        error: (err: unknown) => {
-                          console.log("🚀 ~ file: stations-table.tsx:128 ~ toast.promise ~ err:", err);
+                        success: () => "Journey deleted successfully.",
+                        error: () => {
                           return "Something has error";
                         },
                       });
@@ -173,14 +152,13 @@ export function StationsTable({ data, pageCount }: StationsTableProps) {
   );
 
   function deleteSelectedRows() {
-    toast.promise(Promise.all(selectedRowIds.map((id) => deleteStationMutation.mutateAsync(id))), {
+    toast.promise(Promise.all(selectedRowIds.map((id) => deleteJourneyMutation.mutateAsync(id))), {
       loading: "Deleting...",
       success: () => {
         setSelectedRowIds([]);
-        return "Stations deleted successfully.";
+        return "Journeys deleted successfully.";
       },
-      error: (err: unknown) => {
-        console.log("🚀 ~ file: stations-table.tsx:151 ~ toast.promise ~ err:", err);
+      error: () => {
         setSelectedRowIds([]);
         return "Something has error.";
       },
@@ -208,17 +186,13 @@ export function StationsTable({ data, pageCount }: StationsTableProps) {
       // Render dynamic searchable filters
       searchableColumns={[
         {
-          id: "code",
-          title: "Code",
-        },
-        {
           id: "name",
           title: "Name",
         },
       ]}
       // Render floating filters at the bottom of the table on column selection
       floatingBar={(table) => (
-        <StationsTableFloatingBar table={table} deleteRowsAction={deleteSelectedRows} />
+        <JourneysTableFloatingBar table={table} deleteRowsAction={deleteSelectedRows} />
       )}
     />
   );

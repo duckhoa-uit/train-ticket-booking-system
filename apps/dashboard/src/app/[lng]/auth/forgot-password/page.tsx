@@ -6,6 +6,7 @@ import Link from "next/link";
 import type { CSSProperties, SyntheticEvent } from "react";
 import React from "react";
 
+import { env } from "@ttbs/env";
 import { useClientTranslation } from "@ttbs/i18n";
 import { Button, EmailField } from "@ttbs/ui";
 
@@ -26,7 +27,7 @@ export default function ForgotPassword() {
 
   const submitForgotPasswordRequest = async ({ email }: { email: string }) => {
     try {
-      const res = await post("http://localhost:8081/api/auth/forgot-password", { email });
+      const res = await post(`${env.NEXT_PUBLIC_API_BASE_URI}/api/auth/forgot-password`, { email });
       console.log("🚀 ~ file: page.tsx:30 ~ submitForgotPasswordRequest ~ res:", res);
 
       if (res.error) {
