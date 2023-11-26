@@ -17,11 +17,6 @@ export interface DataTableSearchableColumn<TData> {
   title: string;
 }
 
-export type DataTableFilterableColumn<TData> = (
-  | {
-      type: "default";
-      options: Option[];
-    }
-  | { type: "date" }
-) &
-  DataTableSearchableColumn<TData>;
+export type DataTableFilterableColumn<TData> = {
+  options: Option[];
+} & DataTableSearchableColumn<TData>;

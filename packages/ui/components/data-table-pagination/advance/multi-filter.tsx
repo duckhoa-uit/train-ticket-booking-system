@@ -95,7 +95,7 @@ interface MultiFilterRowProps<TData> extends DataTableMultiFilterProps<TData> {
   i: number;
   option: DataTableFilterOption<TData>;
   operator?: (typeof operators)[number];
-  setOperator: React.Dispatch<React.SetStateAction<(typeof operators)[number] | undefined>>;
+  setOperator: React.Dispatch<React.SetStateAction<(typeof operators)[number]>>;
 }
 
 export function MultiFilterRow<TData>({
@@ -199,7 +199,7 @@ export function MultiFilterRow<TData>({
       ) : i === 1 ? (
         <RadixSelect
           value={operator?.value}
-          onValueChange={(value) => setOperator(operators.find((o) => o.value === value))}
+          onValueChange={(value) => setOperator(operators.find((o) => o.value === value)!)}
         >
           <RadixSelectTrigger className="h-8 w-fit text-xs">
             <RadixSelectValue placeholder={operator?.label} />
@@ -286,7 +286,7 @@ export function MultiFilterRow<TData>({
       )}
       <Dropdown>
         <DropdownMenuTrigger asChild>
-          <Button variant="ghost" size="icon" className="h-8 w-8 shrink-0">
+          <Button variant="icon" color="minimal" className="h-8 w-8 shrink-0">
             <MoreHorizontal className="h-4 w-4" aria-hidden="true" />
           </Button>
         </DropdownMenuTrigger>

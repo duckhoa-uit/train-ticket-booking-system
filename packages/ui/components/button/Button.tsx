@@ -94,7 +94,7 @@ export const buttonClasses = cva(
       {
         variant: "icon",
         size: "base",
-        className: "min-h-[36px] min-w-[36px] !p-2",
+        className: "min-h-8 min-w-8 !p-2",
       },
       {
         variant: "icon",
@@ -181,7 +181,8 @@ export const Button = forwardRef<HTMLAnchorElement | HTMLButtonElement, ButtonPr
             )}
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
-            viewBox="0 0 24 24">
+            viewBox="0 0 24 24"
+          >
             <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
             <path
               className="opacity-75"

@@ -95,7 +95,7 @@ export function DataTableAdvancedFilterItem<TData>({
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button
-          variant="outline"
+          color="secondary"
           size="sm"
           className={cn(
             "h-7 truncate rounded-full",

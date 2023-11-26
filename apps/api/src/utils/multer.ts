@@ -1,6 +1,7 @@
 import multer from "multer";
 
-import { STORAGE_PATH } from "./file";
+// import { STORAGE_PATH } from "./file";
+export const STORAGE_PATH = "assets/app/uploads/uploadedFiles";
 
 export const MIME_TYPE_MAP = {
   "image/png": "png",

@@ -5,7 +5,6 @@ import type { Table } from "@tanstack/react-table";
 import { Button } from "../button";
 import { Input } from "../form/inputs/TextField";
 import { X } from "../icons";
-import { DataTableDateFilter } from "./date-filter";
 import { DataTableFacetedFilter } from "./faceted-filter";
 import type { DataTableFilterableColumn, DataTableSearchableColumn } from "./types";
 import { DataTableViewOptions } from "./view-options";
@@ -42,21 +41,14 @@ export function DataTableToolbar<TData>({
         {filterableColumns.length > 0 &&
           filterableColumns.map(
             (column) =>
-              table.getColumn(column.id ? String(column.id) : "") &&
-              ("options" in column ? (
+              table.getColumn(column.id ? String(column.id) : "") && (
                 <DataTableFacetedFilter
                   key={String(column.id)}
                   column={table.getColumn(column.id ? String(column.id) : "")}
                   title={column.title}
                   options={column.options}
                 />
-              ) : (
-                <DataTableDateFilter
-                  key={String(column.id)}
-                  column={table.getColumn(column.id ? String(column.id) : "")}
-                  title={column.title}
-                />
-              ))
+              )
           )}
         {isFiltered && (
           <Button

@@ -71,7 +71,7 @@ export function DataTableAdvancedToolbar<TData>({
         </div>
         <div className="flex items-center space-x-2">
           {selectedOptions.length > 0 ? (
-            <Button variant="outline" size="sm" onClick={() => setOpen((prev) => !prev)}>
+            <Button color="secondary" size="sm" onClick={() => setOpen((prev) => !prev)}>
               Filter
               <ChevronsUpDown className="ml-2 h-4 w-4 opacity-50" aria-hidden="true" />
             </Button>
@@ -112,7 +112,7 @@ export function DataTableAdvancedToolbar<TData>({
             selectedOptions={selectedOptions}
             setSelectedOptions={setSelectedOptions}
           >
-            <Button variant="outline" size="sm" role="combobox" className="rounded-full">
+            <Button color="secondary" size="sm" role="combobox" className="rounded-full">
               <PlusIcon className="mr-2 h-4 w-4 opacity-50" aria-hidden="true" />
               Add filter
             </Button>
