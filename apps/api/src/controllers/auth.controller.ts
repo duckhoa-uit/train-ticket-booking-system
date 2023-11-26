@@ -5,13 +5,19 @@ import { omit } from "lodash";
 
 import { env } from "@ttbs/env";
 import { comparePasswords } from "@ttbs/lib/password";
-import { Prisma, User } from "@ttbs/prisma";
+import { Prisma } from "@ttbs/prisma";
 
 import { AuthorizedRequest } from "@/middleware";
-import { RefreshTokenSchema, UserLoginInput } from "@/schemas/auth.schema";
-import { UserCreateInput } from "@/schemas/user.schema";
+import {
+  LoginCallbackInput,
+  RefreshTokenSchema,
+  UserLoginInput,
+  loginCallbackSchema,
+  loginSchema,
+} from "@/schemas/auth.schema";
+import { UserCreateInput, userCreateSchema } from "@/schemas/user.schema";
 import { logout, signTokens } from "@/services/auth.service";
-import { createUser, findUniqueUser } from "@/services/user.service";
+import { createUser, findUniqueUser, updateUserLoginCallback } from "@/services/user.service";
 import AppError from "@/utils/app-error";
 import { signJwt, verifyJwt } from "@/utils/jwt";
 import redisClient from "@/utils/redis";
@@ -32,57 +38,47 @@ export const loginUserHandler = async (
   next: NextFunction
 ) => {
   try {
-    const { email, password } = req.body;
+    const {
+      body: { email, password },
+    } = loginSchema.parse(req);
 
-    let user: User | null = null;
-    if (email) {
-      user = await findUniqueUser({
-        // TODO: update this after init schema
-        // emails: {
-        //   some: {
-        //     address: email,
-        //   },
-        // },
-      });
-    }
+    const user = await findUniqueUser({ email: email.toLowerCase() });
 
     if (!user) {
       return next(new AppError(404, "User not found"));
     }
 
-    // TODO: update this after init schema
-    if (!(await comparePasswords(password, "user.services.password?.bcrypt" ?? ""))) {
+    if (!(await comparePasswords(password, user.password ?? ""))) {
       return next(new AppError(401, "Password is not correct"));
     }
 
-    // TODO: update this after init schema
-    // eslint-disable-next-line no-constant-condition
-    if ("user.emails[0].verified") {
-      return next(new AppError(403, "E-mail address not verified."));
-    }
-
-    // TODO: add ip to profile.location
-    // const { user: { _id, profile }, connection: { clientAddress } } = raw;
-    // if (R.path(['location', 'ip'], profile) !== clientAddress) {
-    //   Meteor.users.update({ _id }, { $set: { 'profile.location.ip': clientAddress } });
-    // }
-
     // Sign Tokens
     const { access_token, refresh_token } = signTokens(user);
-    // TODO: do we need cookies?
-    // res.cookie('access_token', access_token, accessTokenCookieOptions);
-    // res.cookie('refresh_token', refresh_token, refreshTokenCookieOptions);
-    // res.cookie('logged_in', true, {
-    //   ...accessTokenCookieOptions,
-    //   httpOnly: false,
-    // });
 
     res.status(200).json({
       status: "success",
       data: {
         access_token,
         refresh_token,
+        user,
       },
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+export const loginCallbackHandler = async (
+  req: Request<{}, {}, LoginCallbackInput>,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { body } = loginCallbackSchema.parse(req);
+
+    const response = await updateUserLoginCallback(body);
+    res.status(200).json({
+      status: "success",
+      data: response,
     });
   } catch (error) {
     next(error);
@@ -94,28 +90,18 @@ export const registerUserHandler = async (
   res: Response,
   next: NextFunction
 ) => {
+  const { body: reqBody } = userCreateSchema.parse(req);
+  const { email } = reqBody;
+
   try {
     const foundUser = await findUniqueUser({
-      // TODO: update this after init schema
-      // emails: {
-      //   some: {
-      //     address: req.body.email,
-      //   },
-      // },
+      email,
     });
     if (foundUser) {
       throw new AppError(409, "Email already exist, please use another email address");
     }
 
-    if (req.body.password.length < 8) {
-      throw new AppError(400, "Password must be at least 8 characters in length");
-    }
-
-    // TODO: verification code
-    // const verifyCode = crypto.randomBytes(32).toString("hex");
-    // const verificationCode = crypto.createHash("sha256").update(verifyCode).digest("hex");
-
-    const user = await createUser(req.body);
+    const user = await createUser(reqBody);
 
     /**
      * TODO: support sendVerificationEmail + sendEnrollmentEmail

@@ -23,6 +23,8 @@ export const env = createEnv({
     API_PORT: envNumberSchema,
     REDIS_HOST: z.string(),
     REDIS_PORT: envNumberSchema,
+
+    RESEND_API_KEY: z.string(),
   },
   clientPrefix: "NEXT_PUBLIC_",
   client: {
@@ -41,6 +43,8 @@ export const env = createEnv({
     API_PORT: process.env["API_PORT"],
     REDIS_HOST: process.env["REDIS_HOST"],
     REDIS_PORT: process.env["REDIS_PORT"],
+
+    RESEND_API_KEY: process.env["RESEND_API_KEY"],
   },
   skipValidation: !!process.env["SKIP_ENV_VALIDATION"],
 });

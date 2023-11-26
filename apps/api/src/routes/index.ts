@@ -1,7 +1,4 @@
-import { Request, Response, Router } from "express";
-import swaggerUi from "swagger-ui-express";
-
-import { swaggerSpec } from "@/utils/swagger";
+import { Router } from "express";
 
 import { authRouter } from "./auth.router";
 import { routeRouter } from "./route.router";
@@ -15,10 +12,3 @@ indexRouter.use("/auth", authRouter);
 indexRouter.use("/stations", stationRouter);
 
 indexRouter.use("/route", routeRouter);
-indexRouter.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-
-// Docs in JSON format
-indexRouter.get("/docs.json", (req: Request, res: Response) => {
-  res.setHeader("Content-Type", "application/json");
-  res.send(swaggerSpec);
-});

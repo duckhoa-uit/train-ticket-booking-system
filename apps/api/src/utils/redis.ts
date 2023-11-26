@@ -1,10 +1,11 @@
 import { createClient } from "redis";
 
-import { env } from "@ttbs/env";
-
 const redisClient = createClient({
-  url: `redis://${env.REDIS_HOST}:${env.REDIS_PORT}`,
+  // url: process.env.REDIS_URL,
+  url: `redis://${process.env.REDIS_HOST}:${process.env.REDIS_PORT}`,
   socket: {
+    // host: process.env.REDIS_HOST,
+    // port: parseInt(process.env.REDIS_PORT ?? '6379'),
     connectTimeout: 50000,
   },
 });
@@ -16,6 +17,12 @@ const connectRedis = async () => {
     console.log("Redis client connect successfully");
     redisClient.set("try", "Hello Welcome to Express with Prisma");
   } catch (error) {
+    console.log(
+      process.env.REDIS_HOST,
+      parseInt(process.env.REDIS_PORT ?? "6379"),
+      process.env.REDIS_PASSWORD,
+      error
+    );
     setTimeout(connectRedis, 5000);
   }
 };

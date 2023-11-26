@@ -42,5 +42,21 @@
   ],
   "prisma": {
     "seed": "ts-node --transpile-only ./seed.ts"
+  },
+  "exports": {
+    ".": "./dist/index.js",
+    "./enums": "./dist/enums/index.js",
+    "./zod": "./dist/zod/index.js",
+    "./*": "./dist/*.js"
+  },
+  "typesVersions": {
+    "*": {
+      "enums": [
+        "./dist/enums/index.d.ts"
+      ],
+      "zod": [
+        "./dist/zod/index.d.ts"
+      ]
+    }
   }
 }

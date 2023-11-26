@@ -1,16 +1,27 @@
-import { authenticate, validate } from '@/middleware'
-import { Router } from 'express'
+import { Router } from "express";
 
 import {
+  loginCallbackHandler,
   loginUserHandler,
   logoutUserHandler,
   refreshToken,
   registerUserHandler,
-} from '@/controllers/auth.controller'
-import { loginSchema } from '@/schemas/auth.schema'
-import { userCreateSchema } from '@/schemas/user.schema'
+} from "@/controllers/auth.controller";
+import {
+  checkResetPasswordHandler,
+  forgotPasswordHandler,
+  resetPasswordHandler,
+} from "@/controllers/user.controller";
+import { authenticate, validate } from "@/middleware";
+import { loginCallbackSchema, loginSchema } from "@/schemas/auth.schema";
+import {
+  forgotPasswordSchema,
+  resetPasswordParamsSchema,
+  userCreateSchema,
+  userResetPasswordSchema,
+} from "@/schemas/user.schema";
 
-export const authRouter = Router()
+export const authRouter = Router();
 
 /**
  *
@@ -41,8 +52,9 @@ export const authRouter = Router()
  *         description: User not found
  */
 
-authRouter.post('/login', validate(loginSchema), loginUserHandler)
+authRouter.post("/login", validate(loginSchema), loginUserHandler);
 
+authRouter.post("/login/callback", validate(loginCallbackSchema), loginCallbackHandler);
 /**
  * @openapi
  * /api/auth/register:
@@ -78,7 +90,7 @@ authRouter.post('/login', validate(loginSchema), loginUserHandler)
  *                  status: fail
  *                  message: Email already exist, please use another email address
  */
-authRouter.post('/register', validate(userCreateSchema), registerUserHandler)
+authRouter.post("/register", validate(userCreateSchema), registerUserHandler);
 
 /**
  * @openapi
@@ -109,7 +121,7 @@ authRouter.post('/register', validate(userCreateSchema), registerUserHandler)
  *                  status: fail
  *                  message: No authorization header found!
  */
-authRouter.get('/logout', authenticate(), logoutUserHandler)
+authRouter.get("/logout", authenticate(), logoutUserHandler);
 
 /**
  *
@@ -134,4 +146,10 @@ authRouter.get('/logout', authenticate(), logoutUserHandler)
  *       403:
  *         description: Could not refresh access token
  */
-authRouter.post('/refresh', refreshToken)
+authRouter.post("/refresh", refreshToken);
+
+authRouter.post("/forgot-password", validate(forgotPasswordSchema), forgotPasswordHandler);
+
+authRouter.post("/reset-password", validate(userResetPasswordSchema), resetPasswordHandler);
+
+authRouter.get("/reset-password/check", validate(resetPasswordParamsSchema), checkResetPasswordHandler);

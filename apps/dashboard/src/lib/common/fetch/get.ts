@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { uuidv4 } from "@/lib/helpers";
 import type { ApiResponse } from "@/types/base";
 
-import { uuidv4 } from "../../helpers";
 import { handleError, handleResponse, handleResponseError, constructHeaders } from "./base";
 
 export async function get<T = any>(url: string, options?: { [prop: string]: any }): Promise<ApiResponse<T>> {
@@ -9,6 +9,7 @@ export async function get<T = any>(url: string, options?: { [prop: string]: any 
   try {
     const { headers: optionHeaders, ...otherOptions } = options ?? {};
     const headers = await constructHeaders(requestId, optionHeaders);
+
     const response = await fetch(url, {
       method: "GET",
       referrerPolicy: "no-referrer-when-downgrade",

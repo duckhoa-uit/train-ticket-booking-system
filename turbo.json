@@ -28,7 +28,7 @@
     },
     "@ttbs/dashboard#dev": {
       "cache": false,
-      "dependsOn": ["@ttbs/env#build", "@ttbs/lib#build", "@ttbs/prisma#dx"]
+      "dependsOn": []
     },
     "@ttbs/prisma#dx": {
       "cache": false,

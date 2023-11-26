@@ -41,6 +41,10 @@ export {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
   DropdownMenuTriggerItem,
+  DropdownMenuShortcut,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
 } from "./dropdown";
 
 export { SettingsToggle, Switch } from "./switch";

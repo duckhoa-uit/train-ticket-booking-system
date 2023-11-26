@@ -48,6 +48,10 @@ export {
   DropdownMenuGroup,
   DropdownMenuRadioItem,
   DropdownMenuTriggerItem,
+  DropdownMenuShortcut,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
   Steps,
   WizardForm,
   SettingsToggle,
@@ -94,7 +98,8 @@ export { default as ImageUploader } from "./components/image-uploader/ImageUploa
 export type { ButtonColor } from "./components/button/Button";
 
 export { WizardLayout } from "./layouts/wizard-layout";
-export { DataTable } from "./components/data-table";
+export { DataTable } from "./components/data-table-pagination";
+export { DataTableColumnHeader } from "./components/data-table-pagination/column-header";
 export {
   Command,
   CommandDialog,
@@ -116,3 +121,11 @@ export * from "./components/sheet";
 export * from "./components/navigation-menu";
 
 export * from "./components/collapsible";
+
+export * from "./components/scroll-area";
+
+export * from "./components/loading";
+
+export { Credits } from "./components/credits";
+
+export * from "./components/radix-select";

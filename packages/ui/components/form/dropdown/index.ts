@@ -13,4 +13,8 @@ export {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
   DropdownMenuTriggerItem,
+  DropdownMenuShortcut,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
 } from "./Dropdown";

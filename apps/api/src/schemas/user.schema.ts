@@ -48,8 +48,6 @@ export const userCreateSchema = z.object({
     password: z.string().min(8).max(50),
     email: z.string().email(),
     role: z.nativeEnum(UserRole).optional(),
-    merchantId: z.string().optional().nullable(),
-    listingId: z.string().optional().nullable(),
   }),
 });
 
@@ -66,6 +64,11 @@ export const userIdParamsSchema = z.object({
     id: z.string(),
   }),
 });
+export const requestIdParamsSchema = z.object({
+  params: z.object({
+    id: z.string(),
+  }),
+});
 export const userPhoneParamsSchema = z.object({
   params: z.object({
     phone: z.string(),
@@ -77,9 +80,9 @@ export const userEmailParamsSchema = z.object({
   }),
 });
 
-export const tokenParamsSchema = z.object({
+export const resetPasswordParamsSchema = z.object({
   query: z.object({
-    token: z.string(),
+    requestId: z.string(),
   }),
 });
 
@@ -104,14 +107,13 @@ export const userGetAllQuery = z.object({
 export const userResetPasswordSchema = z.object({
   body: z.object({
     password: z.string().min(8).max(50),
+    requestId: z.string(),
   }),
 });
 
 export const forgotPasswordSchema = z.object({
   body: z.object({
     email: z.string().min(5).max(50),
-    phone: z.string().min(5).max(50).optional(),
-    extraTokenData: z.any().optional(),
   }),
 });
 
@@ -155,7 +157,7 @@ export type UserCreateInput = z.infer<typeof userCreateSchema>["body"];
 export type UserUpdateInput = z.infer<typeof userUpdateSchema>["body"];
 export type UserReturn = z.infer<typeof userReturn>;
 export type UserIdParamsInput = z.infer<typeof userIdParamsSchema>["params"];
-export type TokenParamsInput = z.infer<typeof tokenParamsSchema>["query"];
+export type ResetPasswordQueryParams = z.infer<typeof resetPasswordParamsSchema>["query"];
 export type UserGetAllQuery = z.infer<typeof userGetAllQuery>["query"] & ParsedQs;
 export type UserResetPasswordInput = z.infer<typeof userResetPasswordSchema>["body"];
 export type UserForgotPasswordInput = z.infer<typeof forgotPasswordSchema>["body"];

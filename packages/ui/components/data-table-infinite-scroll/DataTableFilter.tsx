@@ -77,12 +77,14 @@ export function DataTableFilter<TData, TValue>({ column, title, options }: DataT
                       }
                       const filterValues = Array.from(selectedValues);
                       column?.setFilterValue(filterValues.length ? filterValues : undefined);
-                    }}>
+                    }}
+                  >
                     <div
                       className={cn(
                         "border-subtle mr-2 flex h-4 w-4 items-center justify-center rounded-sm border",
                         isSelected ? "text-emphasis" : "opacity-50 [&_svg]:invisible"
-                      )}>
+                      )}
+                    >
                       <Check className={cn("h-4 w-4")} />
                     </div>
                     {option.icon && <option.icon className="text-muted mr-2 h-4 w-4" />}
@@ -102,7 +104,8 @@ export function DataTableFilter<TData, TValue>({ column, title, options }: DataT
                 <CommandGroup>
                   <CommandItem
                     onSelect={() => column?.setFilterValue(undefined)}
-                    className="justify-center text-center">
+                    className="justify-center text-center"
+                  >
                     Clear filters
                   </CommandItem>
                 </CommandGroup>

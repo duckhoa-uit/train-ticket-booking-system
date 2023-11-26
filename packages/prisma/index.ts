@@ -2,15 +2,13 @@
 import { PrismaClient as PrismaClientWithoutExtension } from "@prisma/client";
 import { withAccelerate } from "@prisma/extension-accelerate";
 
-import { exampleMiddleware } from "./middleware";
-
 const prismaWithoutClientExtensions = new PrismaClientWithoutExtension(
   !!process.env.NEXT_PUBLIC_DEBUG ? { log: ["query", "error", "warn"] } : { log: [] }
 );
 
 // If any changed on middleware server restart is required
 // TODO: Migrate it to $extends
-exampleMiddleware(prismaWithoutClientExtensions);
+// exampleMiddleware(prismaWithoutClientExtensions);
 
 // FIXME: Due to some reason, there are types failing in certain places due to the $extends. Fix it and then enable it
 // Specifically we get errors like `Type 'string | Date | null | undefined' is not assignable to type 'Exact<string | Date | null | undefined, string | Date | null | undefined>'`

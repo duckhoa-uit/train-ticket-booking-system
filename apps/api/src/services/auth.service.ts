@@ -1,7 +1,7 @@
 import config from "config";
 import { Response } from "express";
 
-import { User } from "@ttbs/prisma";
+import prisma, { Prisma, User } from "@ttbs/prisma";
 
 import { signJwt } from "@/utils/jwt";
 import redisClient from "@/utils/redis";
@@ -29,3 +29,5 @@ export function logout(res: Response) {
   res.cookie("refresh_token", "", { maxAge: -1 });
   res.cookie("logged_in", "", { maxAge: -1 });
 }
+
+export const linkAccount = (data: Prisma.AccountCreateInput) => prisma.account.create({ data });

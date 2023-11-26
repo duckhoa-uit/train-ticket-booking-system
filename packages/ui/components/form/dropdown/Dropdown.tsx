@@ -3,13 +3,13 @@
 import * as DropdownMenuPrimitive from "@radix-ui/react-dropdown-menu";
 import Link from "next/link";
 import type { ComponentProps } from "react";
-import { forwardRef } from "react";
+import React, { forwardRef } from "react";
 
 import { cn } from "@ttbs/lib/cn";
 import type { SVGComponent } from "@ttbs/types/SVGComponent";
 
 import type { ButtonColor } from "../../button/Button";
-import { CheckCircle } from "../../icons";
+import { CheckCircle, ChevronRightIcon } from "../../icons";
 
 export const Dropdown = DropdownMenuPrimitive.Root;
 
@@ -45,7 +45,8 @@ export const DropdownMenuContent = forwardRef<HTMLDivElement, DropdownMenuConten
           "[&>*:first-child]:mt-1 [&>*:last-child]:mb-1",
           props.className
         )}
-        ref={forwardedRef}>
+        ref={forwardedRef}
+      >
         {children}
       </DropdownMenuPrimitive.Content>
     );
@@ -144,7 +145,8 @@ export const DropdownItem = (props: DropdownItemProps) => {
           ? "hover:bg-error hover:text-red-700 dark:hover:text-red-100"
           : "hover:bg-subtle",
         props.className
-      )}>
+      )}
+    >
       <>
         {StartIcon && <StartIcon className="h-4 w-4" />}
         <div className={cn("text-sm font-medium leading-5", childrenClassName)}>{children}</div>
@@ -167,5 +169,48 @@ export const DropdownMenuSeparator = forwardRef<HTMLDivElement, DropdownMenuSepa
   }
 );
 DropdownMenuSeparator.displayName = "DropdownMenuSeparator";
+
+// SHADCN
+export const DropdownMenuSub = DropdownMenuPrimitive.Sub;
+export const DropdownMenuSubTrigger = React.forwardRef<
+  React.ElementRef<typeof DropdownMenuPrimitive.SubTrigger>,
+  React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.SubTrigger> & {
+    inset?: boolean;
+  }
+>(({ className, inset, children, ...props }, ref) => (
+  <DropdownMenuPrimitive.SubTrigger
+    ref={ref}
+    className={cn(
+      "focus:bg-accent data-[state=open]:bg-accent flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none",
+      inset && "pl-8",
+      className
+    )}
+    {...props}
+  >
+    {children}
+    <ChevronRightIcon className="ml-auto h-4 w-4" />
+  </DropdownMenuPrimitive.SubTrigger>
+));
+DropdownMenuSubTrigger.displayName = DropdownMenuPrimitive.SubTrigger.displayName;
+
+export const DropdownMenuSubContent = React.forwardRef<
+  React.ElementRef<typeof DropdownMenuPrimitive.SubContent>,
+  React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.SubContent>
+>(({ className, ...props }, ref) => (
+  <DropdownMenuPrimitive.SubContent
+    ref={ref}
+    className={cn(
+      "bg-popover text-popover-foreground data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 z-50 min-w-[8rem] overflow-hidden rounded-md border p-1 shadow-lg",
+      className
+    )}
+    {...props}
+  />
+));
+DropdownMenuSubContent.displayName = DropdownMenuPrimitive.SubContent.displayName;
+
+export const DropdownMenuShortcut = ({ className, ...props }: React.HTMLAttributes<HTMLSpanElement>) => {
+  return <span className={cn("ml-auto text-xs tracking-widest opacity-60", className)} {...props} />;
+};
+DropdownMenuShortcut.displayName = "DropdownMenuShortcut";
 
 export default Dropdown;
