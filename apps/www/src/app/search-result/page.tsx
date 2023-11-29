@@ -80,11 +80,11 @@ const SearchPage = () => {
         departPlace={CONVERT_PARAMS_TO_VN(departPlace)}
         arrivalPlace={CONVERT_PARAMS_TO_VN(arrivalPlace) ?? ""}
         departDate={date ?? ""}
-        className="mx-auto my-5 md:my-10 lg:w-full"
+        className="m-5 mx-auto md:my-10 lg:w-full"
       />
 
       <div className="flex">
-        <div className="border-default hidden w-1/5 border-r md:block md:p-5">
+        <div className="border-default hidden w-1/5 border-r md:block md:pr-5">
           <div className=" bg-default  mb-2 flex justify-between px-3 py-5 md:block md:rounded-md" id="sort">
             <h5 className=" m-2 text-base font-semibold">Sắp xếp</h5>
             <div className="flex flex-col justify-between gap-2 pl-2">
