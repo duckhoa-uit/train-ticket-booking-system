@@ -91,7 +91,7 @@ const TABLE_HEAD_ITEMS: TableHeadItem[] = [
 const TrainDetail = async () => {
   // const router = useRouter();
   await new Promise((resolve) => {
-    setTimeout(resolve, 3000);
+    setTimeout(resolve, 300000);
   });
 
   return (
