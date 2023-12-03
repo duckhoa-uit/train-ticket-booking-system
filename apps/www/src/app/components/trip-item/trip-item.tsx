@@ -1,8 +1,9 @@
-import Link from "next/link";
 import React from "react";
 
 import { cn } from "@ttbs/lib/cn";
 import { Card } from "@ttbs/ui";
+
+import ViewRoutesBtn from "../view-routes/view-routes-btn";
 
 type Props = {
   className?: string;
@@ -13,7 +14,7 @@ export const TripItem = ({ className }: Props) => {
     Thời gian đi: 16:30 p.m | 22/10 
   `;
   return (
-    <div className={cn("w-full", className)}>
+    <div className={cn("relative w-full", className)}>
       <div
         className={cn(
           "border-emphasis bg-default hidden w-full rounded-md border p-10 md:flex md:items-center md:justify-between",
@@ -32,9 +33,13 @@ export const TripItem = ({ className }: Props) => {
           </div>
           <div>
             <div className="h-[1px] w-full bg-black" />
-            <Link className="text-attention" href="/train-detail">
+            {/* <Link className="text-attention" href="/train-detail">
               Xem tuyến
-            </Link>
+            </Link> */}
+            {/* 
+            *NOTE
+            testing */}
+            <ViewRoutesBtn />
           </div>
           <div>
             <p>16:30 p.m</p>

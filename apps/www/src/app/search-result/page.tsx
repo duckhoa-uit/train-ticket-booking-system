@@ -11,6 +11,7 @@ import { Button, Select } from "@ttbs/ui";
 import SearchBar from "@/app/components/search-section/search-bar";
 import { TripItem } from "@/app/components/trip-item/trip-item";
 
+
 type SortFilterItem = {
   label: string;
   value: string;
@@ -75,7 +76,7 @@ const SearchPage = () => {
   };
 
   return (
-    <div className={cn("md:text-normal mx-auto mt-5 min-h-[100vh] w-full max-w-7xl text-sm md:mt-10")}>
+    <div className={cn(" md:text-normal mx-auto mt-5 min-h-[100vh] w-full max-w-7xl text-sm md:mt-10")}>
       <SearchBar
         departPlace={CONVERT_PARAMS_TO_VN(departPlace)}
         arrivalPlace={CONVERT_PARAMS_TO_VN(arrivalPlace) ?? ""}
@@ -125,9 +126,11 @@ const SearchPage = () => {
         </div>
         <div className="w-full pl-5 md:w-4/5">
           <div className=" mb-5 flex gap-5 text-base md:text-xl">
-            <p>{CONVERT_PARAMS_TO_VN(departPlace)} </p>
-            <p>đến</p>
-            <p>{CONVERT_PARAMS_TO_VN(arrivalPlace)} </p>
+            <p>
+              <span>{CONVERT_PARAMS_TO_VN(departPlace)}</span>
+              <span> đến </span>
+              <span>{CONVERT_PARAMS_TO_VN(arrivalPlace)} </span>
+            </p>
             <p className="border-emphasis border-l-2 pl-5">{date}</p>
           </div>
           <div className="mb-2 flex items-center justify-between md:hidden" id="sort">
@@ -138,9 +141,7 @@ const SearchPage = () => {
             <h5 className=" text-base font-semibold">Lọc theo thời gian</h5>
             <Select className="md:hidden" defaultValue={FILTER_ITEMS[0]} options={FILTER_ITEMS} />
           </div>
-          <div className="flex w-full flex-col gap-2 overflow-y-auto">
-            <TripItem />
-            <TripItem />
+          <div className="over flex h-[100vh] w-full flex-col gap-2 overflow-y-scroll py-5">
             <TripItem />
             <TripItem />
             <TripItem />

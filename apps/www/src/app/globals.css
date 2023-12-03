@@ -104,3 +104,38 @@
 .react-date-picker .react-date-picker__wrapper {
   padding: 0.25rem 0.75rem;
 }
+
+html {
+  height: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+body {
+  flex-grow: 1;
+}
+
+::-webkit-scrollbar-corner {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+* {
+  scrollbar-width: thin;
+  /* scrollbar-color: var(--scroll-bar-color) var(--scroll-bar-bg-color); */
+}
+
+/* Works on Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+*::-webkit-scrollbar-track {
+  /* background: var(--scroll-bar-bg-color); */
+}
+
+*::-webkit-scrollbar-thumb {
+  /* background-color: var(--scroll-bar-color); */
+  border-radius: 20px;
+  /* border: 3px solid var(--scroll-bar-bg-color); */
+}
