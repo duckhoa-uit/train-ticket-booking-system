@@ -1,10 +1,8 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import React from "react";
 
 import { cn } from "@ttbs/lib/cn";
-import { Button } from "@ttbs/ui";
 import {
   Table,
   TableBody,
@@ -90,8 +88,12 @@ const TABLE_HEAD_ITEMS: TableHeadItem[] = [
   },
 ];
 
-const TrainDetail = () => {
-  const router = useRouter();
+const TrainDetail = async () => {
+  // const router = useRouter();
+  await new Promise((resolve) => {
+    setTimeout(resolve, 5000);
+  });
+
   return (
     <div className={cn("md:text-normal mx-auto mt-5 min-h-[100vh] w-full max-w-7xl p-5 text-sm md:mt-10")}>
       <TripItem />
@@ -117,7 +119,7 @@ const TrainDetail = () => {
           ))}
         </TableBody>
       </Table>
-      <Button
+      {/* <Button
         variant="button"
         color="primary"
         size="base"
@@ -127,7 +129,7 @@ const TrainDetail = () => {
         }}
       >
         Back
-      </Button>
+      </Button> */}
     </div>
   );
 };
