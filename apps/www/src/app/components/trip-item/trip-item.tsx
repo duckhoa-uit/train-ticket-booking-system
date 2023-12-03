@@ -32,7 +32,7 @@ export const TripItem = ({ className }: Props) => {
           </div>
           <div>
             <div className="h-[1px] w-full bg-black" />
-            <Link className="text-attention" href="#">
+            <Link className="text-attention" href="/train-detail">
               Xem tuyến
             </Link>
           </div>
