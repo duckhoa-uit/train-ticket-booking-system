@@ -19,7 +19,7 @@ export const createTrainHandler = async (
 export const getTrainHandler = async (req: Request<{}, {}, {}>, res: Response, next: NextFunction) => {
   try {
     const allTrains = await getAllTrains();
-    return res.status(201).json({ status: "success", data: allTrains });
+    return res.status(200).json({ status: "success", data: allTrains });
   } catch (error) {
     return next(error);
   }
