@@ -6,6 +6,7 @@ import * as React from "react";
 import { toast } from "sonner";
 
 import { env } from "@ttbs/env";
+import { useClientTranslation } from "@ttbs/i18n";
 import type { Journey } from "@ttbs/prisma";
 import {
   Button,
@@ -13,13 +14,13 @@ import {
   DataTable,
   DataTableColumnHeader,
   Dropdown,
+  DropdownItem,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuPortal,
-  DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@ttbs/ui";
-import { MoreHorizontal } from "@ttbs/ui/components/icons";
+import { ExternalLink, MoreHorizontal } from "@ttbs/ui/components/icons";
 
 import { delete_ } from "@/lib/common/fetch";
 
@@ -31,6 +32,7 @@ interface JourneysTableProps {
 }
 
 export function JourneysTable({ data, pageCount }: JourneysTableProps) {
+  const { t } = useClientTranslation();
   const [isPending, startTransition] = React.useTransition();
   const [selectedRowIds, setSelectedRowIds] = React.useState<number[]>([]);
 
@@ -73,7 +75,7 @@ export function JourneysTable({ data, pageCount }: JourneysTableProps) {
       {
         accessorKey: "name",
         header: ({ column }) => <DataTableColumnHeader column={column} title="Name" />,
-        cell: ({ row }) => <div className="w-[160px]">{row.getValue("name")}</div>,
+        cell: ({ row }) => <div className="w-full">{row.getValue("name")}</div>,
         enableSorting: false,
         enableHiding: false,
       },
@@ -123,24 +125,34 @@ export function JourneysTable({ data, pageCount }: JourneysTableProps) {
 
             <DropdownMenuPortal>
               <DropdownMenuContent align="end" className="w-[160px]">
-                <DropdownMenuItem>Edit</DropdownMenuItem>
-                <DropdownMenuItem
-                  onClick={() => {
-                    startTransition(() => {
-                      row.toggleSelected(false);
+                <DropdownMenuItem>
+                  <DropdownItem
+                    href={`/journeys/${row.original.id}`}
+                    type="button"
+                    StartIcon={ExternalLink}
+                    rel="noreferrer"
+                  >
+                    {t("edit")}
+                  </DropdownItem>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <DropdownItem
+                    onClick={() => {
+                      startTransition(() => {
+                        row.toggleSelected(false);
 
-                      toast.promise(deleteJourneyMutation.mutateAsync(row.original.id), {
-                        loading: "Deleting...",
-                        success: () => "Journey deleted successfully.",
-                        error: () => {
-                          return "Something has error";
-                        },
+                        toast.promise(deleteJourneyMutation.mutateAsync(row.original.id), {
+                          loading: "Deleting...",
+                          success: () => "Journey deleted successfully.",
+                          error: () => {
+                            return "Something has error";
+                          },
+                        });
                       });
-                    });
-                  }}
-                >
-                  Delete
-                  <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
+                    }}
+                  >
+                    Delete
+                  </DropdownItem>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenuPortal>

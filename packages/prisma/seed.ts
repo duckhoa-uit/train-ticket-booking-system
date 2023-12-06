@@ -1,5 +1,5 @@
 import prisma from ".";
-import { createUser } from "./seed-utils";
+import { createStations, createUser } from "./seed-utils";
 
 async function main() {
   await createUser({
@@ -19,6 +19,8 @@ async function main() {
       role: "ADMIN",
     },
   });
+
+  await createStations();
 }
 
 main()

@@ -1,5 +1,3 @@
-import MainLayout from "@/components/layout/main-layout";
-
 import { ReactQueryProvider } from "./react-query-provider";
 
 interface LayoutProps {
@@ -7,9 +5,5 @@ interface LayoutProps {
 }
 
 export default async function Layout({ children }: LayoutProps) {
-  return (
-    <ReactQueryProvider>
-      <MainLayout>{children}</MainLayout>
-    </ReactQueryProvider>
-  );
+  return <ReactQueryProvider>{children}</ReactQueryProvider>;
 }

@@ -22,6 +22,7 @@ import {
 
 import { KBarTrigger } from "@/components/kbar/Kbar";
 
+import { KBarWrapper } from "../kbar/wrapper";
 import { UserDropdown } from "./user-dropdown";
 
 export const Layout = (props: LayoutProps) => {
@@ -77,6 +78,14 @@ type LayoutProps = {
   smallHeading?: boolean;
   hideHeadingOnMobile?: boolean;
 };
+
+export default function Shell(props: LayoutProps) {
+  return (
+    <KBarWrapper withKBar>
+      <Layout {...props} />
+    </KBarWrapper>
+  );
+}
 
 export type NavigationItemType = {
   name: string;
@@ -489,7 +498,7 @@ function MainContainer({
       {/* show top navigation for md and smaller (tablet and phones) */}
       {TopNavContainerProp}
       <div className="max-w-full px-2 py-4 lg:px-6">
-        {props.children}
+        {!props.withoutMain ? <ShellMain {...props}>{props.children}</ShellMain> : props.children}
         {/* show bottom navigation for md and smaller (tablet and phones) on pages where back button doesn't exist */}
         {!props.backPath ? MobileNavigationContainerProp : null}
       </div>

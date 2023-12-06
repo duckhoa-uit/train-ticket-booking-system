@@ -1,3 +1,4 @@
+import { INITIAL_STATIONS } from "@ttbs/lib/constants";
 import { hashPassword } from "@ttbs/lib/password";
 
 import prisma from ".";
@@ -29,4 +30,16 @@ export async function createUser({
   console.log(`👤 Upserted '${user.username}' with email "${user.email}" & password "${user.password}".`);
 
   return theUser;
+}
+
+export async function createStations() {
+  const { count } = await prisma.station.createMany({
+    data: INITIAL_STATIONS.map((station) => ({
+      code: station.code,
+      name: station.name,
+    })),
+    skipDuplicates: false,
+  });
+
+  console.log(`🚉 Created ${count} stations crawled from vetautructuyen.vn`);
 }

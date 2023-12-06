@@ -98,7 +98,7 @@ export const registerUserHandler = async (
       email,
     });
     if (foundUser) {
-      throw new AppError(409, "Email already exist, please use another email address");
+      return next(new AppError(409, "Email already exist, please use another email address"));
     }
 
     const user = await createUser(reqBody);

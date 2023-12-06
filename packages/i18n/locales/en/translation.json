@@ -1,13 +1,13 @@
 {
-  "h1": "A simple example",
-  "title": "Home",
-  "to-client-page": "To client page",
-  "to-second-page": "To second page",
-  "welcome": "Welcome to Next.js 13 <1>with the new app directory features</1> and i18next",
-  "blog": {
-    "text": "Check out the corresponding <1>blog post</1> describing this example.",
-    "link": "https://locize.com/blog/next-13-app-dir-i18n/"
-  },
+  "new": "New",
+  "submit": "Submit",
+  "delete": "Delete",
+  "update": "Update",
+  "save": "Save",
+  "pending": "Pending",
+  "open_options": "Open options",
+  "continue": "Continue",
+  "confirm": "Confirm",
   "welcome_back": "Welcome back",
   "email_address": "Email address",
   "password": "Password",
@@ -57,13 +57,7 @@
   "journey_name": "Name",
   "default_journey_name": "Enter name...",
   "journey_created_successfully": "{{journeyName}} journey created successfully",
-  "new": "New",
-  "submit": "Submit",
-  "delete": "Delete",
-  "update": "Update",
-  "save": "Save",
-  "pending": "Pending",
-  "open_options": "Open options",
-  "continue": "Continue",
-  "confirm": "Confirm"
+  "journey_stations": "Journey Stations",
+  "add_journey_station": "Add station",
+  "journey_updated_successfully": "Journey updated successfully"
 }

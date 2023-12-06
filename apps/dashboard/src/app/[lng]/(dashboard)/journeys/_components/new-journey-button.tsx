@@ -1,6 +1,7 @@
 "use client";
 
 import { useMutation } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -27,6 +28,8 @@ type CreateStationFormValues = {
   name: string;
 };
 export function NewJourneyButton({ name = "new-journey" }: { name?: string }) {
+  const router = useRouter();
+
   const [open, setOpen] = useState(false);
 
   const { t } = useClientTranslation();
@@ -40,6 +43,7 @@ export function NewJourneyButton({ name = "new-journey" }: { name?: string }) {
         ...values,
         journeyStations: [],
       });
+      console.log("🚀 ~ file: new-journey-button.tsx:40 ~ mutationFn: ~ res:", res);
 
       if (res.error) {
         const respError = res.error as ResponseError;
@@ -58,12 +62,12 @@ export function NewJourneyButton({ name = "new-journey" }: { name?: string }) {
         }
       } else {
         setOpen(false);
+        void router.push(`/journeys/${res.data.id}`);
 
         toast.success(t("journey_created_successfully", { journeyName: res.data.name }));
       }
     },
     onError(err) {
-      console.log("🚀 ~ file: new-journey-button.tsx:63 ~ onError ~ err:", err);
       if (err instanceof HttpError) {
         const message = `${err.statusCode}: ${err.message}`;
         toast.error(message);

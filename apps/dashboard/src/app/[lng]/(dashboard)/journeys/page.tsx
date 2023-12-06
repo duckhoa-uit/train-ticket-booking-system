@@ -3,11 +3,15 @@
 import { useQuery } from "@tanstack/react-query";
 
 import { env } from "@ttbs/env";
+import { useClientTranslation } from "@ttbs/i18n";
 import type { Journey } from "@ttbs/prisma";
 
+import { ShellMain } from "@/components/layout/common";
+import MainLayout from "@/components/layout/main-layout";
 import { get } from "@/lib/common/fetch";
 
 import { JourneysTable } from "./_components/journeys-table";
+import { NewJourneyButton } from "./_components/new-journey-button";
 import { searchParamsSchema } from "./search-params-schema";
 
 interface JourneysPageProps {
@@ -17,6 +21,8 @@ interface JourneysPageProps {
 }
 
 export default function Journeys({ searchParams }: JourneysPageProps) {
+  const { t } = useClientTranslation();
+
   const { page, per_page, sort } = searchParamsSchema.parse(searchParams);
 
   // Fallback page for invalid page numbers
@@ -43,5 +49,11 @@ export default function Journeys({ searchParams }: JourneysPageProps) {
     },
   });
 
-  return <JourneysTable data={journeysQuery.data ?? []} pageCount={1} />;
+  return (
+    <MainLayout>
+      <ShellMain withoutSeo heading={t("journeys_page_title")} hideHeadingOnMobile CTA={<NewJourneyButton />}>
+        <JourneysTable data={journeysQuery.data ?? []} pageCount={1} />
+      </ShellMain>
+    </MainLayout>
+  );
 }

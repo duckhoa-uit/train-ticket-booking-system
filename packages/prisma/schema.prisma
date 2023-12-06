@@ -228,6 +228,7 @@ model JourneyStation {
   updatedAt DateTime @updatedAt
 
   @@unique([journeyId, stationId])
+  @@unique([journeyId, order])
   @@map("journey-schedules")
 }
 
