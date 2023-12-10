@@ -26,6 +26,8 @@ export const getAllCarriages = async () => {
   return await prisma.carriage.findMany({
     include: {
       seats: true,
+      seatType: true,
+      train: true,
     },
   });
 };
@@ -35,6 +37,8 @@ export const getCarriageByID = async (id: number) => {
     where: { id },
     include: {
       seats: true,
+      seatType: true,
+      train: true,
     },
   });
 };
@@ -44,6 +48,8 @@ export const updateCarriage = async (id: number, input: CarriageUpdateInput) => 
     where: { id },
     include: {
       seats: true,
+      seatType: true,
+      train: true,
     },
   });
   if (!existCarriage) return null;
@@ -57,6 +63,11 @@ export const updateCarriage = async (id: number, input: CarriageUpdateInput) => 
       seatTypeId: input.seatTypeId,
       trainId: input.trainId,
       seatsPerCabin: input.seatsPerCabin,
+    },
+    include: {
+      seats: true,
+      seatType: true,
+      train: true,
     },
   });
 };

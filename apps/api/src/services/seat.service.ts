@@ -12,12 +12,19 @@ export const createSeat = async (input: seatCreateInput) => {
 };
 
 export const getAllSeats = async () => {
-  return await prisma.seat.findMany({});
+  return await prisma.seat.findMany({
+    include: {
+      carriage: true,
+    },
+  });
 };
 
 export const getSeatByID = async (id: number) => {
   return await prisma.seat.findUnique({
     where: { id },
+    include: {
+      carriage: true,
+    },
   });
 };
 
@@ -32,6 +39,9 @@ export const updateSeat = async (id: number, input: seatUpdateInput) => {
     data: {
       order: input.order,
       carriageId: input.carriageId,
+    },
+    include: {
+      carriage: true,
     },
   });
 };
