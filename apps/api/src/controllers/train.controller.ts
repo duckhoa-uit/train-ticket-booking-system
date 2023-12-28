@@ -7,12 +7,18 @@ import {
   trainCreateSchema,
   trainUpdateSchema,
 } from "@/schemas/train.schema";
-import { createTrain, getAllTrains, getTrainByID, updateTrain, deleteTrain } from "@/services/train.service";
+import {
+  createTrain,
+  getAllTrains,
+  getTrainByID,
+  updateTrain,
+  deleteTrain,
+} from "@/services/train.service";
 
 export const createTrainHandler = async (
   req: Request<{}, {}, trainCreateInput>,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const { body: reqBody } = trainCreateSchema.parse(req);
@@ -23,7 +29,11 @@ export const createTrainHandler = async (
   }
 };
 
-export const getTrainHandler = async (req: Request<{}, {}, {}>, res: Response, next: NextFunction) => {
+export const getTrainHandler = async (
+  req: Request<{}, {}, {}>,
+  res: Response,
+  next: NextFunction,
+) => {
   try {
     const allTrains = await getAllTrains();
     return res.status(200).json({ status: "success", data: allTrains });
@@ -35,7 +45,7 @@ export const getTrainHandler = async (req: Request<{}, {}, {}>, res: Response, n
 export const getTrainById = async (
   req: Request<trainIdParamInput, {}, {}>,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const trainID = Number(req.params.id);
@@ -50,7 +60,7 @@ export const getTrainById = async (
 export const updateTrainHandler = async (
   req: Request<trainIdParamInput, {}, trainUpdateInput>,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const trainID = +req.params.id;
@@ -66,7 +76,7 @@ export const updateTrainHandler = async (
 export const deleteTrainHandler = async (
   req: Request<trainIdParamInput, {}, {}>,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const trainID = Number(req.params.id);

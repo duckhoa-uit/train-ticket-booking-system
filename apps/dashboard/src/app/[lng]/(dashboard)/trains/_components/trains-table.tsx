@@ -39,7 +39,8 @@ export function TrainsTable({ data, pageCount }: TrainsTableProps) {
   const queryClient = useQueryClient();
 
   const deleteTrainMutation = useMutation({
-    mutationFn: (id: number) => delete_(`${env.NEXT_PUBLIC_API_BASE_URI}/api/trains/${id}`),
+    mutationFn: (id: number) =>
+      delete_(`${env.NEXT_PUBLIC_API_BASE_URI}/api/trains/${id}`),
     onSuccess() {
       queryClient.invalidateQueries({ queryKey: ["trains"] });
     },
@@ -55,7 +56,9 @@ export function TrainsTable({ data, pageCount }: TrainsTableProps) {
             checked={table.getIsAllPageRowsSelected()}
             onCheckedChange={(value) => {
               table.toggleAllPageRowsSelected(!!value);
-              setSelectedRowIds((prev) => (prev.length === data.length ? [] : data.map((row) => row.id)));
+              setSelectedRowIds((prev) =>
+                prev.length === data.length ? [] : data.map((row) => row.id),
+              );
             }}
             aria-label="Select all"
             className="translate-y-[2px]"
@@ -67,7 +70,9 @@ export function TrainsTable({ data, pageCount }: TrainsTableProps) {
             onCheckedChange={(value) => {
               row.toggleSelected(!!value);
               setSelectedRowIds((prev) =>
-                value ? [...prev, row.original.id] : prev.filter((id) => id !== row.original.id)
+                value
+                  ? [...prev, row.original.id]
+                  : prev.filter((id) => id !== row.original.id),
               );
             }}
             aria-label="Select row"
@@ -79,7 +84,9 @@ export function TrainsTable({ data, pageCount }: TrainsTableProps) {
       },
       {
         accessorKey: "name",
-        header: ({ column }) => <DataTableColumnHeader column={column} title="Name" />,
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} title="Name" />
+        ),
         cell: ({ row }) => <div className="w-full">{row.getValue("name")}</div>,
         enableSorting: false,
         enableHiding: false,
@@ -146,13 +153,16 @@ export function TrainsTable({ data, pageCount }: TrainsTableProps) {
                       startTransition(() => {
                         row.toggleSelected(false);
 
-                        toast.promise(deleteTrainMutation.mutateAsync(row.original.id), {
-                          loading: "Deleting...",
-                          success: () => "Train deleted successfully.",
-                          error: () => {
-                            return "Something has error";
+                        toast.promise(
+                          deleteTrainMutation.mutateAsync(row.original.id),
+                          {
+                            loading: "Deleting...",
+                            success: () => "Train deleted successfully.",
+                            error: () => {
+                              return "Something has error";
+                            },
                           },
-                        });
+                        );
                       });
                     }}
                   >
@@ -165,21 +175,26 @@ export function TrainsTable({ data, pageCount }: TrainsTableProps) {
         ),
       },
     ],
-    [data, isPending]
+    [data, isPending],
   );
 
   function deleteSelectedRows() {
-    toast.promise(Promise.all(selectedRowIds.map((id) => deleteTrainMutation.mutateAsync(id))), {
-      loading: "Deleting...",
-      success: () => {
-        setSelectedRowIds([]);
-        return "Trains deleted successfully.";
+    toast.promise(
+      Promise.all(
+        selectedRowIds.map((id) => deleteTrainMutation.mutateAsync(id)),
+      ),
+      {
+        loading: "Deleting...",
+        success: () => {
+          setSelectedRowIds([]);
+          return "Trains deleted successfully.";
+        },
+        error: () => {
+          setSelectedRowIds([]);
+          return "Something has error.";
+        },
       },
-      error: () => {
-        setSelectedRowIds([]);
-        return "Something has error.";
-      },
-    });
+    );
   }
 
   return (
@@ -208,7 +223,12 @@ export function TrainsTable({ data, pageCount }: TrainsTableProps) {
         },
       ]}
       // Render floating filters at the bottom of the table on column selection
-      floatingBar={(table) => <TrainsTableFloatingBar table={table} deleteRowsAction={deleteSelectedRows} />}
+      floatingBar={(table) => (
+        <TrainsTableFloatingBar
+          table={table}
+          deleteRowsAction={deleteSelectedRows}
+        />
+      )}
     />
   );
 }

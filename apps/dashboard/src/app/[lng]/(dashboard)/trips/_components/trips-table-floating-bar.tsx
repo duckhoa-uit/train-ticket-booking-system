@@ -6,7 +6,8 @@ import { cn } from "@ttbs/lib/cn";
 import { Button } from "@ttbs/ui";
 import { X, TrashIcon } from "@ttbs/ui/components/icons";
 
-interface DataTableFloatingBarProps<TData> extends React.HTMLAttributes<HTMLElement> {
+interface DataTableFloatingBarProps<TData>
+  extends React.HTMLAttributes<HTMLElement> {
   table: Table<TData>;
   deleteRowsAction?: () => void;
 }
@@ -23,7 +24,7 @@ export function TripsTableFloatingBar<TData>({
     <div
       className={cn(
         "mx-auto flex w-fit items-center gap-2 rounded-md bg-zinc-900 px-4 py-2 text-sm font-medium text-white",
-        className
+        className,
       )}
       {...props}
     >

@@ -46,7 +46,10 @@ const NewTrainPage = (_: NewTrainPageProps) => {
 
   const createMutation = useMutation({
     mutationFn: async (values: NewTrainFormValues) => {
-      const res = await post(`${env.NEXT_PUBLIC_API_BASE_URI}/api/trains`, values);
+      const res = await post(
+        `${env.NEXT_PUBLIC_API_BASE_URI}/api/trains`,
+        values,
+      );
 
       if (res.error) {
         const respError = res.error as ResponseError;
@@ -69,7 +72,7 @@ const NewTrainPage = (_: NewTrainPageProps) => {
         toast.success(
           t("train_created_successfully", {
             trainName: res.data.name,
-          })
+          }),
         );
 
         router.replace("/trains");

@@ -10,7 +10,9 @@ export const createTrip = async (input: TripCreateInput) => {
         journeyId: input.journeyId,
         trainId: input.trainId,
         arrivalDate: input.arrivalDate ?? input.timelines[0].arrivalDate,
-        departDate: input.departDate ?? input.timelines[input.timelines.length - 1].departDate,
+        departDate:
+          input.departDate ??
+          input.timelines[input.timelines.length - 1].departDate,
         timelines: {
           createMany: {
             data: input.timelines.map((timeline) => ({
@@ -23,13 +25,17 @@ export const createTrip = async (input: TripCreateInput) => {
       },
     });
 
-    const prices = input.timelines.flatMap<Prisma.PricingCreateManyInput>((timeline) =>
-      (timeline.prices ?? []).map((price) => ({
-        ...price,
-        tripId: newTrip.id,
-      }))
+    const prices = input.timelines.flatMap<Prisma.PricingCreateManyInput>(
+      (timeline) =>
+        (timeline.prices ?? []).map((price) => ({
+          ...price,
+          tripId: newTrip.id,
+        })),
     );
-    console.log("🚀 ~ file: trip.service.ts:27 ~ returnprisma.$transaction ~ prices:", prices);
+    console.log(
+      "🚀 ~ file: trip.service.ts:27 ~ returnprisma.$transaction ~ prices:",
+      prices,
+    );
 
     await tx.pricing.createMany({
       data: prices,

@@ -43,7 +43,9 @@ export const TripBasicInfo = ({ disabled }: { disabled?: boolean }) => {
 
   return (
     <div className="p-6">
-      <h3 className="text-emphasis mb-4 font-medium leading-6">{t("basic_info")}</h3>
+      <h3 className="text-emphasis mb-4 font-medium leading-6">
+        {t("basic_info")}
+      </h3>
       <div className="space-y-2">
         <div className="grid w-full grid-cols-2 gap-3">
           <div className="col-span-2">

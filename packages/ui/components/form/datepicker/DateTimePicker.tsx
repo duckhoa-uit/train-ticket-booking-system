@@ -34,8 +34,14 @@ interface DateTimePickerProps {
   className?: string;
 }
 
-export function DateTimePicker({ date, setDate, className }: DateTimePickerProps) {
-  const [selectedDateTime, setSelectedDateTime] = React.useState<DateTime>(DateTime.fromJSDate(date));
+export function DateTimePicker({
+  date,
+  setDate,
+  className,
+}: DateTimePickerProps) {
+  const [selectedDateTime, setSelectedDateTime] = React.useState<DateTime>(
+    DateTime.fromJSDate(date),
+  );
 
   const handleSelect: SelectSingleEventHandler = (day, selected) => {
     const selectedDay = DateTime.fromJSDate(selected);
@@ -66,20 +72,33 @@ export function DateTimePicker({ date, setDate, className }: DateTimePickerProps
           className={cn(
             "w-[280px] justify-start text-left font-normal",
             !date && "text-muted-foreground",
-            className
+            className,
           )}
           suppressHydrationWarning // because timestamp is not same, server and client
         >
           <CalendarIcon className="mr-2 h-4 w-4" />
-          {date ? selectedDateTime.toFormat("DDD HH:mm") : <span>Pick a date</span>}
+          {date ? (
+            selectedDateTime.toFormat("DDD HH:mm")
+          ) : (
+            <span>Pick a date</span>
+          )}
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0">
-        <Calendar mode="single" selected={selectedDateTime.toJSDate()} onSelect={handleSelect} initialFocus />
+        <Calendar
+          mode="single"
+          selected={selectedDateTime.toJSDate()}
+          onSelect={handleSelect}
+          initialFocus
+        />
         <div className="px-4 pb-4 pt-0">
           <Label>Time</Label>
           {/* TODO: style it properly! */}
-          <Input type="time" onChange={handleTimeChange} value={selectedDateTime.toFormat("HH:mm")} />
+          <Input
+            type="time"
+            onChange={handleTimeChange}
+            value={selectedDateTime.toFormat("HH:mm")}
+          />
         </div>
         {!selectedDateTime && <p>Please pick a day.</p>}
       </PopoverContent>

@@ -50,7 +50,10 @@ const NewTripPage = (_: NewTripPageProps) => {
 
   const createMutation = useMutation({
     mutationFn: async (values: NewTripFormValues) => {
-      const res = await post(`${env.NEXT_PUBLIC_API_BASE_URI}/api/trips`, values);
+      const res = await post(
+        `${env.NEXT_PUBLIC_API_BASE_URI}/api/trips`,
+        values,
+      );
 
       if (res.error) {
         const respError = res.error as ResponseError;
@@ -73,7 +76,7 @@ const NewTripPage = (_: NewTripPageProps) => {
         toast.success(
           t("trip_created_successfully", {
             tripName: res.data.name,
-          })
+          }),
         );
 
         router.replace("/trips");
@@ -109,7 +112,10 @@ const NewTripPage = (_: NewTripPageProps) => {
           form={form}
           id="new-trip-form"
           handleSubmit={async (values) => {
-            console.log("🚀 ~ file: page.tsx:114 ~ handleSubmit={ ~ values:", values);
+            console.log(
+              "🚀 ~ file: page.tsx:114 ~ handleSubmit={ ~ values:",
+              values,
+            );
             createMutation.mutate(values);
           }}
           className="flex flex-col sm:mx-0 xl:flex-row xl:space-x-6"

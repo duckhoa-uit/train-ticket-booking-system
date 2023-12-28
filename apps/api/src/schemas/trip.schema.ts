@@ -19,10 +19,10 @@ export const tripCreateSchema = z.object({
               departStationId: z.number(),
               arrivalStationId: z.number(),
               amount: z.number(),
-            })
+            }),
           )
           .optional(),
-      })
+      }),
     ),
   }),
 });

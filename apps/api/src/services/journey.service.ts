@@ -1,6 +1,9 @@
 import prisma from "@ttbs/prisma";
 
-import { JourneyCreateInput, JourneyUpdateInput } from "@/schemas/journey.schema";
+import {
+  JourneyCreateInput,
+  JourneyUpdateInput,
+} from "@/schemas/journey.schema";
 import AppError from "@/utils/app-error";
 
 export const createJourney = async (input: JourneyCreateInput) => {
@@ -25,13 +28,14 @@ export const updateJourney = async (id: number, input: JourneyUpdateInput) => {
       journeyStations: true,
     },
   });
-  if (!existJourney) throw new AppError(404, "Not found journey with id: " + id);
+  if (!existJourney)
+    throw new AppError(404, "Not found journey with id: " + id);
 
   const oldStations = existJourney.journeyStations;
   const newStations = input.journeyStations ?? [];
 
   const unlinkStations = oldStations.filter(
-    (old) => !newStations.map((_) => _.stationId).includes(old.stationId)
+    (old) => !newStations.map((_) => _.stationId).includes(old.stationId),
   );
 
   return await prisma.journey.update({
@@ -41,7 +45,12 @@ export const updateJourney = async (id: number, input: JourneyUpdateInput) => {
       journeyStations: {
         deleteMany: unlinkStations.map((_) => ({ id: _.id })),
         upsert: newStations.map((station) => ({
-          where: { journeyId_stationId: { stationId: station.stationId, journeyId: id } },
+          where: {
+            journeyId_stationId: {
+              stationId: station.stationId,
+              journeyId: id,
+            },
+          },
           update: {
             order: station.order,
           },

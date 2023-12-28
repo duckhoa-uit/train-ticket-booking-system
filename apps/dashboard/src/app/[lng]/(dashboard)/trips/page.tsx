@@ -27,7 +27,8 @@ export default function Trips({ searchParams }: TripsPageProps) {
 
   // Fallback page for invalid page numbers
   const pageAsNumber = Number(page);
-  const fallbackPage = isNaN(pageAsNumber) || pageAsNumber < 1 ? 1 : pageAsNumber;
+  const fallbackPage =
+    isNaN(pageAsNumber) || pageAsNumber < 1 ? 1 : pageAsNumber;
   // Number of items per page
   const perPageAsNumber = Number(per_page);
   const limit = isNaN(perPageAsNumber) ? 10 : perPageAsNumber;
@@ -36,10 +37,10 @@ export default function Trips({ searchParams }: TripsPageProps) {
   // Column and order to sort by
   // Spliting the sort string by "." to get the column and order
   // Example: "title.desc" => ["title", "desc"]
-  const [column, order] = (sort?.split(".") as [keyof Trip | undefined, "asc" | "desc" | undefined]) ?? [
-    "title",
-    "desc",
-  ];
+  const [column, order] = (sort?.split(".") as [
+    keyof Trip | undefined,
+    "asc" | "desc" | undefined,
+  ]) ?? ["title", "desc"];
 
   const tripsQuery = useQuery({
     queryKey: ["trips", limit, offset, column, order],

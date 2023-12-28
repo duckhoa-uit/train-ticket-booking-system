@@ -1,12 +1,22 @@
 import { NextFunction, Request, Response } from "express";
 
-import { TripCreateInput, TripUpdateInput, TripIdParamInput, tripCreateSchema } from "@/schemas/trip.schema";
-import { createTrip, getAllTrips, getTripByID, updateTrip } from "@/services/trip.service";
+import {
+  TripCreateInput,
+  TripUpdateInput,
+  TripIdParamInput,
+  tripCreateSchema,
+} from "@/schemas/trip.schema";
+import {
+  createTrip,
+  getAllTrips,
+  getTripByID,
+  updateTrip,
+} from "@/services/trip.service";
 
 export const createTripHandler = async (
   req: Request<{}, {}, TripCreateInput>,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const { body: reqBody } = tripCreateSchema.parse(req);
@@ -17,7 +27,11 @@ export const createTripHandler = async (
   }
 };
 
-export const getTripHandler = async (req: Request<{}, {}, {}>, res: Response, next: NextFunction) => {
+export const getTripHandler = async (
+  req: Request<{}, {}, {}>,
+  res: Response,
+  next: NextFunction,
+) => {
   try {
     const allTrips = await getAllTrips();
     return res.status(200).json({ status: "success", data: allTrips });
@@ -29,7 +43,7 @@ export const getTripHandler = async (req: Request<{}, {}, {}>, res: Response, ne
 export const getTripById = async (
   req: Request<TripIdParamInput, {}, {}>,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const tripID = Number(req.params.id);
@@ -44,7 +58,7 @@ export const getTripById = async (
 export const updateTripHandler = async (
   req: Request<TripIdParamInput, {}, TripUpdateInput>,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const tripID = +req.params.id;

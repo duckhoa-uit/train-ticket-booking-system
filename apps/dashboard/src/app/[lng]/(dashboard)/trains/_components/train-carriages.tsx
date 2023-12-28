@@ -1,7 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 import type { FieldArrayWithId } from "react-hook-form";
-import { Controller, useFieldArray, useFormContext, useWatch } from "react-hook-form";
+import {
+  Controller,
+  useFieldArray,
+  useFormContext,
+  useWatch,
+} from "react-hook-form";
 
 import { env } from "@ttbs/env";
 import { useClientTranslation } from "@ttbs/i18n";
@@ -18,7 +23,10 @@ export const TrainCarriages = ({ disabled }: { disabled?: boolean }) => {
   const { t } = useClientTranslation();
 
   const { control } = useFormContext<NewTrainFormValues>();
-  const { remove, append, fields, update } = useFieldArray<NewTrainFormValues, "carriages">({
+  const { remove, append, fields, update } = useFieldArray<
+    NewTrainFormValues,
+    "carriages"
+  >({
     control,
     name: "carriages",
   });
@@ -57,9 +65,16 @@ export const TrainCarriages = ({ disabled }: { disabled?: boolean }) => {
 
   return (
     <div className="p-6">
-      <h3 className="text-emphasis mb-4 font-medium leading-6">{t("train_carriages")}</h3>
+      <h3 className="text-emphasis mb-4 font-medium leading-6">
+        {t("train_carriages")}
+      </h3>
       <div className="space-y-2">
-        <ul className={cn("rounded border", fields.length ? "border-subtle" : null)}>
+        <ul
+          className={cn(
+            "rounded border",
+            fields.length ? "border-subtle" : null,
+          )}
+        >
           {fields.map((item, index) => (
             <Carriage
               key={item.id}
@@ -115,7 +130,9 @@ const Carriage = ({
   const { data: selectedSeatType } = useQuery({
     queryKey: ["seat-types", selectedSeatTypeId],
     queryFn: async () => {
-      const res = await get(`${env.NEXT_PUBLIC_API_BASE_URI}/api/seat-types/${selectedSeatTypeId}`);
+      const res = await get(
+        `${env.NEXT_PUBLIC_API_BASE_URI}/api/seat-types/${selectedSeatTypeId}`,
+      );
       return res.data as SeatType;
     },
   });
@@ -139,7 +156,9 @@ const Carriage = ({
       className="border-subtle flex justify-between border-b px-5 py-4 last:border-b-0"
     >
       <div className="flex flex-1 items-start">
-        <h3 className="text-emphasis min-w-16 mt-3 text-sm">{`Order ${index + 1} `}</h3>
+        <h3 className="text-emphasis min-w-16 mt-3 text-sm">{`Order ${
+          index + 1
+        } `}</h3>
         <div className="mx-4 grid w-full grid-cols-2 gap-3">
           <div>
             <Label htmlFor={`carriages.${index}.code`}>Code</Label>
@@ -210,7 +229,9 @@ const Carriage = ({
             />
           </div>
           <div>
-            <Label htmlFor={`carriages.${index}.seatsPerCabin`}>Seats per Cabin</Label>
+            <Label htmlFor={`carriages.${index}.seatsPerCabin`}>
+              Seats per Cabin
+            </Label>
             <Controller
               name={`carriages.${index}.seatsPerCabin`}
               control={control}
@@ -225,11 +246,15 @@ const Carriage = ({
                     disabled={disabled}
                     min={1}
                     onChange={(e) => {
-                      !isNaN(e.target.valueAsNumber) ? onChange(e.target.valueAsNumber) : onChange(undefined);
+                      !isNaN(e.target.valueAsNumber)
+                        ? onChange(e.target.valueAsNumber)
+                        : onChange(undefined);
                     }}
                     hint={
                       selectedSeatType
-                        ? t("seats_constraint", { seatsPerRow: selectedSeatType.seatsPerRow })
+                        ? t("seats_constraint", {
+                            seatsPerRow: selectedSeatType.seatsPerRow,
+                          })
                         : null
                     }
                   />
@@ -238,7 +263,9 @@ const Carriage = ({
             />
           </div>
           <div>
-            <Label htmlFor={`carriages.${index}.numOfCabins`}>Cabins per Carriage</Label>
+            <Label htmlFor={`carriages.${index}.numOfCabins`}>
+              Cabins per Carriage
+            </Label>
             <Controller
               name={`carriages.${index}.numOfCabins`}
               control={control}
@@ -251,7 +278,9 @@ const Carriage = ({
                     disabled={disabled}
                     min={1}
                     onChange={(e) => {
-                      !isNaN(e.target.valueAsNumber) ? onChange(e.target.valueAsNumber) : onChange(undefined);
+                      !isNaN(e.target.valueAsNumber)
+                        ? onChange(e.target.valueAsNumber)
+                        : onChange(undefined);
                     }}
                   />
                 );

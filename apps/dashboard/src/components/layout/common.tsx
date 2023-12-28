@@ -4,7 +4,13 @@ import type { User as UserAuth } from "next-auth";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import type { Dispatch, ElementType, ReactElement, ReactNode, SetStateAction } from "react";
+import type {
+  Dispatch,
+  ElementType,
+  ReactElement,
+  ReactNode,
+  SetStateAction,
+} from "react";
 import React, { Fragment, cloneElement } from "react";
 
 import { useClientTranslation } from "@ttbs/i18n";
@@ -40,7 +46,11 @@ export const Layout = (props: LayoutProps) => {
 
       <div className="flex min-h-screen flex-col">
         <div className="flex max-h-screen flex-1" data-testid="dashboard-shell">
-          {props.SidebarContainer ? cloneElement(props.SidebarContainer) : <SideBarContainer />}
+          {props.SidebarContainer ? (
+            cloneElement(props.SidebarContainer)
+          ) : (
+            <SideBarContainer />
+          )}
           <div className="flex w-0 flex-1 flex-col">
             <MainContainer {...props} />
           </div>
@@ -50,7 +60,10 @@ export const Layout = (props: LayoutProps) => {
   );
 };
 
-type DrawerState = [isOpen: boolean, setDrawerOpen: Dispatch<SetStateAction<boolean>>];
+type DrawerState = [
+  isOpen: boolean,
+  setDrawerOpen: Dispatch<SetStateAction<boolean>>,
+];
 
 type LayoutProps = {
   centered?: boolean;
@@ -118,7 +131,9 @@ const navigation: NavigationItemType[] = [
     href: "/journeys",
     icon: CalendarDays,
     isCurrent: ({ item }) => {
-      return item.href.startsWith("/journeys") || item.href.startsWith("/stations");
+      return (
+        item.href.startsWith("/journeys") || item.href.startsWith("/stations")
+      );
     },
     child: [
       {
@@ -161,14 +176,19 @@ const navigation: NavigationItemType[] = [
   },
 ];
 
-const moreSeparatorIndex = navigation.findIndex((item) => item.name === MORE_SEPARATOR_NAME);
+const moreSeparatorIndex = navigation.findIndex(
+  (item) => item.name === MORE_SEPARATOR_NAME,
+);
 // We create all needed navigation items for the different use cases
-const { desktopNavigationItems, mobileNavigationBottomItems, mobileNavigationMoreItems } = navigation.reduce<
-  Record<string, NavigationItemType[]>
->(
+const {
+  desktopNavigationItems,
+  mobileNavigationBottomItems,
+  mobileNavigationMoreItems,
+} = navigation.reduce<Record<string, NavigationItemType[]>>(
   (items, item, index) => {
     // We filter out the "more" separator in` desktop navigation
-    if (item.name !== MORE_SEPARATOR_NAME) items.desktopNavigationItems.push(item);
+    if (item.name !== MORE_SEPARATOR_NAME)
+      items.desktopNavigationItems.push(item);
     // Items for mobile bottom navigation
     if (index < moreSeparatorIndex + 1 && !item.onlyDesktop) {
       items.mobileNavigationBottomItems.push(item);
@@ -178,7 +198,11 @@ const { desktopNavigationItems, mobileNavigationBottomItems, mobileNavigationMor
     }
     return items;
   },
-  { desktopNavigationItems: [], mobileNavigationBottomItems: [], mobileNavigationMoreItems: [] }
+  {
+    desktopNavigationItems: [],
+    mobileNavigationBottomItems: [],
+    mobileNavigationMoreItems: [],
+  },
 );
 
 const Navigation = () => {
@@ -194,8 +218,16 @@ const Navigation = () => {
   );
 };
 
-const defaultIsCurrent: NavigationItemType["isCurrent"] = ({ isChild, item, pathname }) => {
-  return isChild ? item.href === pathname : item.href ? pathname?.startsWith(item.href) : false;
+const defaultIsCurrent: NavigationItemType["isCurrent"] = ({
+  isChild,
+  item,
+  pathname,
+}) => {
+  return isChild
+    ? item.href === pathname
+    : item.href
+      ? pathname?.startsWith(item.href)
+      : false;
 };
 
 const NavigationItem: React.FC<{
@@ -206,7 +238,8 @@ const NavigationItem: React.FC<{
   const { item, isChild } = props;
   const { t, ready: isLocaleReady } = useClientTranslation();
   const pathname = usePathname();
-  const isCurrent: NavigationItemType["isCurrent"] = item.isCurrent || defaultIsCurrent;
+  const isCurrent: NavigationItemType["isCurrent"] =
+    item.isCurrent || defaultIsCurrent;
   const current = isCurrent({ isChild: !!isChild, item, pathname });
 
   return (
@@ -217,13 +250,15 @@ const NavigationItem: React.FC<{
           aria-label={t(item.name)}
           className={cn(
             "text-default group flex items-center rounded-md px-2 py-1.5 text-sm font-medium",
-            item.child ? `[&[aria-current='page']]:bg-transparent` : `[&[aria-current='page']]:bg-emphasis`,
+            item.child
+              ? `[&[aria-current='page']]:bg-transparent`
+              : `[&[aria-current='page']]:bg-emphasis`,
             isChild
               ? `[&[aria-current='page']]:text-emphasis [&[aria-current='page']]:bg-emphasis hidden h-8 pl-16 lg:flex lg:pl-11 ${
                   props.index === 0 ? "mt-0" : "mt-px"
                 }`
               : "[&[aria-current='page']]:text-emphasis mt-0.5 text-sm",
-            isLocaleReady ? "hover:bg-emphasis hover:text-emphasis" : ""
+            isLocaleReady ? "hover:bg-emphasis hover:text-emphasis" : "",
           )}
           aria-current={current ? "page" : undefined}
         >
@@ -246,7 +281,9 @@ const NavigationItem: React.FC<{
       </Tooltip>
       {item.child &&
         isCurrent({ pathname, isChild, item }) &&
-        item.child.map((item, index) => <NavigationItem index={index} key={item.name} item={item} isChild />)}
+        item.child.map((item, index) => (
+          <NavigationItem index={index} key={item.name} item={item} isChild />
+        ))}
     </Fragment>
   );
 };
@@ -262,7 +299,7 @@ const MobileNavigation = () => {
     <>
       <nav
         className={cn(
-          "pwa:pb-2.5 bg-muted border-subtle fixed bottom-0 z-30 -mx-4 flex w-full border-t bg-opacity-40 px-1 shadow backdrop-blur-md md:hidden"
+          "pwa:pb-2.5 bg-muted border-subtle fixed bottom-0 z-30 -mx-4 flex w-full border-t bg-opacity-40 px-1 shadow backdrop-blur-md md:hidden",
         )}
       >
         {mobileNavigationBottomItems.map((item) => (
@@ -282,7 +319,8 @@ const MobileNavigationItem: React.FC<{
   const { item, isChild } = props;
   const pathname = usePathname();
   const { t, ready: isLocaleReady } = useClientTranslation();
-  const isCurrent: NavigationItemType["isCurrent"] = item.isCurrent || defaultIsCurrent;
+  const isCurrent: NavigationItemType["isCurrent"] =
+    item.isCurrent || defaultIsCurrent;
   const current = isCurrent({ isChild: !!isChild, item, pathname });
 
   return (
@@ -300,7 +338,11 @@ const MobileNavigationItem: React.FC<{
           aria-current={current ? "page" : undefined}
         />
       )}
-      {isLocaleReady ? <span className="block truncate">{t(item.name)}</span> : <SkeletonText />}
+      {isLocaleReady ? (
+        <span className="block truncate">{t(item.name)}</span>
+      ) : (
+        <SkeletonText />
+      )}
     </Link>
   );
 };
@@ -314,9 +356,17 @@ const MobileNavigationMoreItem: React.FC<{
 
   return (
     <li className="border-subtle border-b last:border-b-0" key={item.name}>
-      <Link href={item.href} className="hover:bg-subtle flex items-center justify-between p-5">
+      <Link
+        href={item.href}
+        className="hover:bg-subtle flex items-center justify-between p-5"
+      >
         <span className="text-default flex items-center font-semibold ">
-          {item.icon && <item.icon className="h-5 w-5 flex-shrink-0 ltr:mr-3 rtl:ml-3" aria-hidden="true" />}
+          {item.icon && (
+            <item.icon
+              className="h-5 w-5 flex-shrink-0 ltr:mr-3 rtl:ml-3"
+              aria-hidden="true"
+            />
+          )}
           {t(item.name)}
         </span>
         <ArrowRight className="text-subtle h-5 w-5" />
@@ -393,7 +443,12 @@ function SideBar({}: SideBarProps) {
 
         <div>
           {bottomNavItems.map(({ icon: Icon, ...item }, index) => (
-            <Tooltip side="right" content={t(item.name)} className="lg:hidden" key={item.name}>
+            <Tooltip
+              side="right"
+              content={t(item.name)}
+              className="lg:hidden"
+              key={item.name}
+            >
               <ButtonOrLink
                 id={item.name}
                 href={item.href || undefined}
@@ -404,7 +459,7 @@ function SideBar({}: SideBarProps) {
                   "[&[aria-current='page']]:bg-emphasis  text-default justify-right group flex items-center rounded-md px-2 py-1.5 text-sm font-medium",
                   "[&[aria-current='page']]:text-emphasis mt-0.5 w-full text-sm",
                   isLocaleReady ? "hover:bg-emphasis hover:text-emphasis" : "",
-                  index === 0 && "mt-3"
+                  index === 0 && "mt-3",
                 )}
                 onClick={item.onClick}
               >
@@ -412,7 +467,7 @@ function SideBar({}: SideBarProps) {
                   <Icon
                     className={cn(
                       "h-4 w-4 flex-shrink-0 [&[aria-current='page']]:text-inherit",
-                      "me-3 md:mx-auto lg:ltr:mr-2 lg:rtl:ml-2"
+                      "me-3 md:mx-auto lg:ltr:mr-2 lg:rtl:ml-2",
                     )}
                     aria-hidden="true"
                   />
@@ -422,7 +477,10 @@ function SideBar({}: SideBarProps) {
                     <div className="flex">{t(item.name)}</div>
                   </span>
                 ) : (
-                  <SkeletonText style={{ width: `${item.name.length * 10}px` }} className="h-[20px]" />
+                  <SkeletonText
+                    style={{ width: `${item.name.length * 10}px` }}
+                    className="h-[20px]"
+                  />
                 )}
               </ButtonOrLink>
             </Tooltip>
@@ -445,7 +503,7 @@ export function ShellMain(props: LayoutProps) {
           className={cn(
             "flex items-center md:mb-6 md:mt-0",
             props.smallHeading ? "lg:mb-7" : "lg:mb-8",
-            props.hideHeadingOnMobile ? "mb-0" : "mb-6"
+            props.hideHeadingOnMobile ? "mb-0" : "mb-6",
           )}
         >
           {!!props.backPath && (
@@ -454,7 +512,9 @@ export function ShellMain(props: LayoutProps) {
               size="sm"
               color="minimal"
               onClick={() =>
-                typeof props.backPath === "string" ? router.push(props.backPath as string) : router.back()
+                typeof props.backPath === "string"
+                  ? router.push(props.backPath as string)
+                  : router.back()
               }
               StartIcon={ArrowLeft}
               aria-label="Go Back"
@@ -462,23 +522,43 @@ export function ShellMain(props: LayoutProps) {
             />
           )}
           {props.heading && (
-            <header className={cn(props.large && "py-8", "flex w-full max-w-full items-center truncate")}>
-              {props.HeadingLeftIcon && <div className="ltr:mr-4">{props.HeadingLeftIcon}</div>}
-              <div className={cn("w-full truncate ltr:mr-4 rtl:ml-4 md:block", props.headerClassName)}>
+            <header
+              className={cn(
+                props.large && "py-8",
+                "flex w-full max-w-full items-center truncate",
+              )}
+            >
+              {props.HeadingLeftIcon && (
+                <div className="ltr:mr-4">{props.HeadingLeftIcon}</div>
+              )}
+              <div
+                className={cn(
+                  "w-full truncate ltr:mr-4 rtl:ml-4 md:block",
+                  props.headerClassName,
+                )}
+              >
                 {props.heading && (
                   <h3
                     className={cn(
                       "font-cal max-w-28 sm:max-w-72 md:max-w-80 text-emphasis inline truncate text-lg font-semibold tracking-wide sm:text-xl md:block xl:max-w-full",
                       props.smallHeading ? "text-base" : "text-xl",
-                      props.hideHeadingOnMobile && "hidden"
+                      props.hideHeadingOnMobile && "hidden",
                     )}
                   >
-                    {!isLocaleReady ? <SkeletonText invisible /> : props.heading}
+                    {!isLocaleReady ? (
+                      <SkeletonText invisible />
+                    ) : (
+                      props.heading
+                    )}
                   </h3>
                 )}
                 {props.subtitle && (
                   <p className="text-default hidden text-sm md:block">
-                    {!isLocaleReady ? <SkeletonText invisible /> : props.subtitle}
+                    {!isLocaleReady ? (
+                      <SkeletonText invisible />
+                    ) : (
+                      props.subtitle
+                    )}
                   </p>
                 )}
               </div>
@@ -489,7 +569,7 @@ export function ShellMain(props: LayoutProps) {
                     props.backPath
                       ? "relative"
                       : "pwa:bottom-24 fixed bottom-20 z-40 ltr:right-4 rtl:left-4 md:z-auto md:ltr:right-0 md:rtl:left-0",
-                    "flex-shrink-0 md:relative md:bottom-auto md:right-auto"
+                    "flex-shrink-0 md:relative md:bottom-auto md:right-auto",
                   )}
                 >
                   {isLocaleReady && props.CTA}
@@ -500,13 +580,19 @@ export function ShellMain(props: LayoutProps) {
           )}
         </div>
       )}
-      <div className={cn(props.flexChildrenContainer && "flex flex-1 flex-col")}>{props.children}</div>
+      <div
+        className={cn(props.flexChildrenContainer && "flex flex-1 flex-col")}
+      >
+        {props.children}
+      </div>
     </>
   );
 }
 
 function MainContainer({
-  MobileNavigationContainer: MobileNavigationContainerProp = <MobileNavigationContainer />,
+  MobileNavigationContainer: MobileNavigationContainerProp = (
+    <MobileNavigationContainer />
+  ),
   TopNavContainer: TopNavContainerProp = <TopNavContainer />,
   ...props
 }: LayoutProps) {
@@ -515,7 +601,11 @@ function MainContainer({
       {/* show top navigation for md and smaller (tablet and phones) */}
       {TopNavContainerProp}
       <div className="max-w-full px-2 py-4 lg:px-6">
-        {!props.withoutMain ? <ShellMain {...props}>{props.children}</ShellMain> : props.children}
+        {!props.withoutMain ? (
+          <ShellMain {...props}>{props.children}</ShellMain>
+        ) : (
+          props.children
+        )}
         {/* show bottom navigation for md and smaller (tablet and phones) on pages where back button doesn't exist */}
         {!props.backPath ? MobileNavigationContainerProp : null}
       </div>

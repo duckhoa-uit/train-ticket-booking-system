@@ -49,7 +49,12 @@ export {
 
 export { SettingsToggle, Switch } from "./switch";
 
-export { Select, SelectField, SelectWithValidation, getReactSelectProps } from "./select";
+export {
+  Select,
+  SelectField,
+  SelectWithValidation,
+  getReactSelectProps,
+} from "./select";
 export { FormStep, Stepper, Steps } from "./step";
 
 export { DateRangePickerLazy as DateRangePicker } from "./date-range-picker";
