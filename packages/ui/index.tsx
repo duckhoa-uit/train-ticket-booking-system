@@ -130,3 +130,5 @@ export * from "./components/loading";
 export { Credits } from "./components/credits";
 
 export * from "./components/radix-select";
+
+export * from "./components/toggle/Toggle";

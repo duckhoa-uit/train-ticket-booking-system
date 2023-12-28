@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 import { cn } from "@ttbs/lib/cn";
@@ -13,7 +14,6 @@ import {
   TableHeader,
   TableRow,
 } from "@ttbs/ui/components/table/TableNew";
-
 
 // import closeIcon from "../../../public/img/close.svg";
 
@@ -93,6 +93,7 @@ const TABLE_HEAD_ITEMS: TableHeadItem[] = [
 ];
 
 export const DetailRoutes = (props: DetailRoutes) => {
+  const router = useRouter();
   return (
     <div className={cn("md:text-normal mx-auto h-max rounded-sm bg-white p-5 text-sm", props.className)}>
       {/* <TripItem className="p-5" /> */}
@@ -119,7 +120,11 @@ export const DetailRoutes = (props: DetailRoutes) => {
         </TableBody>
       </Table>
       <div className="mt-5 box-border flex items-center justify-around">
-        <Button>
+        <Button
+          onClick={() => {
+            router.push("/book-seats");
+          }}
+        >
           <span>Đặt vé</span>
         </Button>
         <Link

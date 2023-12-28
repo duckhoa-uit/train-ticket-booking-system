@@ -13,6 +13,7 @@
     "lint:report": "eslint . --format json --output-file ../../lint-results/web.json"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.0.0",
     "@ttbs/i18n": "workspace:*",
     "@ttbs/lib": "workspace:*",
     "@ttbs/ui": "workspace:*",
