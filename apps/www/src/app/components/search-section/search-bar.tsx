@@ -25,7 +25,7 @@ const SearchBar = (Props: Props) => {
       className={cn(
         "relative h-3/5 w-full p-5 lg:w-4/5",
         "bg-default dark:bg-muted border-subtle rounded-md border px-4 py-10 sm:px-10",
-        Props.className
+        Props.className,
       )}
     >
       <form className="flex w-full flex-col items-center lg:flex-row lg:items-end">

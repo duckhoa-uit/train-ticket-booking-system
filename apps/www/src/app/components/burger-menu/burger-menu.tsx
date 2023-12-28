@@ -22,7 +22,9 @@ const BurgerMenu: React.FC<Props> = (props) => {
     >
       <svg id="btn-menu--2" className="z-100 w-full" viewBox="0 0 100 100">
         <rect
-          className={`top line ${props.openState ? " activeIcon topRotate" : ""} `}
+          className={`top line ${
+            props.openState ? " activeIcon topRotate" : ""
+          } `}
           width="60"
           rx="5"
           height="8"
@@ -40,7 +42,9 @@ const BurgerMenu: React.FC<Props> = (props) => {
           y="45"
         />
         <rect
-          className={`bottom line ${props.openState ? " activeIcon bottomRotate" : ""}`}
+          className={`bottom line ${
+            props.openState ? " activeIcon bottomRotate" : ""
+          }`}
           width="60"
           rx="5"
           height="8"

@@ -18,7 +18,10 @@ const Footer = () => {
               <ul className=" leading-10">
                 {aboutArray.map((item) => {
                   return (
-                    <li key={item.link} className="hover:cursor-pointer hover:text-gray-50">
+                    <li
+                      key={item.link}
+                      className="hover:cursor-pointer hover:text-gray-50"
+                    >
                       <Link href={item.link}>{item.name}</Link>
                     </li>
                   );
@@ -30,7 +33,10 @@ const Footer = () => {
               <ul className="text- leading-10">
                 {supportArray.map((item) => {
                   return (
-                    <li key={item.link} className="hover:cursor-pointer hover:text-gray-50">
+                    <li
+                      key={item.link}
+                      className="hover:cursor-pointer hover:text-gray-50"
+                    >
                       <Link href={item.link}>{item.name}</Link>
                     </li>
                   );
@@ -60,7 +66,9 @@ const Footer = () => {
         </div>
         <hr className="m-3 mx-auto w-4/5 border-gray-500 lg:w-full" />
         <div className="max-w-7xl text-center lg:text-left">
-          <p className="text-gray-300">@2023 Your Company, Inc. All rights reserved.</p>
+          <p className="text-gray-300">
+            @2023 Your Company, Inc. All rights reserved.
+          </p>
         </div>
       </div>
 
