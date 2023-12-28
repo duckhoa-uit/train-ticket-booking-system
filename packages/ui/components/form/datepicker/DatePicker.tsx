@@ -1,38 +1,29 @@
-import "react-calendar/dist/Calendar.css";
-// import PrimitiveDatePicker from 'react-date-picker/dist/entry.nostyle';
-import PrimitiveDatePicker from "react-date-picker";
-import "react-date-picker/dist/DatePicker.css";
+"use client";
+
+import { Calendar as CalendarIcon } from "lucide-react";
 
 import { cn } from "@ttbs/lib/cn";
+import dayjs from "@ttbs/lib/dayjs";
 
-import { Calendar } from "../../icons";
-import "./DatePicker.css";
+import { Button } from "../../button";
+import { Calendar } from "../../calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "../../popover";
 
-type Props = {
-  date: Date;
-  onDatesChange?: ((date: Value) => void) | undefined;
-  className?: string;
-  disabled?: boolean;
-  minDate?: Date;
-};
-
-type ValuePiece = Date | null;
-
-type Value = ValuePiece | [ValuePiece, ValuePiece];
-
-const DatePicker = ({ minDate, disabled, date, onDatesChange, className }: Props) => {
+export default function DatePicker({ date, setDate }: { date?: Date; setDate: (date?: Date) => void }) {
   return (
-    <PrimitiveDatePicker
-      className={cn("focus:ring-primary-500 h-9 sm:text-sm", className)}
-      calendarClassName="border rounded-md dark:text-black bg-primary border-default hover:border-emphasis"
-      clearIcon={null}
-      calendarIcon={<Calendar className="text-subtle h-5 w-5 rounded-md" />}
-      value={date}
-      minDate={minDate}
-      disabled={disabled}
-      onChange={onDatesChange}
-    />
+    <Popover>
+      <PopoverTrigger asChild>
+        <Button
+          color="secondary"
+          className={cn("w-full justify-start text-left font-normal", !date && "text-muted-foreground")}
+        >
+          <CalendarIcon className="mr-2 h-4 w-4" />
+          {date ? dayjs(date).format("LL") : <span>Pick a date</span>}
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent className="w-auto p-0">
+        <Calendar mode="single" selected={date} onSelect={setDate} initialFocus />
+      </PopoverContent>
+    </Popover>
   );
-};
-
-export default DatePicker;
+}

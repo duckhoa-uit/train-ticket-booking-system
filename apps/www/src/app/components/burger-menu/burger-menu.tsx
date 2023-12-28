@@ -23,29 +23,29 @@ const BurgerMenu: React.FC<Props> = (props) => {
       <svg id="btn-menu--2" className="z-100 w-full" viewBox="0 0 100 100">
         <rect
           className={`top line ${props.openState ? " activeIcon topRotate" : ""} `}
-          width="80"
+          width="60"
           rx="5"
-          height="10"
+          height="8"
           fill="black"
-          x="10"
+          x="8"
           y="25"
         />
         <rect
           className={`middle line ${props.openState ? " opacity-0" : ""}`}
-          width="80"
+          width="60"
           rx="5"
-          height="10"
+          height="8"
           fill="black"
-          x="10"
+          x="8"
           y="45"
         />
         <rect
           className={`bottom line ${props.openState ? " activeIcon bottomRotate" : ""}`}
-          width="80"
+          width="60"
           rx="5"
-          height="10"
+          height="8"
           fill="black"
-          x="10"
+          x="8"
           y="65"
         />
       </svg>

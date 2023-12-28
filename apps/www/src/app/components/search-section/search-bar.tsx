@@ -16,12 +16,9 @@ type Props = {
 };
 
 const SearchBar = (Props: Props) => {
-  const current = new Date(Date.now());
-  // const [departDate, setDepartDate] = useState(current);
   const [departPlace, setDepartPlace] = useState("");
-  // console.log("🚀 ~ file: SearchBar.tsx:13 ~ SearchBar ~ departPlace:", departPlace);
   const [arrivalPlace, setArrivalPlace] = useState("");
-  // console.log("🚀 ~ file: SearchBar.tsx:15 ~ SearchBar ~ arrivalPlace:", arrivalPlace);
+  const [arrivalDate, setArrivalDate] = useState<Date>();
 
   return (
     <div
@@ -69,13 +66,7 @@ const SearchBar = (Props: Props) => {
             <Label htmlFor="arrival" className="self-start">
               Ngày khởi hành
             </Label>
-            <DatePicker
-              className="w-full font-normal outline-none"
-              date={current}
-              onDatesChange={() => {
-                // setDepartDate(date ?? )
-              }}
-            />
+            <DatePicker date={arrivalDate} setDate={(d) => setArrivalDate(d)} />
           </div>
         </div>
         <div className="w-full p-2 lg:w-auto">
@@ -86,7 +77,7 @@ const SearchBar = (Props: Props) => {
                 query: {
                   "depart-station": departPlace,
                   "arrival-station": arrivalPlace,
-                  date: current.toISOString(),
+                  date: arrivalDate?.toISOString(),
                 },
               }}
             >

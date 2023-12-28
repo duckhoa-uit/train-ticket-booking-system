@@ -81,9 +81,9 @@ const Header = () => {
     <header className="bg-white">
       <div className="text-subtle relative flex max-w-7xl flex-col items-center p-3 capitalize md:mx-auto md:flex-row md:justify-around md:align-middle md:text-sm">
         <div className=" flex w-full items-center justify-between gap-3 px-2 md:w-auto">
-          <a href="#">
+          <Link href="/">
             <Image src="/logoipsum.svg" width={200} height={40} alt="logoipsum" />
-          </a>
+          </Link>
           <div>
             <BurgerMenu
               className="z-10 box-border flex w-10 rounded hover:cursor-pointer md:hidden md:w-12"

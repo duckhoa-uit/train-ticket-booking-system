@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 import { about, support } from "./links";
@@ -18,7 +19,7 @@ const Footer = () => {
                 {aboutArray.map((item) => {
                   return (
                     <li key={item.link} className="hover:cursor-pointer hover:text-gray-50">
-                      <a href={item.link}>{item.name}</a>
+                      <Link href={item.link}>{item.name}</Link>
                     </li>
                   );
                 })}
@@ -30,7 +31,7 @@ const Footer = () => {
                 {supportArray.map((item) => {
                   return (
                     <li key={item.link} className="hover:cursor-pointer hover:text-gray-50">
-                      <a href={item.link}>{item.name}</a>
+                      <Link href={item.link}>{item.name}</Link>
                     </li>
                   );
                 })}
