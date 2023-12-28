@@ -22,6 +22,8 @@
   "incorrect_password": "Password is incorrect.",
   "incorrect_email_password": "Email or password is incorrect.",
   "something_went_wrong": "Something went wrong.",
+  "basic_info": "Basic Information",
+  "price": "Price",
   "please_try_again_and_contact_us": "Please try again and contact us if the issue persists.",
   "no_account_exists": "No account exists matching that email address.",
   "token_invalid_expired": "Token is either invalid or expired.",
@@ -59,5 +61,14 @@
   "journey_created_successfully": "{{journeyName}} journey created successfully",
   "journey_stations": "Journey Stations",
   "add_journey_station": "Add station",
-  "journey_updated_successfully": "Journey updated successfully"
+  "journey_updated_successfully": "Journey updated successfully",
+  "trains_page_title": "Trains",
+  "add_train": "Add Train",
+  "train_carriages": "Carriages",
+  "add_train_carriage": "Add Carriage",
+  "seats_constraint": "The number of seats must be a multiple of {{seatsPerRow}}",
+  "train_updated_successfully": "Train updated successfully",
+  "train_created_successfully": "{{trainName}} train created successfully",
+  "trips_page_title": "Trips",
+  "trip_stations": "Stations"
 }

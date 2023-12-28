@@ -15,5 +15,5 @@ export const trainRouter = Router();
 trainRouter.post("/", validate(trainCreateSchema), createTrainHandler);
 trainRouter.get("/", getTrainHandler);
 trainRouter.get("/:id", getTrainById);
-trainRouter.put("/:id", validate(trainUpdateSchema), updateTrainHandler);
+trainRouter.patch("/:id", validate(trainUpdateSchema), updateTrainHandler);
 trainRouter.delete("/:id", deleteTrainHandler);

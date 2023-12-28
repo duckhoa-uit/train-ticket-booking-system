@@ -1,16 +1,41 @@
-import prisma from "@ttbs/prisma";
+import prisma, { Prisma } from "@ttbs/prisma";
 
-import { tripCreateInput, tripUpdateInput } from "@/schemas/trip.schema";
+import { TripCreateInput, TripUpdateInput } from "@/schemas/trip.schema";
 
-export const createTrip = async (input: tripCreateInput) => {
-  return await prisma.trip.create({
-    data: {
-      name: input.name,
-      journeyId: input.journeyId,
-      trainId: input.trainId,
-      arrivalDate: input.arrivalDate,
-      departDate: input.departDate,
-    },
+export const createTrip = async (input: TripCreateInput) => {
+  return prisma.$transaction(async (tx) => {
+    const newTrip = await tx.trip.create({
+      data: {
+        name: input.name,
+        journeyId: input.journeyId,
+        trainId: input.trainId,
+        arrivalDate: input.arrivalDate ?? input.timelines[0].arrivalDate,
+        departDate: input.departDate ?? input.timelines[input.timelines.length - 1].departDate,
+        timelines: {
+          createMany: {
+            data: input.timelines.map((timeline) => ({
+              journeyStationId: timeline.journeyStationId,
+              arrivalDate: timeline.arrivalDate,
+              departDate: timeline.departDate,
+            })),
+          },
+        },
+      },
+    });
+
+    const prices = input.timelines.flatMap<Prisma.PricingCreateManyInput>((timeline) =>
+      (timeline.prices ?? []).map((price) => ({
+        ...price,
+        tripId: newTrip.id,
+      }))
+    );
+    console.log("🚀 ~ file: trip.service.ts:27 ~ returnprisma.$transaction ~ prices:", prices);
+
+    await tx.pricing.createMany({
+      data: prices,
+    });
+
+    return newTrip;
   });
 };
 
@@ -33,7 +58,7 @@ export const getTripByID = async (id: number) => {
   });
 };
 
-export const updateTrip = async (id: number, input: tripUpdateInput) => {
+export const updateTrip = async (id: number, input: TripUpdateInput) => {
   const existTrip = await prisma.trip.findUnique({
     where: { id },
   });

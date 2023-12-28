@@ -21,7 +21,7 @@ export const createSeatType = async (input: seatTypeCreateInput) => {
 };
 
 export const getAllSeatTypes = async () => {
-  return await prisma.seatType.findMany({});
+  return await prisma.seatType.findMany();
 };
 
 export const getSeatTypeByID = async (id: number) => {

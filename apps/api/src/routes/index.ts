@@ -22,6 +22,6 @@ indexRouter.use("/journeys", journeyRouter);
 indexRouter.use("/routes", routeRouter);
 indexRouter.use("/carriages", carriageRouter);
 indexRouter.use("/seats", seatRouter);
-indexRouter.use("/seatTypes", seatTypeRouter);
+indexRouter.use("/seat-types", seatTypeRouter);
 indexRouter.use("/trips", tripRouter);
-indexRouter.use("/trip_timelines", tripTimelineRouter);
+indexRouter.use("/trip-timelines", tripTimelineRouter);

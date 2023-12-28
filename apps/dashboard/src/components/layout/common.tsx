@@ -18,6 +18,7 @@ import {
   Settings,
   Train,
   CalendarDays,
+  Luggage,
 } from "@ttbs/ui/components/icons";
 
 import { KBarTrigger } from "@/components/kbar/Kbar";
@@ -38,7 +39,7 @@ export const Layout = (props: LayoutProps) => {
       )} */}
 
       <div className="flex min-h-screen flex-col">
-        <div className="flex flex-1" data-testid="dashboard-shell">
+        <div className="flex max-h-screen flex-1" data-testid="dashboard-shell">
           {props.SidebarContainer ? cloneElement(props.SidebarContainer) : <SideBarContainer />}
           <div className="flex w-0 flex-1 flex-col">
             <MainContainer {...props} />
@@ -136,6 +137,22 @@ const navigation: NavigationItemType[] = [
         },
       },
     ],
+  },
+  {
+    name: "trains_page_title",
+    href: "/trains",
+    icon: Train,
+    isCurrent: ({ pathname: path, item }) => {
+      return path?.includes(item.href);
+    },
+  },
+  {
+    name: "trips_page_title",
+    href: "/trips",
+    icon: Luggage,
+    isCurrent: ({ pathname: path, item }) => {
+      return path?.includes(item.href);
+    },
   },
   {
     name: MORE_SEPARATOR_NAME,

@@ -183,6 +183,7 @@ model Carriage {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  @@unique([trainId, order])
   @@map("carriages")
 }
 

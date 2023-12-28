@@ -53,4 +53,4 @@ export { Select, SelectField, SelectWithValidation, getReactSelectProps } from "
 export { FormStep, Stepper, Steps } from "./step";
 
 export { DateRangePickerLazy as DateRangePicker } from "./date-range-picker";
-export { DatePicker } from "./datepicker";
+export { DatePicker, DateTimePicker } from "./datepicker";

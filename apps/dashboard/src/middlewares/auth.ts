@@ -21,7 +21,7 @@ export function withAuthMiddleware(middleware: CustomMiddleware) {
     if (!token && path === `/${lng}`) {
       response = NextResponse.redirect(new URL(`/${lng}/auth/login`, req.url));
     } else if (token && (path === `/${lng}/auth/login` || path === `/${lng}/auth/register`)) {
-      response = NextResponse.redirect(new URL(`/${lng}`, req.url));
+      response = NextResponse.redirect(new URL(`/${lng}/dashboard`, req.url));
     }
 
     // Call the next middleware and pass the req and response

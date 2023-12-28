@@ -1,6 +1,12 @@
 import { NextFunction, Request, Response } from "express";
 
-import { trainCreateInput, trainUpdateInput, trainIdParamInput } from "@/schemas/train.schema";
+import {
+  trainCreateInput,
+  trainUpdateInput,
+  trainIdParamInput,
+  trainCreateSchema,
+  trainUpdateSchema,
+} from "@/schemas/train.schema";
 import { createTrain, getAllTrains, getTrainByID, updateTrain, deleteTrain } from "@/services/train.service";
 
 export const createTrainHandler = async (
@@ -9,7 +15,8 @@ export const createTrainHandler = async (
   next: NextFunction
 ) => {
   try {
-    const newTrain = await createTrain(req.body);
+    const { body: reqBody } = trainCreateSchema.parse(req);
+    const newTrain = await createTrain(reqBody);
     return res.status(201).json({ status: "success", data: newTrain });
   } catch (error) {
     return next(error);
@@ -47,8 +54,9 @@ export const updateTrainHandler = async (
 ) => {
   try {
     const trainID = +req.params.id;
+    const { body: reqBody } = trainUpdateSchema.parse(req);
 
-    const updatedTrain = await updateTrain(trainID, req.body);
+    const updatedTrain = await updateTrain(trainID, reqBody);
     return res.status(200).json({ status: "success", data: updatedTrain });
   } catch (error) {
     return next(error);

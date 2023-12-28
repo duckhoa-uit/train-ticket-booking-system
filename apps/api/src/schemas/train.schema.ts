@@ -11,6 +11,7 @@ export const trainCreateSchema = z.object({
         name: z.string(),
         order: z.number(),
         seatsPerCabin: z.number(),
+        numOfCabins: z.number().optional().default(1),
       })
     ),
   }),
@@ -27,6 +28,16 @@ export const trainUpdateSchema = z.object({
     .object({
       code: z.string(),
       name: z.string(),
+      carriages: z.array(
+        z.object({
+          seatTypeId: z.number(),
+          code: z.string(),
+          name: z.string(),
+          order: z.number(),
+          seatsPerCabin: z.number(),
+          numOfCabins: z.number().optional().default(1),
+        })
+      ),
     })
     .partial(),
 });

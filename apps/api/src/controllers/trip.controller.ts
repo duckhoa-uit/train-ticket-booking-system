@@ -1,10 +1,10 @@
 import { NextFunction, Request, Response } from "express";
 
-import { tripCreateInput, tripUpdateInput, tripIdParamInput, tripCreateSchema } from "@/schemas/trip.schema";
+import { TripCreateInput, TripUpdateInput, TripIdParamInput, tripCreateSchema } from "@/schemas/trip.schema";
 import { createTrip, getAllTrips, getTripByID, updateTrip } from "@/services/trip.service";
 
 export const createTripHandler = async (
-  req: Request<{}, {}, tripCreateInput>,
+  req: Request<{}, {}, TripCreateInput>,
   res: Response,
   next: NextFunction
 ) => {
@@ -27,7 +27,7 @@ export const getTripHandler = async (req: Request<{}, {}, {}>, res: Response, ne
 };
 
 export const getTripById = async (
-  req: Request<tripIdParamInput, {}, {}>,
+  req: Request<TripIdParamInput, {}, {}>,
   res: Response,
   next: NextFunction
 ) => {
@@ -42,7 +42,7 @@ export const getTripById = async (
 };
 
 export const updateTripHandler = async (
-  req: Request<tripIdParamInput, {}, tripUpdateInput>,
+  req: Request<TripIdParamInput, {}, TripUpdateInput>,
   res: Response,
   next: NextFunction
 ) => {

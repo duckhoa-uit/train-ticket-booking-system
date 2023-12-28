@@ -30,6 +30,7 @@ export {
   SelectField,
   SelectWithValidation,
   DatePicker,
+  DateTimePicker,
   DateRangePicker,
   getReactSelectProps,
   FormStep,

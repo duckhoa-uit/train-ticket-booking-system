@@ -70,7 +70,11 @@ export const getJourneyById = async (id: number) => {
   return await prisma.journey.findUnique({
     where: { id },
     include: {
-      journeyStations: true,
+      journeyStations: {
+        include: {
+          station: true,
+        },
+      },
     },
   });
 };
