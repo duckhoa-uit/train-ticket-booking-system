@@ -79,7 +79,7 @@ const Header = () => {
 
   return (
     <header className="bg-white">
-      <div className="text-subtle relative flex max-w-7xl flex-col items-center p-3 capitalize md:mx-auto md:flex-row md:justify-around md:align-middle md:text-sm">
+      <div className="text-subtle relative flex max-w-7xl flex-col items-center px-5 py-3 capitalize md:mx-auto md:flex-row md:justify-around md:align-middle md:text-sm">
         <div className=" flex w-full items-center justify-between gap-3 px-2 md:w-auto">
           <Link href="/">
             <Image src="/logoipsum.svg" width={200} height={40} alt="logoipsum" />

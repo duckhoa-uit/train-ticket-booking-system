@@ -2,7 +2,7 @@ import { Router } from "express";
 
 import {
   createTripHandler,
-  getTripHandler,
+  getTripsHandler,
   getTripById,
   updateTripHandler,
 } from "@/controllers/trip.controller";
@@ -12,6 +12,6 @@ import { tripCreateSchema, tripUpdateSchema } from "@/schemas/trip.schema";
 export const tripRouter = Router();
 
 tripRouter.post("/", validate(tripCreateSchema), createTripHandler);
-tripRouter.get("/", getTripHandler);
+tripRouter.get("/", getTripsHandler);
 tripRouter.get("/:id", getTripById);
 tripRouter.put("/:id", validate(tripUpdateSchema), updateTripHandler);

@@ -1,5 +1,4 @@
 import dayjs from "dayjs";
-import dayjsBusinessTime from "dayjs-business-days2";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import duration from "dayjs/plugin/duration";
 import isBetween from "dayjs/plugin/isBetween";
@@ -12,7 +11,6 @@ import toArray from "dayjs/plugin/toArray";
 import utc from "dayjs/plugin/utc";
 
 dayjs.extend(customParseFormat);
-dayjs.extend(dayjsBusinessTime);
 dayjs.extend(isBetween);
 dayjs.extend(isToday);
 dayjs.extend(localizedFormat);

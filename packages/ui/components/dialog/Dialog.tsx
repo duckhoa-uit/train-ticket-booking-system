@@ -5,7 +5,6 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import type { ReactNode } from "react";
 import React, { useState } from "react";
 
-import { useClientTranslation } from "@ttbs/i18n";
 import { cn } from "@ttbs/lib/cn";
 import type { SVGComponent } from "@ttbs/types/SVGComponent";
 
@@ -190,12 +189,11 @@ export function DialogClose(
     color?: ButtonProps["color"];
   } & React.ComponentProps<typeof Button>
 ) {
-  const { t } = useClientTranslation();
   return (
     <DialogPrimitive.Close asChild {...props.dialogCloseProps}>
       {/* This will require the i18n string passed in */}
       <Button data-testid="dialog-rejection" color={props.color || "minimal"} {...props}>
-        {props.children ? props.children : t("Close")}
+        {props.children ? props.children : "Close"}
       </Button>
     </DialogPrimitive.Close>
   );

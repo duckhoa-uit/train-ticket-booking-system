@@ -1,6 +1,14 @@
 import { NextFunction, Request, Response } from "express";
+import { ParsedQs } from "qs";
 
-import { TripCreateInput, TripUpdateInput, TripIdParamInput, tripCreateSchema } from "@/schemas/trip.schema";
+import {
+  TripCreateInput,
+  TripUpdateInput,
+  TripIdParamInput,
+  tripCreateSchema,
+  SearchTripQueryInput,
+  searchTripQueryInputSchema,
+} from "@/schemas/trip.schema";
 import { createTrip, getAllTrips, getTripByID, updateTrip } from "@/services/trip.service";
 
 export const createTripHandler = async (
@@ -17,10 +25,16 @@ export const createTripHandler = async (
   }
 };
 
-export const getTripHandler = async (req: Request<{}, {}, {}>, res: Response, next: NextFunction) => {
+export const getTripsHandler = async (
+  req: Request<{}, {}, {}, SearchTripQueryInput & ParsedQs>,
+  res: Response,
+  next: NextFunction
+) => {
   try {
-    const allTrips = await getAllTrips();
-    return res.status(200).json({ status: "success", data: allTrips });
+    const { query } = searchTripQueryInputSchema.parse(req);
+    const { trips, count } = await getAllTrips(query);
+
+    return res.status(200).json({ status: "success", data: trips, count });
   } catch (error) {
     return next(error);
   }

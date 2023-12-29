@@ -1,10 +1,13 @@
+import { HydrationOverlay } from "@builder.io/react-hydration-overlay";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { Toaster } from "sonner";
 
 import { TailwindIndicator } from "@ttbs/ui";
 
 import Footer from "./components/footer/footer";
 import Header from "./components/header";
+import { ReactQueryProvider } from "./components/react-query-provider";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -16,15 +19,22 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body className={`${inter.className} bg-subtle overflow-x-hidden`}>
-        {/* <LangProvider lang="en"> */}
-        <Header />
-        {children}
-        <Footer />
-        {/* </LangProvider> */}
-        <TailwindIndicator />
-      </body>
-    </html>
+    <HydrationOverlay>
+      <html lang="en">
+        <body className={`${inter.className} bg-subtle overflow-x-hidden`}>
+          {/* <LangProvider lang="en"> */}
+
+          <ReactQueryProvider>
+            <Header />
+
+            {children}
+            <Footer />
+            {/* </LangProvider> */}
+            <Toaster richColors />
+            <TailwindIndicator />
+          </ReactQueryProvider>
+        </body>
+      </html>
+    </HydrationOverlay>
   );
 }

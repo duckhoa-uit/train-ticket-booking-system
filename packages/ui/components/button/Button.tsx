@@ -10,7 +10,7 @@ import type { SVGComponent } from "@ttbs/types/SVGComponent";
 import { Plus } from "../icons";
 import { Tooltip } from "../tooltip";
 
-type InferredVariantProps = VariantProps<typeof buttonClasses>;
+type InferredVariantProps = VariantProps<typeof buttonVariants>;
 
 export type ButtonColor = NonNullable<InferredVariantProps["color"]>;
 export type ButtonBaseProps = {
@@ -37,7 +37,7 @@ export type ButtonProps = ButtonBaseProps &
     | (Omit<JSX.IntrinsicElements["button"], "onClick" | "ref"> & { href?: never })
   );
 
-export const buttonClasses = cva(
+export const buttonVariants = cva(
   "whitespace-nowrap inline-flex items-center text-sm font-medium relative rounded-md transition-colors disabled:cursor-not-allowed",
   {
     variants: {
@@ -50,9 +50,9 @@ export const buttonClasses = cva(
         primary:
           "bg-brand-default hover:bg-brand-emphasis focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset focus-visible:ring-brand-default text-brand disabled:bg-brand-subtle disabled:text-brand-subtle disabled:opacity-40 disabled:hover:bg-brand-subtle disabled:hover:text-brand-default disabled:hover:opacity-40",
         secondary:
-          "text-emphasis border border-default  bg-default hover:bg-muted hover:border-emphasis focus-visible:bg-subtle focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset focus-visible:ring-empthasis disabled:border-subtle disabled:bg-opacity-30 disabled:text-muted disabled:hover:bg-opacity-30 disabled:hover:text-muted disabled:hover:border-subtle disabled:hover:bg-default",
+          "text-emphasis border border-default bg-default hover:bg-muted hover:border-emphasis focus-visible:bg-subtle focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset focus-visible:ring-emphasis disabled:border-subtle disabled:bg-opacity-30 disabled:text-muted disabled:hover:bg-opacity-30 disabled:hover:text-muted disabled:hover:border-subtle disabled:hover:bg-default",
         minimal:
-          "text-emphasis hover:bg-subtle focus-visible:bg-subtle focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset focus-visible:ring-empthasis disabled:border-subtle disabled:bg-opacity-30 disabled:text-muted disabled:hover:bg-transparent disabled:hover:text-muted disabled:hover:border-subtle",
+          "bg-subtle text-emphasis hover:bg-muted focus-visible:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset focus-visible:ring-emphasis disabled:border-muted disabled:bg-opacity-30 disabled:text-muted disabled:hover:bg-transparent disabled:hover:text-muted disabled:hover:border-subtle",
         destructive:
           "border border-default text-emphasis hover:text-red-700 dark:hover:text-red-100 focus-visible:text-red-700  hover:border-red-100 focus-visible:border-red-100 hover:bg-error  focus-visible:bg-error focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset focus-visible:ring-red-700 disabled:bg-red-100 disabled:border-red-200 disabled:text-red-700 disabled:hover:border-red-200 disabled:opacity-40",
       },
@@ -76,13 +76,13 @@ export const buttonClasses = cva(
       {
         loading: true,
         color: "secondary",
-        className: "bg-subtle text-emphasis/80",
+        className: "text-emphasis/80",
       },
       // Minimal variants
       {
         loading: true,
         color: "minimal",
-        className: "bg-subtle text-emphasis/30",
+        className: "text-emphasis/30",
       },
       // Destructive variants
       {
@@ -145,7 +145,7 @@ export const Button = forwardRef<HTMLAnchorElement | HTMLButtonElement, ButtonPr
       disabled,
       type: !isLink ? type : undefined,
       ref: forwardedRef,
-      className: cn(buttonClasses({ color, size, loading, variant }), props.className),
+      className: cn(buttonVariants({ color, size, loading, variant }), props.className),
       // if we click a disabled button, we prevent going through the click handler
       onClick: disabled
         ? (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
@@ -158,14 +158,14 @@ export const Button = forwardRef<HTMLAnchorElement | HTMLButtonElement, ButtonPr
         <>
           {variant === "fab" ? (
             <>
-              <StartIcon className="hidden h-4 w-4 stroke-[1.5px] ltr:-ml-1 ltr:mr-2 rtl:-mr-1 rtl:ml-2 md:inline-flex" />
+              <StartIcon className="hidden h-4 w-4 stroke-[1.5px] md:inline-flex ltr:-ml-1 ltr:mr-2 rtl:-mr-1 rtl:ml-2" />
               <Plus className="inline h-6 w-6 md:hidden" />
             </>
           ) : (
             <StartIcon
               className={cn(
                 variant === "icon" && "h-4 w-4",
-                variant === "button" && "h-4 w-4 stroke-[1.5px] ltr:-ml-1 ltr:mr-2 rtl:-mr-1 rtl:ml-2"
+                variant === "button" && "mr-1 h-4 w-4 stroke-[1.5px] ltr:-ml-1 ltr:mr-2 rtl:-mr-1 rtl:ml-2"
               )}
             />
           )}

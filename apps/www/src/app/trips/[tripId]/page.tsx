@@ -1,5 +1,3 @@
-"use client";
-
 import React from "react";
 
 import { cn } from "@ttbs/lib/cn";
@@ -12,7 +10,7 @@ import {
   TableRow,
 } from "@ttbs/ui/components/table/TableNew";
 
-import { TripItem } from "@/app/components/trip-item/trip-item";
+import { TripCard } from "@/app/components/trip-card/trip-card";
 
 type TableHeadItem = {
   key: number;
@@ -88,7 +86,7 @@ const TABLE_HEAD_ITEMS: TableHeadItem[] = [
   },
 ];
 
-const TrainDetail = async () => {
+const TripDetails = async () => {
   // const router = useRouter();
   await new Promise((resolve) => {
     setTimeout(resolve, 3000);
@@ -96,7 +94,7 @@ const TrainDetail = async () => {
 
   return (
     <div className={cn("md:text-normal mx-auto mt-5 min-h-[100vh] w-full max-w-7xl p-5 text-sm md:mt-10")}>
-      <TripItem />
+      <TripCard />
       <Table className="mx-auto w-full">
         <TableHeader className="[&_tr]:bg-info">
           <TableRow className=" text-center text-white">
@@ -134,4 +132,4 @@ const TrainDetail = async () => {
   );
 };
 
-export default TrainDetail;
+export default TripDetails;

@@ -74,7 +74,17 @@ export {
   SkeletonContainer,
   SkeletonText,
 } from "./components/skeleton";
-export { Card, StepCard, FormCard } from "./components/card";
+export {
+  InformationCard,
+  StepCard,
+  FormCard,
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "./components/card";
 export type { BaseCardProps } from "./components/card";
 export { Tooltip } from "./components/tooltip";
 export {
@@ -132,3 +142,5 @@ export { Credits } from "./components/credits";
 export * from "./components/radix-select";
 
 export * from "./components/toggle/Toggle";
+
+export * from "./components/pagination";
