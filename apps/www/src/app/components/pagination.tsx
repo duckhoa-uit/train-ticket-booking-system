@@ -28,6 +28,9 @@ export function PaginationSection({
     return temp;
   }, [totalItems, itemsPerPage]);
 
+  const hasPreviousPage = pages.length > 0 && currentPage > 1;
+  const hasNextPage = pages.length > 0 && currentPage < pages.length;
+
   const handleNextPage = () => {
     if (currentPage < pages.length) {
       setCurrentPage(currentPage + 1);
@@ -43,7 +46,7 @@ export function PaginationSection({
     <Pagination>
       <PaginationContent>
         <PaginationItem>
-          <PaginationPrevious onClick={() => handlePrevPage()} className="" />
+          <PaginationPrevious onClick={() => handlePrevPage()} className="" disabled={!hasPreviousPage} />
         </PaginationItem>
 
         {pages.map((page, idx) => (
@@ -55,7 +58,7 @@ export function PaginationSection({
         ))}
 
         <PaginationItem>
-          <PaginationNext onClick={() => handleNextPage()} className="" />
+          <PaginationNext onClick={() => handleNextPage()} className="" disabled={!hasNextPage} />
         </PaginationItem>
       </PaginationContent>
     </Pagination>
