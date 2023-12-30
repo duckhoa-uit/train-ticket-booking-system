@@ -69,17 +69,6 @@ export const TripCard = ({ className, trip }: TripCardProps) => {
           <Button StartIcon={ExternalLinkIcon}>Chi tiết</Button>
         </CardFooter>
       </Card>
-
-      {/* <InformationCard
-        containerProps={{
-          className: "border-subtle bg-default w-full rounded-md border p-4 md:hidden",
-        }}
-        title="SE8 | Sài Gòn -> Sài Gòn"
-        variant="basic"
-        structure="card"
-        description="{des}"
-        actionButton={{ child: "Đặt chỗ", href: "#" }}
-      /> */}
     </div>
   );
 };

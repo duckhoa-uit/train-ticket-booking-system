@@ -209,7 +209,7 @@
 }
 
 .fadeIn {
-  animation-duration: 0.3s;
+  animation-duration: 0.2s;
   animation-fill-mode: both;
   animation-name: fadeIn;
   animation-timing-function: ease-in-out;
