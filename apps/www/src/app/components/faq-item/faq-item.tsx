@@ -11,11 +11,11 @@ const FaqItem: React.FC<FaqItemProps> = ({ question, answer }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="max-w-96 rounded-md border-2 border-gray-200 p-4">
+    <div className="w-2/3 rounded-md border-2 border-gray-400 p-4">
       <dt>
         <button
           type="button"
-          className="flex w-full items-start justify-between text-left text-gray-400"
+          className="flex w-full items-start justify-between text-left text-gray-300"
           aria-controls="faq-content"
           aria-expanded="false"
           onClick={() => setIsOpen(!isOpen)}

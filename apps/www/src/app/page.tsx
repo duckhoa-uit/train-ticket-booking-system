@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <main className="z-0 min-h-screen overflow-x-hidden">
       <SearchSection />
-      <div className="flex flex-col gap-10">
+      <div className="flex flex-col">
         <HomeSection type="1" />
         <HomeSection type="2" />
         <HomeSection type="3" />

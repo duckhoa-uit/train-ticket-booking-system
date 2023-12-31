@@ -86,25 +86,31 @@ const HomeSection = ({ type }: { type: string }) => {
     ],
     "2": [
       {
-        title: "Price Match Guarantee",
-        description: "We'll match the price if you find it cheaper elsewhere.",
+        title: "Hassle-free Booking",
+        description:
+          "Bliss Flights is the UK's largest independent travel agent. Whether you'd like a short UK break, a sunny package holiday, an all inclusive getaway or something else entirely, our team will help you book the holiday of your dreams.",
         bgColor: "bg-pink-600",
         textColor: "text-white",
         hoverColor: "bg-pink-700",
+        link: "/booking.png",
       },
       {
-        title: "No Fee on Credit & Debit Card Transactions",
-        description: "We don't charge extra for card transactions.",
+        title: "Trusted Travel Agents in UK",
+        description:
+          "Bliss Flights is the UK's largest independent travel agent. Whether you'd like a short UK break, a sunny package holiday, an all inclusive getaway or something else entirely, our team will help you book the holiday of your dreams.",
         bgColor: "bg-pink-600",
         textColor: "text-white",
         hoverColor: "bg-pink-700",
+        link: "/trust.png",
       },
       {
-        title: "Exclusive Deals for Hundreds of Destinations",
-        description: "Get the best deals for your favorite destinations.",
+        title: "Expert Travel Advice",
+        description:
+          "Bliss Flights is the UK's largest independent travel agent. Whether you'd like a short UK break, a sunny package holiday, an all inclusive getaway or something else entirely, our team will help you book the holiday of your dreams.",
         bgColor: "bg-pink-600",
         textColor: "text-white",
         hoverColor: "bg-pink-700",
+        link: "/rating.png",
       },
     ],
     "3": [
@@ -159,7 +165,7 @@ const HomeSection = ({ type }: { type: string }) => {
           textColor={bookItem.textColor}
           hoverColor={bookItem.hoverColor}
           type={type}
-          link={type === "1" ? bookItem.link : undefined}
+          link={bookItem.link}
         />
       );
     } else if (type === "3") {
@@ -177,30 +183,32 @@ const HomeSection = ({ type }: { type: string }) => {
   }
 
   return (
-    <div className="flex items-center justify-center bg-gray-100 p-2">
-      <div className="w-full max-w-max">
+    <div className="my-5 flex items-center justify-center bg-gray-100 p-2">
+      <div className="h-full w-full">
         <div className="mb-6 text-center">{renderHeader(type)}</div>
         {type === "1" && (
-          <div className="flex items-center justify-between space-x-4">
+          <div className="min-h- flex h-full items-stretch justify-between gap-5">
             {CARD_ITEMS[type].map((item, index) => renderCardItem(type, item, index))}
           </div>
         )}
         {type === "2" && (
-          <div className="flex items-center justify-between space-x-4">
+          <div className="flex h-full items-center justify-between gap-5">
             {CARD_ITEMS[type].map((item, index) => renderCardItem(type, item, index))}
           </div>
         )}
         {type === "3" && (
-          <div className="flex items-center justify-between space-x-4">
+          <div className="flex h-full items-center justify-between gap-5">
             {CARD_ITEMS[type].map((item, index) => renderCardItem(type, item, index))}
           </div>
         )}
         {type === "4" && (
-          <dl className="space-y-6 divide-y divide-gray-200">
-            {faqs.map((faq, index) => (
-              <FaqItem key={index} question={faq.question} answer={faq.answer} />
-            ))}
-          </dl>
+          <div className="space-x-4 space-y-6">
+            <dl className="mx-2 flex flex-col items-center gap-5">
+              {faqs.map((faq, index) => (
+                <FaqItem key={index} question={faq.question} answer={faq.answer} />
+              ))}
+            </dl>
+          </div>
         )}
       </div>
     </div>
