@@ -2,29 +2,10 @@
 //   HAS_SEAT,
 //   FULL,
 // }
-import type { Station, Train, Trip } from "@ttbs/prisma";
+import type { Carriage, SeatType, Station, Train, Trip } from "@ttbs/prisma";
 
-export type Seat = {
-  order: number;
-};
-
-export type Carriage = {
-  code?: string;
-  name?: string;
-  note?: string;
-  //   status?: CarriageStatus;
-  order?: number;
-  numOfCabins?: number;
-  seatsPerCabin?: number;
-  seats?: Seat[];
-};
-
-// export type Train = {
-//   carriages: Carriage[];
-// };
-
-export type TripApiResponse = Trip & {
-  train: Train;
+export type SearchTripItemApiResponse = Trip & {
+  train: Train & { carriages: Array<Carriage & { seatType: SeatType }> };
   timelines: Array<{ departDate: string; arrivalDate: string; station: Station }>;
 };
 

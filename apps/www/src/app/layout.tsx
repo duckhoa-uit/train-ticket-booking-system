@@ -9,6 +9,7 @@ import Footer from "./components/footer/footer";
 import Header from "./components/header";
 import { ReactQueryProvider } from "./components/react-query-provider";
 import "./globals.css";
+import Providers from "./providers";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,13 +26,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {/* <LangProvider lang="en"> */}
 
           <ReactQueryProvider>
-            <Header />
+            <Providers lang="vi">
+              <Header />
 
-            {children}
-            <Footer />
-            {/* </LangProvider> */}
-            <Toaster richColors />
-            <TailwindIndicator />
+              {children}
+              <Footer />
+              {/* </LangProvider> */}
+              <Toaster richColors />
+              <TailwindIndicator />
+            </Providers>
           </ReactQueryProvider>
         </body>
       </html>

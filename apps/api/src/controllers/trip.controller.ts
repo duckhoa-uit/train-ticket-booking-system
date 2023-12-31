@@ -2,14 +2,26 @@ import { NextFunction, Request, Response } from "express";
 import { ParsedQs } from "qs";
 
 import {
-  TripCreateInput,
-  TripUpdateInput,
-  TripIdParamInput,
-  tripCreateSchema,
+  GetSeatsOnTripParamInput,
+  GetPriceOnTripQueryInput,
   SearchTripQueryInput,
+  TripCreateInput,
+  TripIdParamInput,
+  TripUpdateInput,
+  getSeatsOnTripParamInputSchema,
   searchTripQueryInputSchema,
+  tripCreateSchema,
+  getPriceOnTripQueryInputSchema,
+  tripIdParamInputSchema,
 } from "@/schemas/trip.schema";
-import { createTrip, getAllTrips, getTripByID, updateTrip } from "@/services/trip.service";
+import {
+  createTrip,
+  getAllTrips,
+  getPricesOnTrip,
+  getSeatsOnTripByCarriageId,
+  getTripByID,
+  updateTrip,
+} from "@/services/trip.service";
 
 export const createTripHandler = async (
   req: Request<{}, {}, TripCreateInput>,
@@ -65,6 +77,42 @@ export const updateTripHandler = async (
 
     const updatedTrip = await updateTrip(tripID, req.body);
     return res.status(200).json({ status: "success", data: updatedTrip });
+  } catch (error) {
+    return next(error);
+  }
+};
+
+export const getSeatsOnTripHandler = async (
+  req: Request<GetSeatsOnTripParamInput, {}, {}, GetPriceOnTripQueryInput & ParsedQs>,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const {
+      params: { id: tripId, carriageId },
+    } = getSeatsOnTripParamInputSchema.parse(req);
+
+    const seats = await getSeatsOnTripByCarriageId(tripId, carriageId);
+    return res.status(200).json({ status: "success", data: seats });
+  } catch (error) {
+    return next(error);
+  }
+};
+export const getPriceOnTripHandler = async (
+  req: Request<GetSeatsOnTripParamInput, {}, {}, GetPriceOnTripQueryInput & ParsedQs>,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const {
+      params: { id: tripId },
+    } = tripIdParamInputSchema.parse(req);
+    const {
+      query: { departStationId, arrivalStationId, seatTypeId },
+    } = getPriceOnTripQueryInputSchema.parse(req);
+
+    const seats = await getPricesOnTrip({ tripId, seatTypeId, departStationId, arrivalStationId });
+    return res.status(200).json({ status: "success", data: seats });
   } catch (error) {
     return next(error);
   }

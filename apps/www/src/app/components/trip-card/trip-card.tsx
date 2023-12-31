@@ -9,13 +9,13 @@ import { ClockIcon, ExternalLinkIcon } from "@ttbs/ui/components/icons";
 
 import dayjs from "@/app/lib/dayjs";
 import { searchTripsQuerySchema } from "@/app/search/query-schema";
-import type { TripApiResponse } from "@/types";
+import type { SearchTripItemApiResponse } from "@/types";
 
 import ViewRoutesButton from "./view-routes-button";
 
 type TripCardProps = {
   className?: string;
-  trip: TripApiResponse;
+  trip: SearchTripItemApiResponse;
 };
 
 export const TripCard = ({ className, trip }: TripCardProps) => {

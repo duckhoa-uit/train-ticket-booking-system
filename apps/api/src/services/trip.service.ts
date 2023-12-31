@@ -199,7 +199,13 @@ export const getTripByID = async (id: number) => {
   const trip = await prisma.trip.findUnique({
     where: { id },
     include: {
-      train: true,
+      train: {
+        include: {
+          carriages: {
+            include: { seatType: true },
+          },
+        },
+      },
       journey: true,
       timelines: {
         include: {
@@ -242,4 +248,63 @@ export const updateTrip = async (id: number, input: TripUpdateInput) => {
       departDate: input.departDate,
     },
   });
+};
+
+export const getSeatsOnTripByCarriageId = async (tripId: number, carriageId: number) => {
+  const seats = await prisma.seat.findMany({
+    where: {
+      tripId,
+      carriageId,
+    },
+  });
+
+  return seats;
+};
+
+export const getPricesOnTrip = async ({
+  tripId,
+  seatTypeId,
+  arrivalStationId,
+  departStationId,
+}: {
+  tripId: number;
+  seatTypeId: number;
+  arrivalStationId: number;
+  departStationId: number;
+}) => {
+  const trip = await prisma.trip.findUniqueOrThrow({
+    where: {
+      id: tripId,
+    },
+    include: {
+      timelines: {
+        include: {
+          journeyStation: {
+            include: {
+              station: true,
+            },
+          },
+        },
+      },
+    },
+  });
+
+  const stationIds = trip.timelines
+    .map((t) => t.journeyStation)
+    .sort((a, b) => a.order - b.order)
+    .map((j) => j.stationId);
+  const fromStationIdx = stationIds.findIndex((id) => id === departStationId);
+  const toStationIdx = stationIds.findIndex((id) => id === arrivalStationId);
+  const stationIdsRange = stationIds.slice(fromStationIdx, toStationIdx + 1);
+  const lastStation = stationIdsRange.pop();
+
+  const prices = await prisma.pricing.findMany({
+    where: {
+      tripId,
+      seatTypeId,
+      OR: [{ departStationId: { in: stationIdsRange } }, { arrivalStationId: lastStation }],
+    },
+  });
+
+  return prices.reduce((prev, curr) => prev + curr.amount, 0);
 };

@@ -38,7 +38,7 @@ function Calendar({ className, classNames, showOutsideDays = true, ...props }: C
           "h-8 w-8 p-0 font-normal aria-selected:opacity-100"
         ),
         day_selected:
-          "bg-emphasis text-emphasis-foreground hover:bg-emphasis hover:text-emphasis-foreground focus:bg-emphasis focus:text-emphasis-foreground",
+          "bg-emphasis hover:bg-emphasis text-emphasis-foreground hover:bg-emphasis hover:text-emphasis-foreground focus:bg-emphasis focus:text-emphasis-foreground",
         day_today: "bg-muted text-muted-foreground",
         day_outside: "text-muted-foreground opacity-50",
         day_disabled: "text-muted-foreground opacity-50",

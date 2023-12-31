@@ -1,133 +1,196 @@
-import React from "react";
+"use client";
 
+import { useQuery } from "@tanstack/react-query";
+import React, { useState, useEffect, useMemo } from "react";
+
+import { env } from "@ttbs/env";
+import { useTypedQuery } from "@ttbs/lib";
 import { cn } from "@ttbs/lib/cn";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@ttbs/ui/components/table/TableNew";
+import dayjs from "@ttbs/lib/dayjs";
+import type { Carriage, SeatType, Station } from "@ttbs/prisma";
+import { Button, Card, CardContent, CardHeader, Table, VerticalDivider } from "@ttbs/ui";
+import { SkeletonText } from "@ttbs/ui";
+import { TableBody, TableCaption, TableCell, TableRow } from "@ttbs/ui/components/table/TableNew";
 
-import { TripCard } from "@/app/components/trip-card/trip-card";
+import { CarriageIcon, TrainVisualization, CarriageWithSeats } from "@/app/components/train";
+import { get } from "@/app/lib/fetch";
+import type { SearchTripItemApiResponse } from "@/types";
 
-type TableHeadItem = {
-  key: number;
-  title: string;
+import { tripDetailsQuerySchema } from "./query-schema";
+
+type TripDetailsPageProps = {
+  params: {
+    tripId: string;
+  };
 };
 
-type TrainDetail = {
-  key: number;
-  departStation: string;
-  departDate: string;
-  arrivalTime: string;
-  departTime: string;
-};
+const TripDetails = ({ params: { tripId } }: TripDetailsPageProps) => {
+  const [selectedCarriage, setSelectedCarriage] = useState<(Carriage & { seatType: SeatType }) | null>(null);
 
-const TRAIN_DETAILS: TrainDetail[] = [
-  {
-    key: 0,
-    departStation: "Sài Gòn",
-    departDate: "23/11/2023",
-    departTime: "06:00",
-    arrivalTime: "12:30",
-  },
-  {
-    key: 1,
-    departStation: "Sài Gòn",
-    departDate: "23/11/2023",
-    departTime: "06:00",
-    arrivalTime: "12:30",
-  },
-  {
-    key: 2,
-    departStation: "Sài Gòn",
-    departDate: "23/11/2023",
-    departTime: "06:00",
-    arrivalTime: "12:30",
-  },
-  {
-    key: 3,
-    departStation: "Sài Gòn",
-    departDate: "23/11/2023",
-    departTime: "06:00",
-    arrivalTime: "12:30",
-  },
-  {
-    key: 4,
-    departStation: "Sài Gòn",
-    departDate: "23/11/2023",
-    departTime: "06:00",
-    arrivalTime: "12:30",
-  },
-];
+  const {
+    data: { carriageId, arrivalStation: arrivalStationId, date: departDate, departStation: departStationId },
+    setQuery,
+  } = useTypedQuery(tripDetailsQuerySchema);
 
-const TABLE_HEAD_ITEMS: TableHeadItem[] = [
-  {
-    key: 0,
-    title: "STT",
-  },
-  {
-    key: 1,
-    title: "Ga đi",
-  },
-  {
-    key: 2,
-    title: "Ngày xuất phát",
-  },
-  {
-    key: 3,
-    title: "Giờ đến ga",
-  },
-  {
-    key: 4,
-    title: "Giờ xuất phát",
-  },
-];
-
-const TripDetails = async () => {
-  // const router = useRouter();
-  await new Promise((resolve) => {
-    setTimeout(resolve, 3000);
+  const { data: stations } = useQuery({
+    queryKey: ["stations"],
+    queryFn: async () => {
+      const res = await get(`${env.NEXT_PUBLIC_API_BASE_URI}/api/stations`);
+      return res.data as Station[];
+    },
   });
+
+  const departPlace = useMemo(() => {
+    return stations?.find(({ id }) => id === departStationId);
+  }, [departStationId, stations]);
+
+  const arrivalPlace = useMemo(() => {
+    return stations?.find((s) => s.id === arrivalStationId);
+  }, [arrivalStationId, stations]);
+
+  const { data: trip } = useQuery({
+    queryKey: ["trips", tripId],
+    queryFn: async () => {
+      const res = await get(`${env.NEXT_PUBLIC_API_BASE_URI}/api/trips/${tripId}`);
+      return res.data as SearchTripItemApiResponse;
+    },
+  });
+
+  const { data: price } = useQuery({
+    queryKey: ["price", tripId, selectedCarriage, departStationId, arrivalStationId],
+    queryFn: async () => {
+      const searchParams = new URLSearchParams({
+        departStationId: `${departStationId}`,
+        arrivalStationId: `${arrivalStationId}`,
+        seatTypeId: `${selectedCarriage?.seatTypeId}`,
+      });
+      const res = await get(
+        `${env.NEXT_PUBLIC_API_BASE_URI}/api/trips/${tripId}/prices?${searchParams.toString()}`
+      );
+      return res.data as number;
+    },
+    enabled: !!selectedCarriage,
+  });
+
+  useEffect(() => {
+    if (trip) {
+      if (!carriageId) {
+        setQuery(
+          "carriageId",
+          trip.train.carriages.find(({ order }) => order === 1)?.id ?? trip.train.carriages[0].id
+        );
+      } else {
+        setSelectedCarriage(trip.train.carriages.find(({ id }) => id === carriageId) ?? null);
+      }
+    }
+  }, [trip, carriageId]);
 
   return (
     <div className={cn("md:text-normal mx-auto mt-5 min-h-[100vh] w-full max-w-7xl p-5 text-sm md:mt-10")}>
-      <TripCard />
-      <Table className="mx-auto w-full">
-        <TableHeader className="[&_tr]:bg-info">
-          <TableRow className=" text-center text-white">
-            {TABLE_HEAD_ITEMS.map((item) => (
-              <TableHead className="text-center" key={item.key}>
-                {item.title}
-              </TableHead>
-            ))}
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {TRAIN_DETAILS.map((route) => (
-            <TableRow key={route.key}>
-              <TableCell className="text-center">{route.key}</TableCell>
-              <TableCell className="text-center">{route.departStation}</TableCell>
-              <TableCell className="text-center">{route.departDate}</TableCell>
-              <TableCell className="text-center">{route.arrivalTime}</TableCell>
-              <TableCell className="text-center">{route.departTime}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-      {/* <Button
-        variant="button"
-        color="primary"
-        size="base"
-        className="border-default hover:bg-w mb-2 flex h-max flex-col border bg-white text-black md:text-xs"
-        onClick={() => {
-          router.back();
-        }}
-      >
-        Back
-      </Button> */}
+      <Card className="bg-default block w-full">
+        <CardHeader>
+          <div className="flex flex-col items-center justify-start text-xl md:flex-row">
+            <h2 className="">
+              {!departPlace ? <SkeletonText className="h-6 w-20 align-middle" /> : departPlace.name} đến{" "}
+              {!arrivalPlace ? <SkeletonText className="h-6 w-20 align-middle" /> : arrivalPlace.name}
+            </h2>
+            <VerticalDivider className="hidden md:block" />
+            <span>
+              {departDate ? (
+                dayjs(departDate).format("LL")
+              ) : (
+                <SkeletonText className="h-6 w-32 align-middle" />
+              )}
+            </span>
+          </div>
+        </CardHeader>
+        <CardContent className="grid grid-cols-4 gap-5">
+          <div className="col-span-4 md:col-span-3">
+            {trip && (
+              <div className="flex w-full items-center justify-center">
+                <TrainVisualization
+                  train={trip.train}
+                  selectedCarriageId={selectedCarriage?.id}
+                  onChangeCarriage={(id) => setQuery("carriageId", id)}
+                />
+              </div>
+            )}
+
+            <div className="mt-5 flex w-full items-center justify-center">
+              {selectedCarriage ? (
+                <h4 className="">{`Toa số ${selectedCarriage.order}: ${selectedCarriage.seatType.name}`}</h4>
+              ) : (
+                <SkeletonText className="h-6 w-40" />
+              )}
+            </div>
+
+            <div className="mt-2">
+              {selectedCarriage && (
+                <CarriageWithSeats price={price} tripId={+tripId} carriage={selectedCarriage} />
+              )}
+            </div>
+
+            <div className="mt-10 w-full">
+              <Table>
+                <TableCaption>Chú thích kí hiệu</TableCaption>
+
+                <TableBody>
+                  <TableRow>
+                    <TableCell>
+                      <div className="flex items-center justify-start gap-2">
+                        <CarriageIcon />
+                        <p>Toa còn vé</p>
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      <div className="flex items-center justify-start gap-2">
+                        <CarriageIcon selected />
+                        <p>Toa đang chọn</p>
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      <div className="flex items-center justify-start gap-2">
+                        <CarriageIcon isFull />
+                        <p>Toa hết vé</p>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>
+                      <div className="flex items-center justify-start gap-2">
+                        <Button variant="icon" color="secondary" className={cn("h-9 w-9 text-sm")} />
+                        <p>Chỗ trống</p>
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      <div className="flex items-center justify-start gap-2">
+                        <Button
+                          variant="icon"
+                          color="secondary"
+                          className={cn("text-inverted h-9 w-9 bg-[#a6b727] text-sm hover:bg-[#a6b727]")}
+                        />
+                        <p>Chỗ đang chọn</p>
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      <div className="flex items-center justify-start gap-2">
+                        <Button
+                          variant="icon"
+                          color="secondary"
+                          className={cn("text-inverted h-9 w-9 bg-red-600 text-sm hover:bg-red-600")}
+                        />
+                        <p>Chỗ đã bán, không bán</p>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                </TableBody>
+              </Table>
+            </div>
+          </div>
+
+          <div className="hidden md:col-span-1 md:block">Cart</div>
+        </CardContent>
+      </Card>
     </div>
   );
 };

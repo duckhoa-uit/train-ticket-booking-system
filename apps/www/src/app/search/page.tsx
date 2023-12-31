@@ -13,7 +13,7 @@ import { Button, Group, RadioField, Select, SkeletonText } from "@ttbs/ui";
 import SearchBar from "@/app/components/search-section/search-bar";
 import { TripCard } from "@/app/components/trip-card/trip-card";
 import { get } from "@/app/lib/fetch";
-import type { TripApiResponse } from "@/types";
+import type { SearchTripItemApiResponse } from "@/types";
 
 import { PaginationSection } from "../components/pagination";
 import { searchTripsQuerySchema } from "./query-schema";
@@ -103,7 +103,7 @@ const SearchPage = () => {
 
       const res = await get(`${env.NEXT_PUBLIC_API_BASE_URI}/api/search?${searchParams.toString()}`);
       return {
-        trips: res.data as Array<TripApiResponse>,
+        trips: res.data as Array<SearchTripItemApiResponse>,
         count: res.count as number,
       };
     },

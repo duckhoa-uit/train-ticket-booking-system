@@ -15,7 +15,7 @@ import {
 
 import dayjs from "@/app/lib/dayjs";
 import { get } from "@/app/lib/fetch";
-import type { TripApiResponse } from "@/types";
+import type { SearchTripItemApiResponse } from "@/types";
 
 // import closeIcon from "../../../public/img/close.svg";
 
@@ -52,7 +52,7 @@ export const DetailRoutes = ({ tripId }: DetailRoutesProps) => {
     queryKey: ["trips", tripId],
     queryFn: async () => {
       const res = await get(`${env.NEXT_PUBLIC_API_BASE_URI}/api/trips/${tripId}`);
-      return res.data as TripApiResponse;
+      return res.data as SearchTripItemApiResponse;
     },
   });
 
