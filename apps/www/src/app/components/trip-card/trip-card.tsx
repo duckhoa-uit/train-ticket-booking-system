@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useMemo } from "react";
 
 import { useTypedQuery } from "@ttbs/lib";
 import { cn } from "@ttbs/lib/cn";
@@ -20,7 +20,7 @@ type TripCardProps = {
 
 export const TripCard = ({ className, trip }: TripCardProps) => {
   const {
-    data: { arrivalStation: arrivalStationId, departStation: departStationId },
+    data: { arrivalStation: arrivalStationId, departStation: departStationId, date: departDate },
   } = useTypedQuery(searchTripsQuerySchema);
   const { train, timelines } = trip;
 
@@ -28,6 +28,16 @@ export const TripCard = ({ className, trip }: TripCardProps) => {
   const arrivalStation = timelines.find((t) => t.station.id === arrivalStationId);
 
   const duration = dayjs.duration(dayjs(arrivalStation?.arrivalDate).diff(dayjs(departStation?.departDate)));
+
+  const tripUrl = useMemo(() => {
+    const searchParams = new URLSearchParams({
+      departStation: `${departStationId}`,
+      arrivalStation: `${arrivalStationId}`,
+      date: departDate,
+    });
+
+    return `/trips/${trip.id}?${searchParams.toString()}`;
+  }, [arrivalStationId, departStationId]);
 
   return (
     <div className={cn("relative w-full", className)}>
@@ -66,7 +76,9 @@ export const TripCard = ({ className, trip }: TripCardProps) => {
         </CardContent>
         <CardFooter className="flex justify-end gap-3">
           <ViewRoutesButton tripId={trip.id} />
-          <Button StartIcon={ExternalLinkIcon}>Chi tiết</Button>
+          <Button StartIcon={ExternalLinkIcon} href={tripUrl}>
+            Chi tiết
+          </Button>
         </CardFooter>
       </Card>
     </div>

@@ -153,6 +153,8 @@ model SeatType {
 
 model Seat {
   id         Int       @id @default(autoincrement())
+  tripId     Int
+  trip       Trip?     @relation(fields: [tripId], references: [id], onDelete: Cascade)
   carriageId Int
   carriage   Carriage? @relation(fields: [carriageId], references: [id], onDelete: Cascade)
   order      Int
@@ -193,8 +195,7 @@ model Train {
   name      String
   carriages Carriage[]
 
-  trips   Trip[]
-  tickets Ticket[]
+  trips Trip[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -245,7 +246,7 @@ model Trip {
 
   pricings  Pricing[]
   timelines TripTimeline[]
-  tickets   Ticket[]
+  seats     Seat[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -285,8 +286,6 @@ model Pricing {
   arrivalStation   Station  @relation(name: "pricingArrivals", fields: [arrivalStationId], references: [id], onDelete: Cascade)
   amount           Int
 
-  tickets Ticket[]
-
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -295,19 +294,29 @@ model Pricing {
 }
 
 model Ticket {
-  id             Int          @id @default(autoincrement())
-  arrivalDate    DateTime
-  tripId         Int
-  trip           Trip         @relation(fields: [tripId], references: [id], onDelete: Cascade)
-  trainId        Int
-  train          Train        @relation(fields: [trainId], references: [id], onDelete: Cascade)
-  seatId         Int
-  seat           Seat         @relation(fields: [seatId], references: [id], onDelete: Cascade)
-  fromTimelineId Int
-  fromTineline   TripTimeline @relation(name: "fromTimeline", fields: [fromTimelineId], references: [id], onDelete: Cascade)
-  toTimelineId   Int
-  toTineline     TripTimeline @relation(name: "toTimeline", fields: [toTimelineId], references: [id], onDelete: Cascade)
-  priceId        Int
-  price          Pricing      @relation(fields: [priceId], references: [id])
-  // TODO:
+  id                 Int          @id @default(autoincrement())
+  orderId            Int
+  order              Order        @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  seatId             Int
+  seat               Seat         @relation(fields: [seatId], references: [id], onDelete: Cascade)
+  fromTimelineId     Int
+  fromTineline       TripTimeline @relation(name: "fromTimeline", fields: [fromTimelineId], references: [id], onDelete: Cascade)
+  toTimelineId       Int
+  toTineline         TripTimeline @relation(name: "toTimeline", fields: [toTimelineId], references: [id], onDelete: Cascade)
+  amount             Int
+  userName           String
+  userIdentification String
+
+  @@map("tickets")
+}
+
+model Order {
+  id                  Int      @id @default(autoincrement())
+  tickets             Ticket[]
+  buyerName           String
+  buyerIdentification String
+  buyerPhone          String
+  buyerEmail          String
+
+  @@map("orders")
 }

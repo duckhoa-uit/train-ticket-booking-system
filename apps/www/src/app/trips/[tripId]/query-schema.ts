@@ -8,6 +8,6 @@ export const searchTripQuerySchema = z.object({
 
 export const tripDetailsQuerySchema = z
   .object({
-    carriageId: z.coerce.number(),
+    carriageId: z.coerce.number().optional(),
   })
   .merge(searchTripQuerySchema);

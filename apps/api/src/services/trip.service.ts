@@ -5,6 +5,19 @@ import { SearchTripQueryInput, TripCreateInput, TripUpdateInput } from "@/schema
 
 export const createTrip = async (input: TripCreateInput) => {
   return prisma.$transaction(async (tx) => {
+    const train = await prisma.train.findUniqueOrThrow({
+      where: {
+        id: input.trainId,
+      },
+      include: {
+        carriages: {
+          include: {
+            seatType: true,
+          },
+        },
+      },
+    });
+
     const newTrip = await tx.trip.create({
       data: {
         name: input.name,
@@ -19,6 +32,16 @@ export const createTrip = async (input: TripCreateInput) => {
               arrivalDate: timeline.arrivalDate,
               departDate: timeline.departDate,
             })),
+          },
+        },
+        seats: {
+          createMany: {
+            data: train.carriages.flatMap((c) =>
+              Array.from({ length: c.seatsPerCabin * (c.numOfCabins ?? 1) }).map((_, idx) => ({
+                carriageId: c.id,
+                order: idx + 1,
+              }))
+            ),
           },
         },
       },
