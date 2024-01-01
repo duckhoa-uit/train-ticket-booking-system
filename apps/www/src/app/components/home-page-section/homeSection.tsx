@@ -196,18 +196,18 @@ const HomeSection = ({ type }: { type: string }) => {
       <div className="flex h-full w-full flex-col items-center">
         <div className="mb-5 text-center">{renderHeader(type)}</div>
         {type === "1" && (
-          <div className="flex h-full flex-col items-center gap-5 md:flex md:flex-row md:items-stretch md:overflow-x-auto">
+          <div className="flex h-full w-full flex-col items-center gap-5 md:flex md:flex-row md:items-stretch md:justify-evenly md:overflow-x-auto">
             {CARD_ITEMS[type].map((item, index) => renderCardItem(type, item, index))}
           </div>
         )}
         {type === "2" && (
-          <div className="flex h-full flex-col items-center gap-5 md:flex-row md:items-stretch md:overflow-x-auto">
+          <div className="flex h-full w-full flex-col items-center gap-5 md:flex-row md:items-stretch md:justify-evenly md:overflow-x-auto">
             {CARD_ITEMS[type].map((item, index) => renderCardItem(type, item, index))}
           </div>
         )}
         {type === "3" && (
           <div>
-            <div className=" hidden h-full flex-col items-center gap-5 md:flex md:flex-row md:items-stretch md:overflow-x-auto">
+            <div className=" hidden h-full w-full flex-col items-center gap-5 md:flex md:flex-row md:items-stretch md:justify-between md:overflow-x-auto">
               {CARD_ITEMS[type].map((item, index) => renderCardItem(type, item, index))}
             </div>
             <Carousel className="mx-auto w-full max-w-xs md:hidden">
