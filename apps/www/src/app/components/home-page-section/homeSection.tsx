@@ -239,8 +239,8 @@ const HomeSection = ({ type }: { type: string }) => {
           </div>
         )}
         {type === "4" && (
-          <div>
-            <dl className="mx-2 flex w-full flex-col items-center gap-5">
+          <div className="min-w-full">
+            <dl className="mx-2 flex flex-col items-center gap-5 md:mx-auto md:w-3/4">
               {faqs.map((faq, index) => (
                 <FaqItem key={index} question={faq.question} answer={faq.answer} />
               ))}
