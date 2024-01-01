@@ -46,19 +46,31 @@ export function PaginationSection({
     <Pagination>
       <PaginationContent>
         <PaginationItem>
-          <PaginationPrevious onClick={() => handlePrevPage()} className="" disabled={!hasPreviousPage} />
+          <PaginationPrevious
+            onClick={() => handlePrevPage()}
+            className=""
+            disabled={!hasPreviousPage}
+          />
         </PaginationItem>
 
         {pages.map((page, idx) => (
           <PaginationItem key={idx}>
-            <PaginationLink isActive={currentPage === page} onClick={() => setCurrentPage(page)} className="">
+            <PaginationLink
+              isActive={currentPage === page}
+              onClick={() => setCurrentPage(page)}
+              className=""
+            >
               {page}
             </PaginationLink>
           </PaginationItem>
         ))}
 
         <PaginationItem>
-          <PaginationNext onClick={() => handleNextPage()} className="" disabled={!hasNextPage} />
+          <PaginationNext
+            onClick={() => handleNextPage()}
+            className=""
+            disabled={!hasNextPage}
+          />
         </PaginationItem>
       </PaginationContent>
     </Pagination>

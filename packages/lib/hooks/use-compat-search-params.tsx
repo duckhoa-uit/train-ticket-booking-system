@@ -1,4 +1,8 @@
-import { ReadonlyURLSearchParams, useParams, useSearchParams } from "next/navigation";
+import {
+  ReadonlyURLSearchParams,
+  useParams,
+  useSearchParams,
+} from "next/navigation";
 
 export const useCompatSearchParams = () => {
   const _searchParams = useSearchParams() ?? new URLSearchParams();

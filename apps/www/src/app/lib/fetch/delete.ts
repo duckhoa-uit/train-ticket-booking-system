@@ -2,12 +2,17 @@
 import type { ApiResponse } from "@/types/base";
 
 import { uuidv4 } from "../helpers";
-import { handleError, handleResponse, handleResponseError, constructHeaders } from "./base";
+import {
+  handleError,
+  handleResponse,
+  handleResponseError,
+  constructHeaders,
+} from "./base";
 
 export async function delete_<T = any>(
   url: string,
   data?: { [prop: string]: any },
-  options?: { [prop: string]: any }
+  options?: { [prop: string]: any },
 ): Promise<ApiResponse<T>> {
   const requestId = uuidv4();
   try {

@@ -10,7 +10,13 @@ import { TailwindIndicator } from "@ttbs/ui";
 
 import CartProvider from "./cart/context";
 
-export default function Providers({ children, lang }: { children: React.ReactNode; lang: string }) {
+export default function Providers({
+  children,
+  lang,
+}: {
+  children: React.ReactNode;
+  lang: string;
+}) {
   const [queryClient] = useState(() => new QueryClient());
 
   return (

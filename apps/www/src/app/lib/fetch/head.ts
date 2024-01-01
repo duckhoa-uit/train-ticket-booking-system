@@ -2,12 +2,17 @@
 import type { ApiResponse } from "@/types/base";
 
 import { uuidv4 } from "../helpers";
-import { handleError, handleHeadResponse, handleResponseError, constructHeaders } from "./base";
+import {
+  handleError,
+  handleHeadResponse,
+  handleResponseError,
+  constructHeaders,
+} from "./base";
 
 export async function head<T = any>(
   url: string,
   headersToRetrieve: string[],
-  options?: { [prop: string]: any }
+  options?: { [prop: string]: any },
 ): Promise<ApiResponse<T>> {
   const requestId = uuidv4();
   try {
@@ -29,7 +34,7 @@ export async function head<T = any>(
 export async function headWithTimeout<T = any>(
   url: string,
   headersToRetrieve: string[],
-  options?: { [prop: string]: any }
+  options?: { [prop: string]: any },
 ): Promise<ApiResponse<T>> {
   const requestId = uuidv4();
   try {

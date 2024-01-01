@@ -51,7 +51,9 @@ export const DetailRoutes = ({ tripId }: DetailRoutesProps) => {
   const { data: trip } = useQuery({
     queryKey: ["trips", tripId],
     queryFn: async () => {
-      const res = await get(`${env.NEXT_PUBLIC_API_BASE_URI}/api/trips/${tripId}`);
+      const res = await get(
+        `${env.NEXT_PUBLIC_API_BASE_URI}/api/trips/${tripId}`,
+      );
       return res.data as SearchTripItemApiResponse;
     },
   });
@@ -75,8 +77,12 @@ export const DetailRoutes = ({ tripId }: DetailRoutesProps) => {
             <TableRow key={station.id}>
               <TableCell className="text-center">{idx + 1}</TableCell>
               <TableCell className="text-center">{station.name}</TableCell>
-              <TableCell className="text-center">{dayjs(departDate).format("LLL")}</TableCell>
-              <TableCell className="text-center">{dayjs(arrivalDate).format("LLL")}</TableCell>
+              <TableCell className="text-center">
+                {dayjs(departDate).format("LLL")}
+              </TableCell>
+              <TableCell className="text-center">
+                {dayjs(arrivalDate).format("LLL")}
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

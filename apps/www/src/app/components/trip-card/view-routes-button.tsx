@@ -2,7 +2,14 @@
 
 import { useState } from "react";
 
-import { Button, Dialog, DialogContent, DialogTrigger, DialogFooter, DialogClose } from "@ttbs/ui";
+import {
+  Button,
+  Dialog,
+  DialogContent,
+  DialogTrigger,
+  DialogFooter,
+  DialogClose,
+} from "@ttbs/ui";
 import { Route, ExternalLinkIcon } from "@ttbs/ui/components/icons";
 
 import { DetailRoutes } from "../detail-routes/DetailRoutes";

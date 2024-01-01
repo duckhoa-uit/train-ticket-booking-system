@@ -26,7 +26,7 @@ import {
 export const createTripHandler = async (
   req: Request<{}, {}, TripCreateInput>,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const { body: reqBody } = tripCreateSchema.parse(req);
@@ -40,7 +40,7 @@ export const createTripHandler = async (
 export const getTripsHandler = async (
   req: Request<{}, {}, {}, SearchTripQueryInput & ParsedQs>,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const { query } = searchTripQueryInputSchema.parse(req);
@@ -55,7 +55,7 @@ export const getTripsHandler = async (
 export const getTripById = async (
   req: Request<TripIdParamInput, {}, {}>,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const tripID = Number(req.params.id);
@@ -70,7 +70,7 @@ export const getTripById = async (
 export const updateTripHandler = async (
   req: Request<TripIdParamInput, {}, TripUpdateInput>,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const tripID = +req.params.id;
@@ -83,9 +83,14 @@ export const updateTripHandler = async (
 };
 
 export const getSeatsOnTripHandler = async (
-  req: Request<GetSeatsOnTripParamInput, {}, {}, GetPriceOnTripQueryInput & ParsedQs>,
+  req: Request<
+    GetSeatsOnTripParamInput,
+    {},
+    {},
+    GetPriceOnTripQueryInput & ParsedQs
+  >,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const {
@@ -99,9 +104,14 @@ export const getSeatsOnTripHandler = async (
   }
 };
 export const getPriceOnTripHandler = async (
-  req: Request<GetSeatsOnTripParamInput, {}, {}, GetPriceOnTripQueryInput & ParsedQs>,
+  req: Request<
+    GetSeatsOnTripParamInput,
+    {},
+    {},
+    GetPriceOnTripQueryInput & ParsedQs
+  >,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const {
@@ -111,7 +121,12 @@ export const getPriceOnTripHandler = async (
       query: { departStationId, arrivalStationId, seatTypeId },
     } = getPriceOnTripQueryInputSchema.parse(req);
 
-    const seats = await getPricesOnTrip({ tripId, seatTypeId, departStationId, arrivalStationId });
+    const seats = await getPricesOnTrip({
+      tripId,
+      seatTypeId,
+      departStationId,
+      arrivalStationId,
+    });
     return res.status(200).json({ status: "success", data: seats });
   } catch (error) {
     return next(error);

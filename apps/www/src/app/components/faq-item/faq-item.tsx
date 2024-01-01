@@ -2,7 +2,12 @@
 
 import React from "react";
 
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "../accordion/accordion";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "../accordion/accordion";
 
 interface FaqItemProps {
   question: string;

@@ -12,14 +12,19 @@ type CarriageIconProps = {
   isFull?: boolean;
   onClick?: () => void;
 };
-export const CarriageIcon = ({ carriage, selected = false, isFull = false, onClick }: CarriageIconProps) => {
+export const CarriageIcon = ({
+  carriage,
+  selected = false,
+  isFull = false,
+  onClick,
+}: CarriageIconProps) => {
   const TrainIconComp = () => (
     <div className="relative h-7 w-[50px] cursor-pointer" onClick={onClick}>
       <div
         className={cn(
           "absolute top-0 h-5 w-full rounded-md bg-[#80b5d6] hover:to-blue-600 focus:bg-green-400",
           selected && "bg-[#a6b727]",
-          isFull && "bg-red-600"
+          isFull && "bg-red-600",
         )}
       />
 

@@ -2,12 +2,17 @@
 import type { ApiResponse } from "@/types/base";
 
 export function handleError<T>(e: any, requestId: string): ApiResponse<T> {
-  const message = e?.message ? `An error has occurred: ${e.message}` : "An error has occurred";
+  const message = e?.message
+    ? `An error has occurred: ${e.message}`
+    : "An error has occurred";
   const error = { code: 500, message, requestId };
   return { error } as unknown as ApiResponse<T>;
 }
 
-export async function handleResponse<T>(response: Response, requestId: string): Promise<ApiResponse<T>> {
+export async function handleResponse<T>(
+  response: Response,
+  requestId: string,
+): Promise<ApiResponse<T>> {
   const contentType = response.headers.get("Content-Type");
   if (contentType === "application/octet-stream") return response as any;
 
@@ -28,7 +33,7 @@ export async function handleResponse<T>(response: Response, requestId: string): 
 export async function handleHeadResponse<T>(
   response: Response,
   requestId: string,
-  headers: string[]
+  headers: string[],
 ): Promise<ApiResponse<T>> {
   try {
     const res = {} as any;
@@ -43,7 +48,7 @@ export async function handleHeadResponse<T>(
 
 export async function handleResponseError<T = unknown>(
   response: Response,
-  requestId: string
+  requestId: string,
 ): Promise<ApiResponse<T>> {
   let resJson: Record<string, any>;
 
@@ -64,19 +69,31 @@ export async function handleResponseError<T = unknown>(
       };
       return { error } as unknown as ApiResponse<T>;
     } else {
-      const error = { code: response.status, message: resJson.error, requestId };
+      const error = {
+        code: response.status,
+        message: resJson.error,
+        requestId,
+      };
       return { error } as unknown as ApiResponse<T>;
     }
   } else if (resJson.message) {
-    const error = { code: response.status, message: resJson.message, requestId };
+    const error = {
+      code: response.status,
+      message: resJson.message,
+      requestId,
+    };
     return { error } as unknown as ApiResponse<T>;
   } else if (resJson.msg) {
     const error = { code: response.status, message: resJson.msg, requestId };
     return { error } as unknown as ApiResponse<T>;
   } else if (resJson.error && resJson.error.message) {
-    return { error: { code: response.status, ...resJson.error } } as unknown as ApiResponse<T>;
+    return {
+      error: { code: response.status, ...resJson.error },
+    } as unknown as ApiResponse<T>;
   } else if (resJson.errors) {
-    return { error: { code: response.status, errors: resJson.errors } } as unknown as ApiResponse<T>;
+    return {
+      error: { code: response.status, errors: resJson.errors },
+    } as unknown as ApiResponse<T>;
   } else {
     const message = resTxt ?? `An error has occurred: ${response.status}`;
     const error = { code: response.status, message, requestId };
@@ -84,7 +101,10 @@ export async function handleResponseError<T = unknown>(
   }
 }
 
-export async function constructHeaders(requestId: string, optionHeaders?: { [prop: string]: any }) {
+export async function constructHeaders(
+  requestId: string,
+  optionHeaders?: { [prop: string]: any },
+) {
   const headers: { [prop: string]: any } = {
     "Content-Type": "application/json",
     Accept: "application/json",
@@ -92,7 +112,8 @@ export async function constructHeaders(requestId: string, optionHeaders?: { [pro
     ...optionHeaders,
   };
 
-  const hasAuthHeader = optionHeaders !== undefined && "Authorization" in (optionHeaders ?? {});
+  const hasAuthHeader =
+    optionHeaders !== undefined && "Authorization" in (optionHeaders ?? {});
   if (!hasAuthHeader) {
     // const session = await auth();
     // if (session) headers.Authorization = `Bearer ${session?.accessToken}`;
@@ -101,10 +122,16 @@ export async function constructHeaders(requestId: string, optionHeaders?: { [pro
   return headers;
 }
 
-export function isResponseOk<T>(response: ApiResponse<T> | undefined): response is T {
+export function isResponseOk<T>(
+  response: ApiResponse<T> | undefined,
+): response is T {
   return (
     response !== undefined &&
     response !== null &&
-    !(typeof response === "object" && "error" in response && Boolean(response.error))
+    !(
+      typeof response === "object" &&
+      "error" in response &&
+      Boolean(response.error)
+    )
   );
 }

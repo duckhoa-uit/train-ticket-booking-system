@@ -2,12 +2,17 @@
 import type { ApiResponse } from "@/types/base";
 
 import { uuidv4 } from "../helpers";
-import { constructHeaders, handleError, handleResponse, handleResponseError } from "./base";
+import {
+  constructHeaders,
+  handleError,
+  handleResponse,
+  handleResponseError,
+} from "./base";
 
 export async function patch<T = any>(
   url: string,
   data: { [prop: string]: any },
-  options?: { [prop: string]: any }
+  options?: { [prop: string]: any },
 ): Promise<ApiResponse<T>> {
   const requestId = uuidv4();
   try {

@@ -20,14 +20,22 @@ type TripCardProps = {
 
 export const TripCard = ({ className, trip }: TripCardProps) => {
   const {
-    data: { arrivalStation: arrivalStationId, departStation: departStationId, date: departDate },
+    data: {
+      arrivalStation: arrivalStationId,
+      departStation: departStationId,
+      date: departDate,
+    },
   } = useTypedQuery(searchTripsQuerySchema);
   const { train, timelines } = trip;
 
   const departStation = timelines.find((t) => t.station.id === departStationId);
-  const arrivalStation = timelines.find((t) => t.station.id === arrivalStationId);
+  const arrivalStation = timelines.find(
+    (t) => t.station.id === arrivalStationId,
+  );
 
-  const duration = dayjs.duration(dayjs(arrivalStation?.arrivalDate).diff(dayjs(departStation?.departDate)));
+  const duration = dayjs.duration(
+    dayjs(arrivalStation?.arrivalDate).diff(dayjs(departStation?.departDate)),
+  );
 
   const tripUrl = useMemo(() => {
     const searchParams = new URLSearchParams({
@@ -50,10 +58,14 @@ export const TripCard = ({ className, trip }: TripCardProps) => {
         <CardContent>
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
-              <h3 className="text-2xl font-semibold">{dayjs(departStation?.departDate).format("HH:mm")}</h3>
+              <h3 className="text-2xl font-semibold">
+                {dayjs(departStation?.departDate).format("HH:mm")}
+              </h3>
               <div className="flex flex-col">
                 <p className="font-medium">{departStation?.station.name}</p>
-                <p className="text-sm text-gray-500">{dayjs(departStation?.departDate).format("LL")}</p>
+                <p className="text-sm text-gray-500">
+                  {dayjs(departStation?.departDate).format("LL")}
+                </p>
               </div>
             </div>
             <div className="flex items-center space-x-2">
@@ -61,15 +73,21 @@ export const TripCard = ({ className, trip }: TripCardProps) => {
               <p className="font-medium">
                 Thời gian di chuyển dự tính:{" "}
                 {`${Math.round(duration.asHours())}h ${Math.round(
-                  duration.subtract(Math.round(duration.asHours()), "hours").asMinutes()
+                  duration
+                    .subtract(Math.round(duration.asHours()), "hours")
+                    .asMinutes(),
                 )}p`}
               </p>
             </div>
             <div className="flex items-center space-x-4">
-              <h3 className="text-2xl font-semibold">{dayjs(arrivalStation?.arrivalDate).format("HH:mm")}</h3>
+              <h3 className="text-2xl font-semibold">
+                {dayjs(arrivalStation?.arrivalDate).format("HH:mm")}
+              </h3>
               <div className="flex flex-col">
                 <p className="font-medium">{arrivalStation?.station.name}</p>
-                <p className="text-sm text-gray-500">{dayjs(arrivalStation?.arrivalDate).format("LL")}</p>
+                <p className="text-sm text-gray-500">
+                  {dayjs(arrivalStation?.arrivalDate).format("LL")}
+                </p>
               </div>
             </div>
           </div>

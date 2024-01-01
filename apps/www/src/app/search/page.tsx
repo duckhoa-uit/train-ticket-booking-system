@@ -89,7 +89,15 @@ const SearchPage = () => {
   }, [arrivalStationId, stations]);
 
   const { data: { trips, count: totalItems } = {} } = useQuery({
-    queryKey: ["search", departStationId, arrivalStationId, departDate, skip, limit, timeRange],
+    queryKey: [
+      "search",
+      departStationId,
+      arrivalStationId,
+      departDate,
+      skip,
+      limit,
+      timeRange,
+    ],
     queryFn: async () => {
       const searchParams = new URLSearchParams({
         skip: `${skip}`,
@@ -101,7 +109,9 @@ const SearchPage = () => {
         ...(orderBy ? { orderBy } : {}),
       });
 
-      const res = await get(`${env.NEXT_PUBLIC_API_BASE_URI}/api/search?${searchParams.toString()}`);
+      const res = await get(
+        `${env.NEXT_PUBLIC_API_BASE_URI}/api/search?${searchParams.toString()}`,
+      );
       return {
         trips: res.data as Array<SearchTripItemApiResponse>,
         count: res.count as number,
@@ -112,7 +122,7 @@ const SearchPage = () => {
   return (
     <div
       className={cn(
-        "md:text-normal mx-auto mt-5 min-h-[calc(100dvh-64px)] w-full max-w-7xl px-5 text-sm md:mt-24 md:min-h-[calc(100dvh-80px)]"
+        "md:text-normal mx-auto mt-5 min-h-[calc(100dvh-64px)] w-full max-w-7xl px-5 text-sm md:mt-24 md:min-h-[calc(100dvh-80px)]",
       )}
     >
       <SearchBar
@@ -124,13 +134,25 @@ const SearchPage = () => {
 
       <div className="flex">
         <div className="border-default hidden w-1/5 border-r md:block md:pr-5">
-          <div className=" bg-default  mb-2 flex justify-between px-3 py-5 md:block md:rounded-md" id="sort">
+          <div
+            className=" bg-default  mb-2 flex justify-between px-3 py-5 md:block md:rounded-md"
+            id="sort"
+          >
             <h5 className=" m-2 text-base font-semibold">Sắp xếp</h5>
             <div className="flex flex-col justify-between gap-2 pl-2">
-              <Group defaultValue={orderBy} value={orderBy} onValueChange={(val) => setQuery("orderBy", val)}>
+              <Group
+                defaultValue={orderBy}
+                value={orderBy}
+                onValueChange={(val) => setQuery("orderBy", val)}
+              >
                 {SORT_ITEMS.map((item) => {
                   return (
-                    <RadioField key={item.value} label={item.label} id={item.value} value={item.value} />
+                    <RadioField
+                      key={item.value}
+                      label={item.label}
+                      id={item.value}
+                      value={item.value}
+                    />
                   );
                 })}
               </Group>
@@ -184,18 +206,26 @@ const SearchPage = () => {
               )}
             </p>
           </div>
-          <div className="mb-2 flex items-center justify-between md:hidden" id="sort">
+          <div
+            className="mb-2 flex items-center justify-between md:hidden"
+            id="sort"
+          >
             <h5 className=" text-base font-semibold">Sắp xếp</h5>
             <Select defaultValue={SORT_ITEMS[0]} options={SORT_ITEMS} />
           </div>
-          <div className="mb-2 flex items-center justify-between md:hidden" id="sort">
+          <div
+            className="mb-2 flex items-center justify-between md:hidden"
+            id="sort"
+          >
             <h5 className=" text-base font-semibold">Lọc theo thời gian</h5>
-            <Select className="md:hidden" defaultValue={FILTER_ITEMS[0]} options={FILTER_ITEMS} />
+            <Select
+              className="md:hidden"
+              defaultValue={FILTER_ITEMS[0]}
+              options={FILTER_ITEMS}
+            />
           </div>
           <div className="over flex w-full flex-col gap-2 py-5">
-            {trips?.map((trip) => (
-              <TripCard trip={trip} key={trip.id} />
-            ))}
+            {trips?.map((trip) => <TripCard trip={trip} key={trip.id} />)}
           </div>
 
           <div className="flex w-full items-center justify-center">

@@ -28,7 +28,13 @@ export const TrainVisualization = ({
           />
         ))}
 
-      <Image className="h-max" src="/train2.png" width={50} height={27.7} alt="train-head" />
+      <Image
+        className="h-max"
+        src="/train2.png"
+        width={50}
+        height={27.7}
+        alt="train-head"
+      />
     </div>
   );
 };

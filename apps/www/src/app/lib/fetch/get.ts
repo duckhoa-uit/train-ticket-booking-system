@@ -2,9 +2,17 @@
 import type { ApiResponse } from "@/types/base";
 
 import { uuidv4 } from "../helpers";
-import { handleError, handleResponse, handleResponseError, constructHeaders } from "./base";
+import {
+  handleError,
+  handleResponse,
+  handleResponseError,
+  constructHeaders,
+} from "./base";
 
-export async function get<T = any>(url: string, options?: { [prop: string]: any }): Promise<ApiResponse<T>> {
+export async function get<T = any>(
+  url: string,
+  options?: { [prop: string]: any },
+): Promise<ApiResponse<T>> {
   const requestId = uuidv4();
   try {
     const { headers: optionHeaders, ...otherOptions } = options ?? {};
@@ -25,7 +33,7 @@ export async function get<T = any>(url: string, options?: { [prop: string]: any 
 
 export async function getWithTimeout<T = any>(
   url: string,
-  options?: { [prop: string]: any }
+  options?: { [prop: string]: any },
 ): Promise<ApiResponse<T>> {
   const requestId = uuidv4();
   try {

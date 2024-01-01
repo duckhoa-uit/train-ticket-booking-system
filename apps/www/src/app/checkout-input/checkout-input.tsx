@@ -68,7 +68,8 @@ const TABLE_HEAD_ITEMS: TableHeadItem[] = [
 const TABLE_ROW_ITEMS: CartInformation[] = [
   {
     username: "Vũ Quang Huy",
-    seatInfo: "SE8 Sài Gòn - Hà Nội, 04/01/2024 06:00, Toa 2 chỗ 49, Ngồi mềm điều hòa",
+    seatInfo:
+      "SE8 Sài Gòn - Hà Nội, 04/01/2024 06:00, Toa 2 chỗ 49, Ngồi mềm điều hòa",
     price: 800000,
     discountForPerson: 0,
     promotion: "Không có khuyến mại cho vé này",
@@ -77,7 +78,8 @@ const TABLE_ROW_ITEMS: CartInformation[] = [
   },
   {
     username: "Vũ Quang Huy",
-    seatInfo: "SE8 Sài Gòn - Hà Nội, 04/01/2024 06:00, Toa 2 chỗ 49, Ngồi mềm điều hòa",
+    seatInfo:
+      "SE8 Sài Gòn - Hà Nội, 04/01/2024 06:00, Toa 2 chỗ 49, Ngồi mềm điều hòa",
     price: 800000,
     discountForPerson: 0,
     promotion: "Không có khuyến mại cho vé này",
@@ -86,7 +88,8 @@ const TABLE_ROW_ITEMS: CartInformation[] = [
   },
   {
     username: "Vũ Quang Huy",
-    seatInfo: "SE8 Sài Gòn - Hà Nội, 04/01/2024 06:00, Toa 2 chỗ 49, Ngồi mềm điều hòa",
+    seatInfo:
+      "SE8 Sài Gòn - Hà Nội, 04/01/2024 06:00, Toa 2 chỗ 49, Ngồi mềm điều hòa",
     price: 800000,
     discountForPerson: 0,
     promotion: "Không có khuyến mại cho vé này",
@@ -150,7 +153,10 @@ const renderCheckoutInput = (type: string) => {
       <div className="flex justify-center gap-10">
         <div className="flex-1">
           {INPUT_LEFT.map((item: CheckoutInputObj) => (
-            <div key={item.key} className="w-full flex-1 md:flex md:justify-between lg:mx-0">
+            <div
+              key={item.key}
+              className="w-full flex-1 md:flex md:justify-between lg:mx-0"
+            >
               <Label className="ml-5" htmlFor={item.key}>
                 {item.label}
               </Label>
@@ -160,7 +166,10 @@ const renderCheckoutInput = (type: string) => {
         </div>
         <div className="flex-1">
           {INPUT_RIGHT.map((item: CheckoutInputObj) => (
-            <div key={item.key} className="w-full flex-1 md:flex md:justify-between lg:mx-0">
+            <div
+              key={item.key}
+              className="w-full flex-1 md:flex md:justify-between lg:mx-0"
+            >
               <Label className="ml-5" htmlFor={item.key}>
                 {item.label}
               </Label>
@@ -172,7 +181,10 @@ const renderCheckoutInput = (type: string) => {
     );
   }
   return INPUT.map((item: CheckoutInputObj) => (
-    <div key={item.key} className="w-full flex-1 md:ml-5 md:flex md:justify-between">
+    <div
+      key={item.key}
+      className="w-full flex-1 md:ml-5 md:flex md:justify-between"
+    >
       <Label className="ml-5" htmlFor={item.key}>
         {item.label}
       </Label>
@@ -185,7 +197,9 @@ const CheckoutInput = () => {
   return (
     <div className="mx-auto flex min-h-screen min-w-[320px] max-w-7xl flex-col bg-white px-5">
       <div className="mx-auto my-5 md:overflow-x-auto">
-        <h3 className="text-attention my-5 ml-5 font-medium uppercase">Thông tin giỏ vé</h3>
+        <h3 className="text-attention my-5 ml-5 font-medium uppercase">
+          Thông tin giỏ vé
+        </h3>
         <Table className="mx-auto w-full">
           <TableHeader className="">
             <TableRow className=" text-center text-white">
@@ -202,7 +216,9 @@ const CheckoutInput = () => {
                 <TableCell className="text-center">{item.username}</TableCell>
                 <TableCell className="text-center">{item.seatInfo}</TableCell>
                 <TableCell className="text-center">{item.price}</TableCell>
-                <TableCell className="text-center">{item.discountForPerson}</TableCell>
+                <TableCell className="text-center">
+                  {item.discountForPerson}
+                </TableCell>
                 <TableCell className="text-center">{item.promotion}</TableCell>
                 <TableCell className="text-center">{item.insurance}</TableCell>
                 <TableCell className="text-center">{item.total}</TableCell>
@@ -217,22 +233,33 @@ const CheckoutInput = () => {
         </Table>
       </div>
       <div className="">
-        <h3 className="text-attention my-5 ml-5 font-medium uppercase">Thông tin người đặt vé</h3>
+        <h3 className="text-attention my-5 ml-5 font-medium uppercase">
+          Thông tin người đặt vé
+        </h3>
         <p className="mb-5 text-indigo-500">
-          Quý khách vui lòng điền đầy đủ và chính xác các thông tin về người mua vé dưới đây. Các thông tin sẽ
-          được sử dụng để xác minh người mua vé tại ga trước khi lên tàu theo đúng quy định của Tổng công ty
-          Đường sắt Việt Nam
+          Quý khách vui lòng điền đầy đủ và chính xác các thông tin về người mua
+          vé dưới đây. Các thông tin sẽ được sử dụng để xác minh người mua vé
+          tại ga trước khi lên tàu theo đúng quy định của Tổng công ty Đường sắt
+          Việt Nam
         </p>
-        <div className="flex flex-col items-center lg:hidden">{renderCheckoutInput("small-screen")}</div>
-        <div className=" hidden w-full lg:inline-block">{renderCheckoutInput("large-screen")}</div>
+        <div className="flex flex-col items-center lg:hidden">
+          {renderCheckoutInput("small-screen")}
+        </div>
+        <div className=" hidden w-full lg:inline-block">
+          {renderCheckoutInput("large-screen")}
+        </div>
       </div>
       <div>
         <div className="my-5 flex h-max items-start justify-center gap-5">
           <input className="mt-1" type="checkbox" id="checkbox" />
           <label htmlFor="checkbox">
             Tôi đã đọc kỹ và đồng ý tuân thủ tất cả các
-            <span className="text-indigo-500"> quy định mua vé trực tuyến, các chương trình khuyến mại </span>
-            của Tổng công ty đường sắt Việt Nam và chịu trách nhiệm về tính xác thực của các thông tin trên
+            <span className="text-indigo-500">
+              {" "}
+              quy định mua vé trực tuyến, các chương trình khuyến mại{" "}
+            </span>
+            của Tổng công ty đường sắt Việt Nam và chịu trách nhiệm về tính xác
+            thực của các thông tin trên
           </label>
         </div>
         <div className="mb-5 flex justify-between">

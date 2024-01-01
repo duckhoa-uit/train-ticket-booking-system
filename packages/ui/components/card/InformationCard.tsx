@@ -95,8 +95,12 @@ const cvaInformationCardTypeByVariant = cva("", {
   ],
 });
 
-type CVACardType = Required<Pick<VariantProps<typeof cvaInformationCardTypeByVariant>, "variant">>;
-type CVACardStructure = VariantProps<typeof cvaInformationCardTypeByVariant>["structure"];
+type CVACardType = Required<
+  Pick<VariantProps<typeof cvaInformationCardTypeByVariant>, "variant">
+>;
+type CVACardStructure = VariantProps<
+  typeof cvaInformationCardTypeByVariant
+>["structure"];
 
 export interface InformationCardProps extends CVACardType {
   image?: string;
@@ -132,13 +136,14 @@ export function InformationCard({
   thumbnailUrl,
   learnMore,
 }: InformationCardProps) {
-  const LinkComponent = learnMore && learnMore.href.startsWith("https") ? "a" : Link;
+  const LinkComponent =
+    learnMore && learnMore.href.startsWith("https") ? "a" : Link;
   return (
     <div
       className={cn(
         containerProps?.className,
         cvaInformationCardTypeByVariant({ variant, structure: "card" }),
-        "bg-default border-subtle text-default flex flex-col justify-between rounded-md border"
+        "bg-default border-subtle text-default flex flex-col justify-between rounded-md border",
       )}
       data-testid="card-container"
       {...containerProps}
@@ -152,7 +157,7 @@ export function InformationCard({
             alt={imageProps?.alt}
             className={cn(
               imageProps?.className,
-              cvaInformationCardTypeByVariant({ variant, structure: "image" })
+              cvaInformationCardTypeByVariant({ variant, structure: "image" }),
             )}
             {...imageProps}
           />
@@ -161,7 +166,7 @@ export function InformationCard({
           title={title}
           className={cn(
             cvaInformationCardTypeByVariant({ variant, structure: "title" }),
-            "text-emphasis line-clamp-1 font-bold leading-5"
+            "text-emphasis line-clamp-1 font-bold leading-5",
           )}
         >
           {title}
@@ -169,7 +174,13 @@ export function InformationCard({
         {description && (
           <p
             title={description.toString()}
-            className={cn(cvaInformationCardTypeByVariant({ variant, structure: "description" }), "pt-1")}
+            className={cn(
+              cvaInformationCardTypeByVariant({
+                variant,
+                structure: "description",
+              }),
+              "pt-1",
+            )}
           >
             {description}
           </p>
@@ -210,7 +221,12 @@ export function InformationCard({
       {/* TODO: this should be CardActions https://mui.com/material-ui/api/card-actions/ */}
       <div>
         {variant === "basic" && (
-          <Button color="secondary" href={actionButton?.href} className="mt-10" EndIcon={ArrowRight}>
+          <Button
+            color="secondary"
+            href={actionButton?.href}
+            className="mt-10"
+            EndIcon={ArrowRight}
+          >
             {actionButton?.child}
           </Button>
         )}

@@ -27,9 +27,15 @@ const SearchBar = ({
 }: Props) => {
   const router = useRouter();
 
-  const [departPlace, setDepartPlace] = useState<number | null>(initialDepartPlace ?? null);
-  const [arrivalPlace, setArrivalPlace] = useState<number | null>(initialArrivalPlace ?? null);
-  const [departDate, setDepartDate] = useState<Date | undefined>(initialDepartDate ?? undefined);
+  const [departPlace, setDepartPlace] = useState<number | null>(
+    initialDepartPlace ?? null,
+  );
+  const [arrivalPlace, setArrivalPlace] = useState<number | null>(
+    initialArrivalPlace ?? null,
+  );
+  const [departDate, setDepartDate] = useState<Date | undefined>(
+    initialDepartDate ?? undefined,
+  );
 
   const { data: stations } = useQuery({
     queryKey: ["stations"],
@@ -64,7 +70,7 @@ const SearchBar = ({
       className={cn(
         "relative h-3/5 w-full p-5",
         "bg-default dark:bg-muted border-subtle rounded-md border px-4 py-10 sm:px-10",
-        className
+        className,
       )}
     >
       <form className="flex w-full flex-col items-center lg:flex-row lg:items-end">
