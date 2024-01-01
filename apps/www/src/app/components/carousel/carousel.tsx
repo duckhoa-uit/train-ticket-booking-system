@@ -1,6 +1,5 @@
 "use client";
 
-import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons";
 import useEmblaCarousel, {
   type EmblaCarouselType as CarouselApi,
   type EmblaOptionsType as CarouselOptions,
@@ -11,6 +10,7 @@ import * as React from "react";
 import { cn } from "@ttbs/lib/cn";
 // import { Button } from "@/components/ui/button";
 import { Button } from "@ttbs/ui";
+import { ArrowLeftIcon, ArrowRightIcon } from "@ttbs/ui/components/icons";
 
 type CarouselProps = {
   opts?: CarouselOptions;
@@ -172,15 +172,15 @@ const CarouselItem = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLD
 CarouselItem.displayName = "CarouselItem";
 
 const CarouselPrevious = React.forwardRef<HTMLButtonElement, React.ComponentProps<typeof Button>>(
-  ({ className, variant = "button", size = "base", ...props }, ref) => {
+  ({ className, color = "secondary", size = "base", ...props }, ref) => {
     const { orientation, scrollPrev, canScrollPrev } = useCarousel();
 
     return (
       <Button
         ref={ref}
-        color="secondary"
-        variant={variant}
+        color={color}
         size={size}
+        variant="icon"
         className={cn(
           "absolute  h-8 w-8 rounded-full",
           orientation === "horizontal"
@@ -201,15 +201,15 @@ const CarouselPrevious = React.forwardRef<HTMLButtonElement, React.ComponentProp
 CarouselPrevious.displayName = "CarouselPrevious";
 
 const CarouselNext = React.forwardRef<HTMLButtonElement, React.ComponentProps<typeof Button>>(
-  ({ className, variant = "button", size = "base", ...props }, ref) => {
+  ({ className, color = "secondary", size = "base", ...props }, ref) => {
     const { orientation, scrollNext, canScrollNext } = useCarousel();
 
     return (
       <Button
         ref={ref}
-        variant={variant}
+        color={color}
         size={size}
-        color="secondary"
+        variant="icon"
         className={cn(
           "absolute h-8 w-8 rounded-full",
           orientation === "horizontal"
