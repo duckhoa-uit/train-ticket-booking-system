@@ -22,16 +22,15 @@ const BookCardItem: React.FC<BookCardItemProps> = ({
   link,
 }) => {
   return (
-    <div className="h-full flex-1">
+    <div className="min-w-[384px] max-w-sm flex-1">
       {type === "1" && (
         <div
-          className={`h-full gap-3 p-4 ${bgColor} shadow-max flex max-w-sm flex-col items-center justify-stretch rounded-lg`}
+          className={`shadow-max flex h-full ${bgColor} max-w-sm flex-col items-center justify-stretch gap-3 rounded-lg  p-4`}
         >
-          <h3 className={`mb-3 text-lg font-semibold ${textColor}`}>{title}</h3>
+          <h3 className={`mb-3 text-center text-lg font-semibold ${textColor}`}>{title}</h3>
           <Button
-            className="rounded-md px-4 py-2 text-white transition duration-300"
+            className="rounded-md bg-black px-4 py-2 text-white transition duration-300"
             variant="button"
-            color="primary"
           >
             Book Now
           </Button>

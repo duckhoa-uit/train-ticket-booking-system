@@ -1,6 +1,15 @@
 import React from "react";
 
+import { Card, CardContent } from "@ttbs/ui";
+
 import BookCardItem from "../bookCardItem/bookCardItem";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "../carousel/carousel";
 import FaqItem from "../faq-item/faq-item";
 import RatingCardItem from "../rating-card/ratingCard";
 
@@ -34,7 +43,7 @@ const HomeSection = ({ type }: { type: string }) => {
     {
       question: "Why is Bliss different from others?",
       answer:
-        "Bliss Flights is the UK's largest independent travel agent. Whether you'd like a short UK break, a sunny package holiday, an all inclusive getaway or something else entirely.",
+        "Easy Boarding is the UK's largest independent travel agent. Whether you'd like a short UK break, a sunny package holiday, an all inclusive getaway or something else entirely.",
     },
     {
       question: "Do I have to pay during the booking process?",
@@ -62,24 +71,24 @@ const HomeSection = ({ type }: { type: string }) => {
       {
         title: "Price Match Guarantee",
         description: "We'll match the price if you find it cheaper elsewhere.",
-        bgColor: "bg-pink-600",
-        textColor: "text-white",
+        bgColor: "bg-gradient-to-b from-yellow-100 to-yellow-200",
+        textColor: "text-black",
         hoverColor: "bg-pink-700",
         link: "/best-price.png",
       },
       {
         title: "No Fee on Credit & Debit Card Transactions",
         description: "We don't charge extra for card transactions.",
-        bgColor: "bg-blue-600",
-        textColor: "text-white",
+        bgColor: "bg-gradient-to-b from-blue-100 to-blue-200",
+        textColor: "text-black",
         hoverColor: "bg-blue-700",
         link: "/debit-card.png",
       },
       {
         title: "Exclusive Deals for Hundreds of Destinations",
         description: "Get the best deals for your favorite destinations.",
-        bgColor: "bg-pink-600",
-        textColor: "text-white",
+        bgColor: "bg-gradient-to-b from-red-100 to-red-200",
+        textColor: "text-black",
         hoverColor: "bg-pink-700",
         link: "/hot-deal.png",
       },
@@ -88,7 +97,7 @@ const HomeSection = ({ type }: { type: string }) => {
       {
         title: "Hassle-free Booking",
         description:
-          "Bliss Flights is the UK's largest independent travel agent. Whether you'd like a short UK break, a sunny package holiday, an all inclusive getaway or something else entirely, our team will help you book the holiday of your dreams.",
+          "Easy Boarding is the UK's largest independent travel agent. Whether you'd like a short UK break, a sunny package holiday, an all inclusive getaway or something else entirely, our team will help you book the holiday of your dreams.",
         bgColor: "bg-pink-600",
         textColor: "text-white",
         hoverColor: "bg-pink-700",
@@ -97,7 +106,7 @@ const HomeSection = ({ type }: { type: string }) => {
       {
         title: "Trusted Travel Agents in UK",
         description:
-          "Bliss Flights is the UK's largest independent travel agent. Whether you'd like a short UK break, a sunny package holiday, an all inclusive getaway or something else entirely, our team will help you book the holiday of your dreams.",
+          "Easy Boarding is the UK's largest independent travel agent. Whether you'd like a short UK break, a sunny package holiday, an all inclusive getaway or something else entirely, our team will help you book the holiday of your dreams.",
         bgColor: "bg-pink-600",
         textColor: "text-white",
         hoverColor: "bg-pink-700",
@@ -106,7 +115,7 @@ const HomeSection = ({ type }: { type: string }) => {
       {
         title: "Expert Travel Advice",
         description:
-          "Bliss Flights is the UK's largest independent travel agent. Whether you'd like a short UK break, a sunny package holiday, an all inclusive getaway or something else entirely, our team will help you book the holiday of your dreams.",
+          "Easy Boarding is the UK's largest independent travel agent. Whether you'd like a short UK break, a sunny package holiday, an all inclusive getaway or something else entirely, our team will help you book the holiday of your dreams.",
         bgColor: "bg-pink-600",
         textColor: "text-white",
         hoverColor: "bg-pink-700",
@@ -117,21 +126,21 @@ const HomeSection = ({ type }: { type: string }) => {
       {
         username: "Ruby Ryan",
         reviewText:
-          "Bliss Flights is the UK's largest independent travel agent. Whether you'd like a short UK break, a sunny package holiday, an all inclusive getaway or something else entirely.",
+          "Easy Boarding is the UK's largest independent travel agent. Whether you'd like a short UK break, a sunny package holiday, an all inclusive getaway or something else entirely.",
         rating: 4.9,
         maxRating: 5,
       },
       {
         username: "Ruby Ryan",
         reviewText:
-          "Bliss Flights is the UK's largest independent travel agent. Whether you'd like a short UK break, a sunny package holiday, an all inclusive getaway or something else entirely.",
+          "Easy Boarding is the UK's largest independent travel agent. Whether you'd like a short UK break, a sunny package holiday, an all inclusive getaway or something else entirely.",
         rating: 3,
         maxRating: 5,
       },
       {
         username: "Ruby Ryan",
         reviewText:
-          "Bliss Flights is the UK's largest independent travel agent. Whether you'd like a short UK break, a sunny package holiday, an all inclusive getaway or something else entirely.",
+          "Easy Boarding is the UK's largest independent travel agent. Whether you'd like a short UK break, a sunny package holiday, an all inclusive getaway or something else entirely.",
         rating: 2,
         maxRating: 5,
       },
@@ -183,27 +192,55 @@ const HomeSection = ({ type }: { type: string }) => {
   }
 
   return (
-    <div className="my-5 flex items-center justify-center bg-gray-100 p-2">
-      <div className="h-full w-full">
-        <div className="mb-6 text-center">{renderHeader(type)}</div>
+    <div className="mx-auto mt-5 w-full max-w-7xl bg-gray-100 p-2">
+      <div className="flex h-full w-full flex-col items-center">
+        <div className="mb-5 text-center">{renderHeader(type)}</div>
         {type === "1" && (
-          <div className="min-h- flex h-full items-stretch justify-between gap-5">
+          <div className="flex h-full flex-col items-center gap-5 md:flex md:flex-row md:items-stretch md:overflow-x-auto">
             {CARD_ITEMS[type].map((item, index) => renderCardItem(type, item, index))}
           </div>
         )}
         {type === "2" && (
-          <div className="flex h-full items-center justify-between gap-5">
+          <div className="flex h-full flex-col items-center gap-5 md:flex-row md:items-stretch md:overflow-x-auto">
             {CARD_ITEMS[type].map((item, index) => renderCardItem(type, item, index))}
           </div>
         )}
         {type === "3" && (
-          <div className="flex h-full items-center justify-between gap-5">
-            {CARD_ITEMS[type].map((item, index) => renderCardItem(type, item, index))}
+          <div>
+            <div className=" hidden h-full flex-col items-center gap-5 md:flex md:flex-row md:items-stretch md:overflow-x-auto">
+              {CARD_ITEMS[type].map((item, index) => renderCardItem(type, item, index))}
+            </div>
+            <Carousel className="mx-auto w-full max-w-xs md:hidden">
+              <CarouselContent>
+                {CARD_ITEMS[type].map((item, index) => {
+                  const ratingCard = item as RatingCardObj;
+                  return (
+                    <CarouselItem key={index}>
+                      <div className="p-1">
+                        <Card>
+                          <CardContent className="p-0">
+                            <RatingCardItem
+                              key={index}
+                              username={ratingCard.username ?? ""}
+                              reviewText={ratingCard.reviewText ?? ""}
+                              rating={ratingCard.rating ?? 0}
+                              maxRating={ratingCard.maxRating ?? 5}
+                            />
+                          </CardContent>
+                        </Card>
+                      </div>
+                    </CarouselItem>
+                  );
+                })}
+              </CarouselContent>
+              <CarouselPrevious />
+              <CarouselNext />
+            </Carousel>
           </div>
         )}
         {type === "4" && (
-          <div className="space-x-4 space-y-6">
-            <dl className="mx-2 flex flex-col items-center gap-5">
+          <div>
+            <dl className="mx-2 flex w-full flex-col items-center gap-5">
               {faqs.map((faq, index) => (
                 <FaqItem key={index} question={faq.question} answer={faq.answer} />
               ))}

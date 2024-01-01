@@ -20,7 +20,7 @@ const RatingCardItem: React.FC<RatingCardItemProps> = ({ username, reviewText, r
     return stars;
   };
   return (
-    <div className="max-w-sm rounded-lg bg-blue-600 p-4 text-white shadow-lg">
+    <div className="max-w-sm rounded-lg bg-white p-4 text-black shadow-lg">
       <div className="mb-4 flex items-center">
         <div className="mr-3 flex h-10 w-10 items-center justify-center rounded-full bg-red-400">
           <span className="text-xl">👤</span> {/* Placeholder for avatar icon */}
