@@ -45,5 +45,15 @@ const config: Config = {
   // plugins: [],
   ...base,
   plugins: [...base.plugins, require("tailwindcss-animate")],
+  safelist: [
+    {
+      pattern: /grid-cols-/,
+      variants: ["md", "lg"],
+    },
+    {
+      pattern: /grid-rows-/,
+      variants: ["md", "lg"],
+    },
+  ],
 };
 export default config;

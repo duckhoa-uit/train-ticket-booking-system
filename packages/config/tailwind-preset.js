@@ -12,6 +12,20 @@ module.exports = {
   darkMode: "class",
   theme: {
     extend: {
+      keyframes: {
+        "accordion-down": {
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
+        },
+        "accordion-up": {
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
+        },
+      },
+      animation: {
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out",
+      },
       colors: {
         emphasis: "var(--ttbs-bg-emphasis)",
         default: "var(--ttbs-bg, white)",
@@ -101,7 +115,8 @@ module.exports = {
         },
       },
       animation: {
-        "fade-in-up": "fade-in-up 600ms var(--animation-delay, 0ms) cubic-bezier(.21,1.02,.73,1) forwards",
+        "fade-in-up":
+          "fade-in-up 600ms var(--animation-delay, 0ms) cubic-bezier(.21,1.02,.73,1) forwards",
         spinning: "spinning 0.75s linear infinite",
       },
       boxShadow: {
@@ -141,7 +156,8 @@ module.exports = {
         screen: "100vw",
       }),
       backgroundImage: {
-        "gradient-primary": "radial-gradient(162.05% 170% at 109.58% 35%, #667593 0%, #E3E3E3 100%)",
+        "gradient-primary":
+          "radial-gradient(162.05% 170% at 109.58% 35%, #667593 0%, #E3E3E3 100%)",
       },
     },
   },

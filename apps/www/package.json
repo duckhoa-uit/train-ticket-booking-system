@@ -13,12 +13,25 @@
     "lint:report": "eslint . --format json --output-file ../../lint-results/web.json"
   },
   "dependencies": {
+    "@builder.io/react-hydration-overlay": "^0.0.6",
+    "@radix-ui/react-accordion": "^1.1.2",
+    "@tanstack/react-query": "^5.0.0",
+    "@ttbs/env": "workspace:*",
     "@ttbs/i18n": "workspace:*",
     "@ttbs/lib": "workspace:*",
+    "@ttbs/prisma": "workspace:*",
     "@ttbs/ui": "workspace:*",
+    "dayjs": "^1.11.9",
+    "embla-carousel-react": "8.0.0-rc17",
+    "i": "^0.3.7",
+    "lottie-react": "^2.4.0",
     "next": "13.5.5",
+    "npm": "^10.2.5",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "sonner": "^1.0.3",
+    "uuid": "^9.0.1",
+    "zod": "^3.21.1"
   },
   "devDependencies": {
     "@ttbs/config": "workspace:*",
@@ -26,10 +39,11 @@
     "@types/node": "^20.8.1",
     "@types/react": "^18.2.8",
     "@types/react-dom": "^18.2.8",
+    "@types/uuid": "^9.0.7",
     "autoprefixer": "^10",
     "eslint-config-next": "13.5.5",
     "postcss": "^8",
-    "tailwindcss": "^3.3.1",
+    "tailwindcss": "^3.4.0",
     "tailwindcss-animate": "^1.0.7",
     "typescript": "^5.2.2"
   }

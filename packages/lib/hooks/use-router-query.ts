@@ -1,9 +1,11 @@
-import { useSearchParams } from "next/navigation";
+import { useCompatSearchParams } from "./use-compat-search-params";
 
 /**
  * An alternative to Object.fromEntries that allows duplicate keys.
  */
-function fromEntriesWithDuplicateKeys(entries: IterableIterator<[string, string]> | null) {
+function fromEntriesWithDuplicateKeys(
+  entries: IterableIterator<[string, string]> | null,
+) {
   const result: Record<string, string | string[]> = {};
 
   if (entries === null) {
@@ -35,7 +37,9 @@ function fromEntriesWithDuplicateKeys(entries: IterableIterator<[string, string]
  * @returns {Object} routerQuery
  */
 export const useRouterQuery = () => {
-  const searchParams = useSearchParams();
-  const routerQuery = fromEntriesWithDuplicateKeys(searchParams?.entries() ?? null);
+  const searchParams = useCompatSearchParams();
+  const routerQuery = fromEntriesWithDuplicateKeys(
+    searchParams?.entries() ?? null,
+  );
   return routerQuery;
 };

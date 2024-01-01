@@ -79,10 +79,15 @@ const Header = () => {
 
   return (
     <header className="bg-white">
-      <div className="text-subtle relative flex max-w-7xl flex-col items-center p-3 capitalize md:mx-auto md:flex-row md:justify-around md:align-middle md:text-sm">
+      <div className="text-subtle relative flex max-w-7xl flex-col items-center px-5 py-3 capitalize md:mx-auto md:flex-row md:justify-around md:align-middle md:text-sm">
         <div className=" flex w-full items-center justify-between gap-3 px-2 md:w-auto">
           <Link href="/">
-            <Image src="/logoipsum.svg" width={200} height={40} alt="logoipsum" />
+            <Image
+              src="/logoipsum.svg"
+              width={200}
+              height={40}
+              alt="logoipsum"
+            />
           </Link>
           <div>
             <BurgerMenu
@@ -95,7 +100,11 @@ const Header = () => {
         </div>
         {isMobileOrTablet ? (
           <Sheet open={openMobileMenu} onOpenChange={setOpenMobileMenu}>
-            <SheetContent position="right" size="default" className="w-1/2 min-w-[250px]">
+            <SheetContent
+              position="right"
+              size="default"
+              className="w-1/2 min-w-[250px]"
+            >
               <div className="flex w-full flex-col items-center">
                 <Navigation isMobileOrTablet />
               </div>
@@ -104,7 +113,7 @@ const Header = () => {
         ) : (
           <ul
             className={cn(
-              `text-emphasis static z-20 mr-5 hidden flex-1 flex-row justify-end gap-2 rounded-md p-2 transition-all duration-500 ease-in-out md:flex `
+              `text-emphasis static z-20 mr-5 hidden flex-1 flex-row justify-end gap-2 rounded-md p-2 transition-all duration-500 ease-in-out md:flex `,
             )}
           >
             <Navigation />
@@ -116,13 +125,19 @@ const Header = () => {
 };
 
 const Navigation = ({ isMobileOrTablet }: { isMobileOrTablet?: boolean }) => (
-  <NavigationMenu orientation={isMobileOrTablet ? "vertical" : "horizontal"} className="capitalize">
+  <NavigationMenu
+    orientation={isMobileOrTablet ? "vertical" : "horizontal"}
+    className="capitalize"
+  >
     <NavigationMenuList className={cn(isMobileOrTablet ? "flex-col" : null)}>
       {NAVIGATION_ITEMS.map((nav, idx) => {
         if ("children" in nav) {
           if (isMobileOrTablet)
             return (
-              <Collapsible key={`${nav.title}_${idx}`} className="flex flex-col items-center">
+              <Collapsible
+                key={`${nav.title}_${idx}`}
+                className="flex flex-col items-center"
+              >
                 <CollapsibleTrigger>
                   <NavigationMenuItem className="flex items-center">
                     {nav.title}{" "}
@@ -134,7 +149,11 @@ const Navigation = ({ isMobileOrTablet }: { isMobileOrTablet?: boolean }) => (
                 </CollapsibleTrigger>
                 <CollapsibleContent>
                   {nav.children.map((navItem) => (
-                    <ListItem key={navItem.title} title={navItem.title} href={navItem.href}>
+                    <ListItem
+                      key={navItem.title}
+                      title={navItem.title}
+                      href={navItem.href}
+                    >
                       {navItem.description}
                     </ListItem>
                   ))}
@@ -148,7 +167,11 @@ const Navigation = ({ isMobileOrTablet }: { isMobileOrTablet?: boolean }) => (
               <NavigationMenuContent>
                 <ul className="grid w-[200px] grid-cols-1 gap-3 p-4">
                   {nav.children.map((navItem) => (
-                    <ListItem key={navItem.title} title={navItem.title} href={navItem.href}>
+                    <ListItem
+                      key={navItem.title}
+                      title={navItem.title}
+                      href={navItem.href}
+                    >
                       {navItem.description}
                     </ListItem>
                   ))}
@@ -160,7 +183,9 @@ const Navigation = ({ isMobileOrTablet }: { isMobileOrTablet?: boolean }) => (
         return (
           <NavigationMenuItem key={`${nav.href}_${idx}`}>
             <Link href={nav.href} legacyBehavior passHref>
-              <NavigationMenuLink className={navigationMenuTriggerStyle()}>{nav.title}</NavigationMenuLink>
+              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                {nav.title}
+              </NavigationMenuLink>
             </Link>
           </NavigationMenuItem>
         );
@@ -169,27 +194,30 @@ const Navigation = ({ isMobileOrTablet }: { isMobileOrTablet?: boolean }) => (
   </NavigationMenu>
 );
 
-const ListItem = React.forwardRef<React.ElementRef<"a">, React.ComponentPropsWithoutRef<"a">>(
-  ({ className, title, children, ...props }, ref) => {
-    return (
-      <li>
-        <NavigationMenuLink asChild>
-          <a
-            ref={ref}
-            className={cn(
-              "hover:bg-muted hover:text-muted-foreground focus:bg-muted focus:text-muted-foreground block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors",
-              className
-            )}
-            {...props}
-          >
-            <div className="text-sm font-medium leading-none">{title}</div>
-            <p className="text-muted-foreground line-clamp-2 text-sm leading-snug">{children}</p>
-          </a>
-        </NavigationMenuLink>
-      </li>
-    );
-  }
-);
+const ListItem = React.forwardRef<
+  React.ElementRef<"a">,
+  React.ComponentPropsWithoutRef<"a">
+>(({ className, title, children, ...props }, ref) => {
+  return (
+    <li>
+      <NavigationMenuLink asChild>
+        <a
+          ref={ref}
+          className={cn(
+            "hover:bg-muted hover:text-muted-foreground focus:bg-muted focus:text-muted-foreground block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors",
+            className,
+          )}
+          {...props}
+        >
+          <div className="text-sm font-medium leading-none">{title}</div>
+          <p className="text-muted-foreground line-clamp-2 text-sm leading-snug">
+            {children}
+          </p>
+        </a>
+      </NavigationMenuLink>
+    </li>
+  );
+});
 ListItem.displayName = "ListItem";
 
 export default Header;

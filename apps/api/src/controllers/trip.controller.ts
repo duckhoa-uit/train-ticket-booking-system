@@ -1,12 +1,32 @@
 import { NextFunction, Request, Response } from "express";
+import { ParsedQs } from "qs";
 
-import { TripCreateInput, TripUpdateInput, TripIdParamInput, tripCreateSchema } from "@/schemas/trip.schema";
-import { createTrip, getAllTrips, getTripByID, updateTrip } from "@/services/trip.service";
+import {
+  GetSeatsOnTripParamInput,
+  GetPriceOnTripQueryInput,
+  SearchTripQueryInput,
+  TripCreateInput,
+  TripIdParamInput,
+  TripUpdateInput,
+  getSeatsOnTripParamInputSchema,
+  searchTripQueryInputSchema,
+  tripCreateSchema,
+  getPriceOnTripQueryInputSchema,
+  tripIdParamInputSchema,
+} from "@/schemas/trip.schema";
+import {
+  createTrip,
+  getAllTrips,
+  getPricesOnTrip,
+  getSeatsOnTripByCarriageId,
+  getTripByID,
+  updateTrip,
+} from "@/services/trip.service";
 
 export const createTripHandler = async (
   req: Request<{}, {}, TripCreateInput>,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const { body: reqBody } = tripCreateSchema.parse(req);
@@ -17,10 +37,16 @@ export const createTripHandler = async (
   }
 };
 
-export const getTripHandler = async (req: Request<{}, {}, {}>, res: Response, next: NextFunction) => {
+export const getTripsHandler = async (
+  req: Request<{}, {}, {}, SearchTripQueryInput & ParsedQs>,
+  res: Response,
+  next: NextFunction,
+) => {
   try {
-    const allTrips = await getAllTrips();
-    return res.status(200).json({ status: "success", data: allTrips });
+    const { query } = searchTripQueryInputSchema.parse(req);
+    const { trips, count } = await getAllTrips(query);
+
+    return res.status(200).json({ status: "success", data: trips, count });
   } catch (error) {
     return next(error);
   }
@@ -29,7 +55,7 @@ export const getTripHandler = async (req: Request<{}, {}, {}>, res: Response, ne
 export const getTripById = async (
   req: Request<TripIdParamInput, {}, {}>,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const tripID = Number(req.params.id);
@@ -44,13 +70,64 @@ export const getTripById = async (
 export const updateTripHandler = async (
   req: Request<TripIdParamInput, {}, TripUpdateInput>,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const tripID = +req.params.id;
 
     const updatedTrip = await updateTrip(tripID, req.body);
     return res.status(200).json({ status: "success", data: updatedTrip });
+  } catch (error) {
+    return next(error);
+  }
+};
+
+export const getSeatsOnTripHandler = async (
+  req: Request<
+    GetSeatsOnTripParamInput,
+    {},
+    {},
+    GetPriceOnTripQueryInput & ParsedQs
+  >,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const {
+      params: { id: tripId, carriageId },
+    } = getSeatsOnTripParamInputSchema.parse(req);
+
+    const seats = await getSeatsOnTripByCarriageId(tripId, carriageId);
+    return res.status(200).json({ status: "success", data: seats });
+  } catch (error) {
+    return next(error);
+  }
+};
+export const getPriceOnTripHandler = async (
+  req: Request<
+    GetSeatsOnTripParamInput,
+    {},
+    {},
+    GetPriceOnTripQueryInput & ParsedQs
+  >,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const {
+      params: { id: tripId },
+    } = tripIdParamInputSchema.parse(req);
+    const {
+      query: { departStationId, arrivalStationId, seatTypeId },
+    } = getPriceOnTripQueryInputSchema.parse(req);
+
+    const seats = await getPricesOnTrip({
+      tripId,
+      seatTypeId,
+      departStationId,
+      arrivalStationId,
+    });
+    return res.status(200).json({ status: "success", data: seats });
   } catch (error) {
     return next(error);
   }

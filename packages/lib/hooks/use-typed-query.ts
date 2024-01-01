@@ -1,5 +1,7 @@
+"use client";
+
 import { usePathname, useRouter } from "next/navigation";
-import { useCallback, useMemo } from "react";
+import { useCallback, useMemo, useEffect } from "react";
 import { z } from "zod";
 
 import { useRouterQuery } from "./use-router-query";
@@ -46,6 +48,17 @@ export function useTypedQuery<T extends z.AnyZodObject>(schema: T) {
     return {} as Output;
   }, []);
 
+  useEffect(() => {
+    if (parsedQuerySchema.success && parsedQuerySchema.data) {
+      Object.entries(parsedQuerySchema.data).forEach(([key, value]) => {
+        if (key in unparsedQuery || !value) return;
+        const search = new URLSearchParams(parsedQuery);
+        search.set(String(key), String(value));
+        router.replace(`${pathname}?${search.toString()}`);
+      });
+    }
+  }, [parsedQuerySchema, schema, router, pathname, unparsedQuery, parsedQuery]);
+
   if (parsedQuerySchema.success) parsedQuery = parsedQuerySchema.data;
   else if (!parsedQuerySchema.success) console.error(parsedQuerySchema.error);
 
@@ -58,7 +71,7 @@ export function useTypedQuery<T extends z.AnyZodObject>(schema: T) {
       router.replace(`${pathname}?${search.toString()}`);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [parsedQuery, router]
+    [parsedQuery, router],
   );
 
   // Delete a key from the query
@@ -69,7 +82,10 @@ export function useTypedQuery<T extends z.AnyZodObject>(schema: T) {
   }
 
   // push item to existing key
-  function pushItemToKey<J extends ArrayOutputKeys>(key: J, value: ArrayOutput[J][number]) {
+  function pushItemToKey<J extends ArrayOutputKeys>(
+    key: J,
+    value: ArrayOutput[J][number],
+  ) {
     const existingValue = parsedQuery[key];
     if (Array.isArray(existingValue)) {
       if (existingValue.includes(value)) return; // prevent adding the same value to the array
@@ -82,7 +98,10 @@ export function useTypedQuery<T extends z.AnyZodObject>(schema: T) {
   }
 
   // Remove item by key and value
-  function removeItemByKeyAndValue<J extends ArrayOutputKeys>(key: J, value: ArrayOutput[J][number]) {
+  function removeItemByKeyAndValue<J extends ArrayOutputKeys>(
+    key: J,
+    value: ArrayOutput[J][number],
+  ) {
     const existingValue = parsedQuery[key];
     if (Array.isArray(existingValue) && existingValue.length > 1) {
       // @ts-expect-error this is too much for TS it seems
