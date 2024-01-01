@@ -14,7 +14,7 @@ export const orderCreateSchema = z.object({
         amount: z.number(),
         userName: z.string(),
         userIdentification: z.string(),
-      })
+      }),
     ),
   }),
 });
@@ -40,12 +40,14 @@ export const orderUpdateSchema = z.object({
           amount: z.number(),
           userName: z.string(),
           userIdentification: z.string(),
-        })
+        }),
       ),
     })
     .partial(),
 });
 
 export type OrderCreateInput = z.infer<typeof orderCreateSchema>["body"];
-export type OrderIdParamInput = z.infer<typeof orderIdParamInputSchema>["params"];
+export type OrderIdParamInput = z.infer<
+  typeof orderIdParamInputSchema
+>["params"];
 export type OrderUpdateInput = z.infer<typeof orderUpdateSchema>["body"];
