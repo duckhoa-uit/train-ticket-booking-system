@@ -44,12 +44,14 @@ const Addon = ({ isFilled, children, className, error, onClickAddon }: AddonProp
       isFilled && "bg-subtle",
       onClickAddon && "cursor-pointer disabled:hover:cursor-not-allowed",
       className
-    )}>
+    )}
+  >
     <div
       className={cn(
-        "min-h-9 flex flex-col justify-center text-sm leading-7",
+        "flex min-h-9 flex-col justify-center text-sm leading-7",
         error ? "text-error" : "text-default"
-      )}>
+      )}
+    >
       <span className="flex whitespace-nowrap">{children}</span>
     </div>
   </div>
@@ -96,10 +98,11 @@ export const InputField = forwardRef<HTMLInputElement, InputFieldProps>(function
           htmlFor={id}
           loadingClassName="w-16"
           {...labelProps}
-          className={cn(labelClassName, labelSrOnly && "sr-only", props.error && "text-error")}>
+          className={cn(labelClassName, labelSrOnly && "sr-only", props.error && "text-error")}
+        >
           {label}
           {showAsteriskIndicator && !readOnly && passThrough.required ? (
-            <span className="text-default ml-1 font-medium">*</span>
+            <span className="text-default text-error ml-1 font-medium">*</span>
           ) : null}
           {LockedIcon}
         </Skeleton>
@@ -107,7 +110,8 @@ export const InputField = forwardRef<HTMLInputElement, InputFieldProps>(function
       {addOnLeading || addOnSuffix ? (
         <div
           dir="ltr"
-          className="focus-within:ring-brand-default group relative mb-1 flex items-center rounded-md focus-within:outline-none focus-within:ring-2">
+          className="focus-within:ring-brand-default group relative mb-1 flex items-center rounded-md focus-within:outline-none focus-within:ring-2"
+        >
           {addOnLeading && (
             <Addon isFilled={addOnFilled} className={cn("rounded-l-md border-r-0", addOnClassname)}>
               {addOnLeading}
@@ -141,7 +145,8 @@ export const InputField = forwardRef<HTMLInputElement, InputFieldProps>(function
             <Addon
               onClickAddon={onClickAddon}
               isFilled={addOnFilled}
-              className={cn("ltr:rounded-r-md rtl:rounded-l-md", addOnClassname)}>
+              className={cn("ltr:rounded-r-md rtl:rounded-l-md", addOnClassname)}
+            >
               {addOnSuffix}
             </Addon>
           )}

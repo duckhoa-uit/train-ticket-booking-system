@@ -37,7 +37,7 @@ export const getTripTimelineHandler = async (req: Request<{}, {}, {}>, res: Resp
   }
 };
 
-export const getTripTimelineById = async (
+export const getTripTimelineByIdHandler = async (
   req: Request<tripTimelineIdParamInput, {}, {}>,
   res: Response,
   next: NextFunction

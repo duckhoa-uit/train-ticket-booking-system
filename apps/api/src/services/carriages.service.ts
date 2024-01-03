@@ -11,13 +11,13 @@ export const createCarriage = async (input: CarriageCreateInput) => {
       seatTypeId: input.seatTypeId,
       trainId: input.trainId,
       seatsPerCabin: input.seatsPerCabin,
-      seats: {
-        createMany: {
-          data: input.seats.map((_) => ({
-            order: _.order,
-          })),
-        },
-      },
+      // seats: {
+      //   createMany: {
+      //     data: input.seats.map((_) => ({
+      //       order: _.order,
+      //     })),
+      //   },
+      // },
     },
   });
 };

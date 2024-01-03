@@ -3,7 +3,7 @@ import { Router } from "express";
 import {
   createTripTimelineHandler,
   getTripTimelineHandler,
-  getTripTimelineById,
+  getTripTimelineByIdHandler,
   updateTripTimelineHandler,
 } from "@/controllers/tripTimeline.controller";
 import { validate } from "@/middleware";
@@ -13,5 +13,5 @@ export const tripTimelineRouter = Router();
 
 tripTimelineRouter.post("/", validate(tripTimelineCreateSchema), createTripTimelineHandler);
 tripTimelineRouter.get("/", getTripTimelineHandler);
-tripTimelineRouter.get("/:id", getTripTimelineById);
+tripTimelineRouter.get("/:id", getTripTimelineByIdHandler);
 tripTimelineRouter.put("/:id", validate(tripTimelineUpdateSchema), updateTripTimelineHandler);

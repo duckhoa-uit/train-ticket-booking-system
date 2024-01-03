@@ -1,0 +1,122 @@
+
+#train-page-loader {
+  display: flex;
+  align-items: center;
+  min-height: 100vh
+}
+
+.loader {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center
+}
+
+.loader__icon {
+  transform: scale(.6) translateY(-40px)
+}
+
+.loader__train {
+  width: 6em;
+  height: 6em;
+  background: radial-gradient(circle at 20% 80%,#fff 0.6em,transparent 0.6em),radial-gradient(circle at 80% 80%,#fff 0.6em,transparent 0.6em),#dcdcdc;
+  border-radius: 1em;
+  position: relative;
+  left: 1em;
+  animation: train-animate 1s infinite ease-in-out
+}
+
+.loader__train::before {
+  content: '';
+  position: absolute;
+  width: 80%;
+  height: 2.3em;
+  background-color: #fff;
+  border-radius: .4em;
+  top: 1.2em;
+  left: 10%
+}
+
+.loader__train::after {
+  content: '';
+  position: absolute;
+  width: 25%;
+  height: .4em;
+  background-color: #fff;
+  border-radius: .3em;
+  top: .4em;
+  left: calc((100% - 25%)/2)
+}
+
+.loader__track {
+  width: 8em;
+  position: relative
+}
+
+.loader__track::before,.loader__track::after {
+  content: '';
+  position: absolute;
+  width: .3em;
+  height: 4em;
+  background-color: #dcdcdc;
+  border-radius: .4em;
+  transform-origin: bottom
+}
+
+.loader__track::before {
+  left: 0;
+  transform: skewX(-27deg)
+}
+
+.loader__track::after {
+  right: 0;
+  transform: skewX(27deg)
+}
+
+.loader__track span {
+  width: inherit;
+  height: .3em;
+  background-color: #dcdcdc;
+  position: absolute;
+  top: 4em;
+  animation: track-animate 1s linear infinite
+}
+
+.loader__track span:nth-child(2) {
+  animation-delay: -.33s
+}
+
+.loader__track span:nth-child(3) {
+  animation-delay: -.66s
+}
+
+@keyframes train-animate {
+  0%,100% {
+      transform: rotate(0deg)
+  }
+
+  25%,75% {
+      transform: rotate(1deg)
+  }
+
+  50% {
+      transform: rotate(-1deg)
+  }
+}
+
+@keyframes track-animate {
+  0% {
+      transform: translateY(-0.5em) scaleX(.9);
+      filter: opacity(0)
+  }
+
+  10%,90% {
+      filter: opacity(1)
+  }
+
+  100% {
+      transform: translateY(-4em) scaleX(.5);
+      filter: opacity(0)
+  }
+}

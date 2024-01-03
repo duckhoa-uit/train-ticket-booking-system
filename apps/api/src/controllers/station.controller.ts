@@ -3,7 +3,7 @@ import { NextFunction, Request, Response } from "express";
 import { Prisma } from "@ttbs/prisma";
 
 import { StationCreateInput, StationIdParamInput, StationUpdateInput } from "@/schemas/station.schema";
-import { createStation, getStations, updateStation } from "@/services/station.service";
+import { createStation, getStationById, getStations, updateStation } from "@/services/station.service";
 
 export const createStationHandler = async (
   req: Request<{}, {}, StationCreateInput>,
@@ -45,6 +45,21 @@ export const getStationsHandler = async (_: Request, res: Response, next: NextFu
   try {
     const stations = await getStations();
     return res.status(200).json({ status: "success", data: stations });
+  } catch (error) {
+    return next(error);
+  }
+};
+
+export const getStationByIdHandler = async (
+  req: Request<StationIdParamInput, {}, {}>,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const stationId = Number(req.params.id);
+
+    const station = await getStationById(stationId);
+    return res.status(200).json({ status: "success", data: station });
   } catch (error) {
     return next(error);
   }

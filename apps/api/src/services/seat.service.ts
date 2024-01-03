@@ -1,10 +1,13 @@
 import prisma from "@ttbs/prisma";
 
-import { seatCreateInput, seatUpdateInput } from "@/schemas/seat.schema";
+import { SeatCreateInput, SeatUpdateInput } from "@/schemas/seat.schema";
 
-export const createSeat = async (input: seatCreateInput) => {
+import { getTripTimelineByStationId } from "./tripTimeline.service";
+
+export const createSeat = async (input: SeatCreateInput) => {
   return await prisma.seat.create({
     data: {
+      tripId: input.tripId,
       order: input.order,
       carriageId: input.carriageId,
     },
@@ -19,16 +22,40 @@ export const getAllSeats = async () => {
   });
 };
 
-export const getSeatByID = async (id: number) => {
-  return await prisma.seat.findUnique({
+export const getSeatByID = async (id: number, extra?: { departStationId?: number }) => {
+  const { departStationId } = extra ?? {};
+
+  const seat = await prisma.seat.findUnique({
     where: { id },
     include: {
-      carriage: true,
+      carriage: {
+        include: {
+          train: true,
+          seatType: true,
+        },
+      },
+      trip: true,
     },
   });
+  if (!seat) return seat;
+
+  const { carriage, ...seatWithoutCarriage } = seat;
+  const { train, seatType, ...carriageWithoutTrain } = carriage ?? {};
+
+  const fromTimeline = departStationId
+    ? await getTripTimelineByStationId(seat.tripId, departStationId)
+    : undefined;
+
+  return {
+    ...seatWithoutCarriage,
+    carriage: carriageWithoutTrain,
+    train,
+    seatType,
+    departTime: fromTimeline?.departDate,
+  };
 };
 
-export const updateSeat = async (id: number, input: seatUpdateInput) => {
+export const updateSeat = async (id: number, input: SeatUpdateInput) => {
   const existSeat = await prisma.seat.findUnique({
     where: { id },
   });

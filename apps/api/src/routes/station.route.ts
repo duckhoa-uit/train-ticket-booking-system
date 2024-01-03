@@ -2,6 +2,7 @@ import { Router } from "express";
 
 import {
   createStationHandler,
+  getStationByIdHandler,
   getStationsHandler,
   updateStationHandler,
 } from "@/controllers/station.controller";
@@ -15,3 +16,5 @@ stationRouter.post("/", validate(stationCreateSchema), createStationHandler);
 stationRouter.patch("/", validate(stationUpdateSchema), updateStationHandler);
 
 stationRouter.get("/", getStationsHandler);
+
+stationRouter.get("/:id", getStationByIdHandler);

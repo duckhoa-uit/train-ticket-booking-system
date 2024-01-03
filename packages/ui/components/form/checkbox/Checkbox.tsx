@@ -32,7 +32,8 @@ const Checkbox = React.forwardRef<
       "border-default data-[state=checked]:bg-brand-default data-[state=checked]:text-brand peer h-4 w-4 shrink-0 rounded-[4px] border ring-offset-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed",
       className
     )}
-    {...props}>
+    {...props}
+  >
     <CheckboxPrimitive.Indicator className={cn("flex items-center justify-center text-current")}>
       <Check className="h-4 w-4" />
     </CheckboxPrimitive.Indicator>
@@ -47,7 +48,7 @@ const CheckboxField = forwardRef<HTMLInputElement, Props>(
     return (
       <div className="block items-center sm:flex">
         {label && (
-          <div className="min-w-48 mb-4 sm:mb-0">
+          <div className="mb-4 min-w-48 sm:mb-0">
             {React.createElement(
               descriptionAsLabel ? "div" : "label",
               {
@@ -69,7 +70,7 @@ const CheckboxField = forwardRef<HTMLInputElement, Props>(
               {
                 className: cn(
                   "relative flex items-start",
-                  !error && descriptionAsLabel ? "text-emphasis" : "text-emphasis",
+                  !error && descriptionAsLabel ? "text-default" : "text-emphasis",
                   error && "text-error"
                 ),
               },
@@ -82,10 +83,10 @@ const CheckboxField = forwardRef<HTMLInputElement, Props>(
                     disabled={disabled}
                     id={rest.id ? rest.id : id}
                     className={cn(
-                      "text-primary-600 focus:ring-primary-500 border-default bg-default focus:bg-default active:bg-default h-4 w-4 rounded checked:hover:bg-gray-600 focus:outline-none focus:ring-0 ltr:mr-2 rtl:ml-2",
+                      "text-emphasis focus:ring-emphasis border-default bg-default focus:bg-default active:bg-default h-4 w-4 rounded focus:outline-none focus:ring-0 ltr:mr-2 rtl:ml-2",
                       !error && disabled
                         ? "cursor-not-allowed bg-gray-300 checked:bg-gray-300 hover:bg-gray-300 hover:checked:bg-gray-300"
-                        : "hover:bg-subtle hover:border-emphasis checked:bg-gray-800",
+                        : "hover:checked:bg-brand-emphasis hover:border-emphasis checked:bg-brand-default",
                       error &&
                         "border-error hover:bg-error hover:border-error checked:bg-darkerror checked:hover:border-error checked:hover:bg-darkerror",
                       rest.className
@@ -94,13 +95,13 @@ const CheckboxField = forwardRef<HTMLInputElement, Props>(
                 </div>
                 {descriptionAsSafeHtml ? (
                   <span
-                    className={cn("text-sm", rest.descriptionClassName)}
+                    className={cn("ms-2 text-sm", rest.descriptionClassName)}
                     dangerouslySetInnerHTML={{
                       __html: descriptionAsSafeHtml,
                     }}
                   />
                 ) : (
-                  <span className={cn("text-sm", rest.descriptionClassName)}>{description}</span>
+                  <span className={cn("ms-2 text-sm", rest.descriptionClassName)}>{description}</span>
                 )}
               </>
             )}

@@ -9,7 +9,7 @@ import { Button } from "../../button";
 import { Calendar } from "../../calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "../../popover";
 
-export default function DatePicker({ date, setDate }: { date?: Date; setDate: (date?: Date) => void }) {
+export default function DatePicker({ date, setDate }: { date?: Date; setDate?: (date?: Date) => void }) {
   return (
     <Popover>
       <PopoverTrigger asChild>

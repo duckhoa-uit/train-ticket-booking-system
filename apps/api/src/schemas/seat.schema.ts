@@ -3,6 +3,7 @@ import { z } from "zod";
 export const seatCreateSchema = z.object({
   body: z.object({
     order: z.number(),
+    tripId: z.number(),
     carriageId: z.number(),
   }),
 });
@@ -17,11 +18,19 @@ export const seatUpdateSchema = z.object({
   body: z
     .object({
       order: z.number(),
+      tripId: z.number(),
       carriageId: z.number(),
     })
     .partial(),
 });
 
-export type seatCreateInput = z.infer<typeof seatCreateSchema>["body"];
-export type seatIdParamInput = z.infer<typeof seatIdParamInputSchema>["params"];
-export type seatUpdateInput = z.infer<typeof seatUpdateSchema>["body"];
+export const getTripTimelineBySeatQueryInputSchema = z.object({
+  query: z.object({
+    departStationId: z.coerce.number().optional(),
+  }),
+});
+
+export type SeatCreateInput = z.infer<typeof seatCreateSchema>["body"];
+export type SeatIdParamInput = z.infer<typeof seatIdParamInputSchema>["params"];
+export type SeatUpdateInput = z.infer<typeof seatUpdateSchema>["body"];
+export type GetTripTimelineBySeatInput = z.infer<typeof getTripTimelineBySeatQueryInputSchema>["query"];

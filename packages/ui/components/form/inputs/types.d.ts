@@ -1,6 +1,7 @@
-import type { ReactNode } from 'react';
+import type { ReactNode } from "react";
 
-import type { Input } from './TextField';
+import type { Label } from "./Label";
+import type { Input } from "./TextField";
 
 export type InputFieldProps = {
   label?: ReactNode;
@@ -23,4 +24,4 @@ export type InputFieldProps = {
     labelClassName?: string;
   };
 
-export type InputProps = JSX.IntrinsicElements['input'] & { isFullWidth?: boolean };
+export type InputProps = JSX.IntrinsicElements["input"] & { isFullWidth?: boolean };

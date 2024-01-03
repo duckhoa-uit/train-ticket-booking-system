@@ -2,14 +2,7 @@
 
 import { useState } from "react";
 
-import {
-  Button,
-  Dialog,
-  DialogContent,
-  DialogTrigger,
-  DialogFooter,
-  DialogClose,
-} from "@ttbs/ui";
+import { Button, Dialog, DialogContent, DialogTrigger, DialogFooter, DialogClose } from "@ttbs/ui";
 import { Route, ExternalLinkIcon } from "@ttbs/ui/components/icons";
 
 import { DetailRoutes } from "../detail-routes/DetailRoutes";
@@ -24,6 +17,7 @@ const ViewRoutesButton = ({ tripId }: { tripId: number }) => {
           Xem lộ trình
         </Button>
       </DialogTrigger>
+
       <DialogContent>
         <DetailRoutes tripId={tripId} />
         <DialogFooter>

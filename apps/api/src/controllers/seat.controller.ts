@@ -1,10 +1,16 @@
 import { NextFunction, Request, Response } from "express";
 
-import { seatCreateInput, seatIdParamInput, seatUpdateInput } from "@/schemas/seat.schema";
+import {
+  GetTripTimelineBySeatInput,
+  SeatCreateInput,
+  SeatIdParamInput,
+  SeatUpdateInput,
+  getTripTimelineBySeatQueryInputSchema,
+} from "@/schemas/seat.schema";
 import { createSeat, updateSeat, getAllSeats, getSeatByID, deleteSeat } from "@/services/seat.service";
 
 export const createSeatHandler = async (
-  req: Request<{}, {}, seatCreateInput>,
+  req: Request<{}, {}, SeatCreateInput>,
   res: Response,
   next: NextFunction
 ) => {
@@ -25,15 +31,18 @@ export const getSeatHandler = async (req: Request<{}, {}, {}>, res: Response, ne
   }
 };
 
-export const getSeatById = async (
-  req: Request<seatIdParamInput, {}, {}>,
+export const getSeatByIdHandler = async (
+  req: Request<SeatIdParamInput, {}, {}, GetTripTimelineBySeatInput>,
   res: Response,
   next: NextFunction
 ) => {
   try {
-    const seateID = Number(req.params.id);
+    const seatId = Number(req.params.id);
+    const {
+      query: { departStationId },
+    } = getTripTimelineBySeatQueryInputSchema.parse(req);
 
-    const seat = await getSeatByID(seateID);
+    const seat = await getSeatByID(seatId, { departStationId });
     return res.status(200).json({ status: "success", data: seat });
   } catch (error) {
     return next(error);
@@ -41,7 +50,7 @@ export const getSeatById = async (
 };
 
 export const updateSeatHandler = async (
-  req: Request<seatIdParamInput, {}, seatUpdateInput>,
+  req: Request<SeatIdParamInput, {}, SeatUpdateInput>,
   res: Response,
   next: NextFunction
 ) => {
@@ -56,7 +65,7 @@ export const updateSeatHandler = async (
 };
 
 export const deleteSeatHandler = async (
-  req: Request<seatIdParamInput, {}, {}>,
+  req: Request<SeatIdParamInput, {}, {}>,
   res: Response,
   next: NextFunction
 ) => {

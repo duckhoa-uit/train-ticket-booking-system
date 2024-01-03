@@ -9,8 +9,8 @@ export const orderCreateSchema = z.object({
     tickets: z.array(
       z.object({
         seatId: z.number(),
-        fromTimelineId: z.number(),
-        toTimelineId: z.number(),
+        fromStationId: z.number(),
+        toStationId: z.number(),
         amount: z.number(),
         userName: z.string(),
         userIdentification: z.string(),
@@ -35,8 +35,8 @@ export const orderUpdateSchema = z.object({
       tickets: z.array(
         z.object({
           seatId: z.number(),
-          fromTimelineId: z.number(),
-          toTimelineId: z.number(),
+          fromStationId: z.number(),
+          toStationId: z.number(),
           amount: z.number(),
           userName: z.string(),
           userIdentification: z.string(),

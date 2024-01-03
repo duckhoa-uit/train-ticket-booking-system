@@ -31,6 +31,20 @@ export const getTripTimelineByID = async (id: number) => {
     },
   });
 };
+export const getTripTimelineByStationId = async (tripId: number, stationId: number) => {
+  return await prisma.tripTimeline.findFirst({
+    where: {
+      tripId,
+      journeyStation: {
+        stationId,
+      },
+    },
+    include: {
+      trip: true,
+      journeyStation: true,
+    },
+  });
+};
 
 export const updateTripTimeline = async (id: number, input: tripTimelineUpdateInput) => {
   const existTripTimeline = await prisma.tripTimeline.findUnique({

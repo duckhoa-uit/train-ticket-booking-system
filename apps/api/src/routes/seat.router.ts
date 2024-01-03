@@ -3,7 +3,7 @@ import { Router } from "express";
 import {
   createSeatHandler,
   getSeatHandler,
-  getSeatById,
+  getSeatByIdHandler,
   updateSeatHandler,
   deleteSeatHandler,
 } from "@/controllers/seat.controller";
@@ -14,6 +14,6 @@ export const seatRouter = Router();
 
 seatRouter.post("/", validate(seatCreateSchema), createSeatHandler);
 seatRouter.get("/", getSeatHandler);
-seatRouter.get("/:id", getSeatById);
+seatRouter.get("/:id", getSeatByIdHandler);
 seatRouter.put("/:id", validate(seatUpdateSchema), updateSeatHandler);
 seatRouter.delete("/:id", deleteSeatHandler);
