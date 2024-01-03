@@ -22,11 +22,18 @@ export const SeatButton = ({ price, seat, onClick }: SeatButtonProps) => {
   }, [lineItems, seat]);
 
   return (
-    <Tooltip content={!price ? "loading..." : `Giá: ${currencyFormatter.format(price)}`}>
+    <Tooltip
+      content={
+        !price ? "loading..." : `Giá: ${currencyFormatter.format(price)}`
+      }
+    >
       <Button
         color="secondary"
         variant="icon"
-        className={cn("h-9 w-9", selected && "bg-brand-default text-inverted hover:bg-brand-emphasis")}
+        className={cn(
+          "h-9 w-9",
+          selected && "bg-brand-default text-inverted hover:bg-brand-emphasis",
+        )}
         onClick={onClick}
       >
         {!seat ? <SkeletonText className="h-4 w-4" /> : <>{seat.order}</>}

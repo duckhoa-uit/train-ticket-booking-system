@@ -2,13 +2,22 @@ import { NextFunction, Request, Response } from "express";
 
 import { Prisma } from "@ttbs/prisma";
 
-import { StationCreateInput, StationIdParamInput, StationUpdateInput } from "@/schemas/station.schema";
-import { createStation, getStationById, getStations, updateStation } from "@/services/station.service";
+import {
+  StationCreateInput,
+  StationIdParamInput,
+  StationUpdateInput,
+} from "@/schemas/station.schema";
+import {
+  createStation,
+  getStationById,
+  getStations,
+  updateStation,
+} from "@/services/station.service";
 
 export const createStationHandler = async (
   req: Request<{}, {}, StationCreateInput>,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const newStation = await createStation(req.body);
@@ -30,7 +39,7 @@ export const createStationHandler = async (
 export const updateStationHandler = async (
   req: Request<StationIdParamInput, {}, StationUpdateInput>,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const stationId = Number(req.params.id);
@@ -41,7 +50,11 @@ export const updateStationHandler = async (
     return next(error);
   }
 };
-export const getStationsHandler = async (_: Request, res: Response, next: NextFunction) => {
+export const getStationsHandler = async (
+  _: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   try {
     const stations = await getStations();
     return res.status(200).json({ status: "success", data: stations });
@@ -53,7 +66,7 @@ export const getStationsHandler = async (_: Request, res: Response, next: NextFu
 export const getStationByIdHandler = async (
   req: Request<StationIdParamInput, {}, {}>,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const stationId = Number(req.params.id);

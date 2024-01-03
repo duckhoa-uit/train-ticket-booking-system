@@ -9,7 +9,7 @@ export function useStateful<T = any>(initial: T): UseStateful<T> {
       value,
       setValue,
     }),
-    [value]
+    [value],
   );
 }
 

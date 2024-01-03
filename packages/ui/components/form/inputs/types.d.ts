@@ -24,4 +24,6 @@ export type InputFieldProps = {
     labelClassName?: string;
   };
 
-export type InputProps = JSX.IntrinsicElements["input"] & { isFullWidth?: boolean };
+export type InputProps = JSX.IntrinsicElements["input"] & {
+  isFullWidth?: boolean;
+};

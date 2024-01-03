@@ -22,7 +22,10 @@ export const getAllSeats = async () => {
   });
 };
 
-export const getSeatByID = async (id: number, extra?: { departStationId?: number }) => {
+export const getSeatByID = async (
+  id: number,
+  extra?: { departStationId?: number },
+) => {
   const { departStationId } = extra ?? {};
 
   const seat = await prisma.seat.findUnique({

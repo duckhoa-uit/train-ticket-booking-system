@@ -1,6 +1,9 @@
 import prisma from "@ttbs/prisma";
 
-import { tripTimelineCreateInput, tripTimelineUpdateInput } from "@/schemas/tripTimeline.schema";
+import {
+  tripTimelineCreateInput,
+  tripTimelineUpdateInput,
+} from "@/schemas/tripTimeline.schema";
 
 export const createTripTimeline = async (input: tripTimelineCreateInput) => {
   return await prisma.tripTimeline.create({
@@ -31,7 +34,10 @@ export const getTripTimelineByID = async (id: number) => {
     },
   });
 };
-export const getTripTimelineByStationId = async (tripId: number, stationId: number) => {
+export const getTripTimelineByStationId = async (
+  tripId: number,
+  stationId: number,
+) => {
   return await prisma.tripTimeline.findFirst({
     where: {
       tripId,
@@ -46,7 +52,10 @@ export const getTripTimelineByStationId = async (tripId: number, stationId: numb
   });
 };
 
-export const updateTripTimeline = async (id: number, input: tripTimelineUpdateInput) => {
+export const updateTripTimeline = async (
+  id: number,
+  input: tripTimelineUpdateInput,
+) => {
   const existTripTimeline = await prisma.tripTimeline.findUnique({
     where: { id },
   });

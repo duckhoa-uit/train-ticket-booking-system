@@ -7,12 +7,18 @@ import {
   SeatUpdateInput,
   getTripTimelineBySeatQueryInputSchema,
 } from "@/schemas/seat.schema";
-import { createSeat, updateSeat, getAllSeats, getSeatByID, deleteSeat } from "@/services/seat.service";
+import {
+  createSeat,
+  updateSeat,
+  getAllSeats,
+  getSeatByID,
+  deleteSeat,
+} from "@/services/seat.service";
 
 export const createSeatHandler = async (
   req: Request<{}, {}, SeatCreateInput>,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const newSeat = await createSeat(req.body);
@@ -22,7 +28,11 @@ export const createSeatHandler = async (
   }
 };
 
-export const getSeatHandler = async (req: Request<{}, {}, {}>, res: Response, next: NextFunction) => {
+export const getSeatHandler = async (
+  req: Request<{}, {}, {}>,
+  res: Response,
+  next: NextFunction,
+) => {
   try {
     const allSeats = await getAllSeats();
     return res.status(200).json({ status: "success", data: allSeats });
@@ -34,7 +44,7 @@ export const getSeatHandler = async (req: Request<{}, {}, {}>, res: Response, ne
 export const getSeatByIdHandler = async (
   req: Request<SeatIdParamInput, {}, {}, GetTripTimelineBySeatInput>,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const seatId = Number(req.params.id);
@@ -52,7 +62,7 @@ export const getSeatByIdHandler = async (
 export const updateSeatHandler = async (
   req: Request<SeatIdParamInput, {}, SeatUpdateInput>,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const seatID = +req.params.id;
@@ -67,7 +77,7 @@ export const updateSeatHandler = async (
 export const deleteSeatHandler = async (
   req: Request<SeatIdParamInput, {}, {}>,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const seatID = Number(req.params.id);

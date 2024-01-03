@@ -9,20 +9,34 @@ import { Button } from "../../button";
 import { Calendar } from "../../calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "../../popover";
 
-export default function DatePicker({ date, setDate }: { date?: Date; setDate?: (date?: Date) => void }) {
+export default function DatePicker({
+  date,
+  setDate,
+}: {
+  date?: Date;
+  setDate?: (date?: Date) => void;
+}) {
   return (
     <Popover>
       <PopoverTrigger asChild>
         <Button
           color="secondary"
-          className={cn("w-full justify-start text-left font-normal", !date && "text-muted-foreground")}
+          className={cn(
+            "w-full justify-start text-left font-normal",
+            !date && "text-muted-foreground",
+          )}
         >
           <CalendarIcon className="mr-2 h-4 w-4" />
           {date ? dayjs(date).format("LL") : <span>Pick a date</span>}
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0">
-        <Calendar mode="single" selected={date} onSelect={setDate} initialFocus />
+        <Calendar
+          mode="single"
+          selected={date}
+          onSelect={setDate}
+          initialFocus
+        />
       </PopoverContent>
     </Popover>
   );

@@ -30,11 +30,13 @@ const Checkbox = React.forwardRef<
     ref={ref}
     className={cn(
       "border-default data-[state=checked]:bg-brand-default data-[state=checked]:text-brand peer h-4 w-4 shrink-0 rounded-[4px] border ring-offset-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed",
-      className
+      className,
     )}
     {...props}
   >
-    <CheckboxPrimitive.Indicator className={cn("flex items-center justify-center text-current")}>
+    <CheckboxPrimitive.Indicator
+      className={cn("flex items-center justify-center text-current")}
+    >
       <Check className="h-4 w-4" />
     </CheckboxPrimitive.Indicator>
   </CheckboxPrimitive.Root>
@@ -42,7 +44,10 @@ const Checkbox = React.forwardRef<
 Checkbox.displayName = CheckboxPrimitive.Root.displayName;
 
 const CheckboxField = forwardRef<HTMLInputElement, Props>(
-  ({ label, description, error, disabled, descriptionAsSafeHtml, ...rest }, ref) => {
+  (
+    { label, description, error, disabled, descriptionAsSafeHtml, ...rest },
+    ref,
+  ) => {
     const descriptionAsLabel = !label || rest.descriptionAsLabel;
     const id = useId();
     return (
@@ -59,7 +64,7 @@ const CheckboxField = forwardRef<HTMLInputElement, Props>(
                     }
                   : {}),
               },
-              label
+              label,
             )}
           </div>
         )}
@@ -70,8 +75,10 @@ const CheckboxField = forwardRef<HTMLInputElement, Props>(
               {
                 className: cn(
                   "relative flex items-start",
-                  !error && descriptionAsLabel ? "text-default" : "text-emphasis",
-                  error && "text-error"
+                  !error && descriptionAsLabel
+                    ? "text-default"
+                    : "text-emphasis",
+                  error && "text-error",
                 ),
               },
               <>
@@ -89,7 +96,7 @@ const CheckboxField = forwardRef<HTMLInputElement, Props>(
                         : "hover:checked:bg-brand-emphasis hover:border-emphasis checked:bg-brand-default",
                       error &&
                         "border-error hover:bg-error hover:border-error checked:bg-darkerror checked:hover:border-error checked:hover:bg-darkerror",
-                      rest.className
+                      rest.className,
                     )}
                   />
                 </div>
@@ -101,16 +108,20 @@ const CheckboxField = forwardRef<HTMLInputElement, Props>(
                     }}
                   />
                 ) : (
-                  <span className={cn("ms-2 text-sm", rest.descriptionClassName)}>{description}</span>
+                  <span
+                    className={cn("ms-2 text-sm", rest.descriptionClassName)}
+                  >
+                    {description}
+                  </span>
                 )}
-              </>
+              </>,
             )}
             {/* {informationIconText && <InfoBadge content={informationIconText}></InfoBadge>} */}
           </div>
         </div>
       </div>
     );
-  }
+  },
 );
 
 CheckboxField.displayName = "CheckboxField";

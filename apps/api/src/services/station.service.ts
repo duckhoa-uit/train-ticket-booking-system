@@ -1,6 +1,9 @@
 import prisma from "@ttbs/prisma";
 
-import { StationCreateInput, StationUpdateInput } from "@/schemas/station.schema";
+import {
+  StationCreateInput,
+  StationUpdateInput,
+} from "@/schemas/station.schema";
 
 export const createStation = async (input: StationCreateInput) => {
   return await prisma.station.create({

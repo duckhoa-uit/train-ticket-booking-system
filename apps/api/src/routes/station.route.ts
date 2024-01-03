@@ -7,7 +7,10 @@ import {
   updateStationHandler,
 } from "@/controllers/station.controller";
 import { validate } from "@/middleware";
-import { stationCreateSchema, stationUpdateSchema } from "@/schemas/station.schema";
+import {
+  stationCreateSchema,
+  stationUpdateSchema,
+} from "@/schemas/station.schema";
 
 export const stationRouter = Router();
 

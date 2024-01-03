@@ -1,6 +1,9 @@
 import prisma from "@ttbs/prisma";
 
-import { CarriageCreateInput, CarriageUpdateInput } from "@/schemas/carriages.schema";
+import {
+  CarriageCreateInput,
+  CarriageUpdateInput,
+} from "@/schemas/carriages.schema";
 
 export const createCarriage = async (input: CarriageCreateInput) => {
   return await prisma.carriage.create({
@@ -43,7 +46,10 @@ export const getCarriageByID = async (id: number) => {
   });
 };
 
-export const updateCarriage = async (id: number, input: CarriageUpdateInput) => {
+export const updateCarriage = async (
+  id: number,
+  input: CarriageUpdateInput,
+) => {
   const existCarriage = await prisma.carriage.findUnique({
     where: { id },
     include: {

@@ -6,7 +6,7 @@ import { OrderCreateInput, OrderUpdateInput } from "@/schemas/order.schema";
 export const createOrder = async (
   input: Omit<OrderCreateInput, "tickets"> & {
     tickets: Prisma.TicketCreateManyOrderInput[];
-  }
+  },
 ) => {
   return await prisma.order.create({
     data: {

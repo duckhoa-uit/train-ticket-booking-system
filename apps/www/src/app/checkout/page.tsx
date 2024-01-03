@@ -86,7 +86,9 @@ const Checkout = () => {
             nextLabel="Tiếp theo"
             finishLabel="Hoàn tất"
             prevLabel="Quay lại"
-            stepLabel={(currentStep, maxSteps) => `Bước ${currentStep}/${maxSteps}`}
+            stepLabel={(currentStep, maxSteps) =>
+              `Bước ${currentStep}/${maxSteps}`
+            }
           />
         </CardContent>
       </Card>

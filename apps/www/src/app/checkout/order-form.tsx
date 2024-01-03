@@ -4,7 +4,10 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 import { cn } from "@ttbs/lib/cn";
-import { identificationRegex, vietnamesePhoneNumberRegex } from "@ttbs/lib/constants";
+import {
+  identificationRegex,
+  vietnamesePhoneNumberRegex,
+} from "@ttbs/lib/constants";
 import { Button, CheckboxField, Form, TextField } from "@ttbs/ui";
 import {
   FormControl,
@@ -49,7 +52,9 @@ const TABLE_HEAD_ITEMS = [
 const orderFormSchema = z.object({
   buyerName: z.string().min(5, "Độ dài tên quá ngắn"),
   buyerIdentification: z.string().regex(identificationRegex, "Mã không hợp lệ"),
-  buyerPhone: z.string().regex(vietnamesePhoneNumberRegex, "Số điện thoại không hợp lệ"),
+  buyerPhone: z
+    .string()
+    .regex(vietnamesePhoneNumberRegex, "Số điện thoại không hợp lệ"),
   buyerEmail: z.string().email().or(z.literal("")),
   tickets: z.array(
     z.object({
@@ -58,8 +63,10 @@ const orderFormSchema = z.object({
       toStationId: z.number(),
       amount: z.number(),
       userName: z.string().min(5, "Độ dài tên quá ngắn"),
-      userIdentification: z.string().regex(identificationRegex, "Mã không hợp lệ"),
-    })
+      userIdentification: z
+        .string()
+        .regex(identificationRegex, "Mã không hợp lệ"),
+    }),
   ),
   agreeRule: z.boolean().refine((bool) => bool == true, {
     message: "Bạn cần xác nhận đã đồng ý với quy định trên",
@@ -69,7 +76,10 @@ const orderFormSchema = z.object({
 type OrderFormValues = z.infer<typeof orderFormSchema>;
 
 const OrderForm = (
-  props: { onSubmit: () => void } & Omit<JSX.IntrinsicElements["form"], "onSubmit" | "ref">
+  props: { onSubmit: () => void } & Omit<
+    JSX.IntrinsicElements["form"],
+    "onSubmit" | "ref"
+  >,
 ) => {
   const { onSubmit, ...rest } = props;
   const {
@@ -96,7 +106,10 @@ const OrderForm = (
     resolver: zodResolver(orderFormSchema),
   });
   const handleSubmit = (values: OrderFormValues) => {
-    console.log("🚀 ~ file: checkout-input.tsx:204 ~ handleSubmit ~ values:", values);
+    console.log(
+      "🚀 ~ file: checkout-input.tsx:204 ~ handleSubmit ~ values:",
+      values,
+    );
     onSubmit();
 
     setBuyer({
@@ -140,7 +153,9 @@ const OrderForm = (
                                 {...field}
                                 required
                                 labelSrOnly
-                                className={cn("group-hover:border-emphasis mb-0")}
+                                className={cn(
+                                  "group-hover:border-emphasis mb-0",
+                                )}
                                 placeholder="Thông tin hành khách"
                                 addOnLeading="Họ tên"
                                 addOnFilled={false}
@@ -164,7 +179,9 @@ const OrderForm = (
                                 addOnLeading="Số giấy tờ"
                                 addOnFilled={false}
                                 addOnClassname="hover:border-default w-24 group-hover:border-emphasis"
-                                className={cn("group-hover:border-emphasis mb-0")}
+                                className={cn(
+                                  "group-hover:border-emphasis mb-0",
+                                )}
                               />
                             </FormControl>
                           </FormItem>
@@ -175,7 +192,9 @@ const OrderForm = (
                   <TableCell className="text-center">
                     <SelectedSeatText seat={item} className="items-center" />
                   </TableCell>
-                  <TableCell className="text-center">{currencyFormatter.format(item.amount)}</TableCell>
+                  <TableCell className="text-center">
+                    {currencyFormatter.format(item.amount)}
+                  </TableCell>
                   <TableCell className="text-center">
                     <Button variant="button" color="destructive">
                       Xóa
@@ -187,11 +206,14 @@ const OrderForm = (
           </Table>
         </div>
         <div>
-          <h3 className="text-attention my-5 text-lg font-medium">Thông tin người đặt vé</h3>
+          <h3 className="text-attention my-5 text-lg font-medium">
+            Thông tin người đặt vé
+          </h3>
           <p className="mb-5">
-            Quý khách vui lòng điền đầy đủ và chính xác các thông tin về người mua vé dưới đây. Các thông tin
-            sẽ được sử dụng để xác minh người mua vé tại ga trước khi lên tàu theo đúng quy định của Tổng công
-            ty Đường sắt Việt Nam
+            Quý khách vui lòng điền đầy đủ và chính xác các thông tin về người
+            mua vé dưới đây. Các thông tin sẽ được sử dụng để xác minh người mua
+            vé tại ga trước khi lên tàu theo đúng quy định của Tổng công ty
+            Đường sắt Việt Nam
           </p>
           <div className="grid grid-cols-1 gap-x-10 gap-y-3 md:grid-cols-2">
             <div className="w-full flex-1 md:flex md:items-center md:justify-between">
@@ -201,10 +223,16 @@ const OrderForm = (
                 render={({ field }) => (
                   <FormItem className="w-full">
                     <FormLabel className="mt-2">
-                      Họ và tên<span className="text-error ml-1 font-medium">*</span>
+                      Họ và tên
+                      <span className="text-error ml-1 font-medium">*</span>
                     </FormLabel>
                     <FormControl>
-                      <TextField {...field} required labelSrOnly placeholder="Họ và tên" />
+                      <TextField
+                        {...field}
+                        required
+                        labelSrOnly
+                        placeholder="Họ và tên"
+                      />
                     </FormControl>
                   </FormItem>
                 )}
@@ -217,10 +245,16 @@ const OrderForm = (
                 render={({ field }) => (
                   <FormItem className="w-full">
                     <FormLabel className="mt-2">
-                      Số CCCD/CMND/Hộ chiếu<span className="text-error ml-1 font-medium">*</span>
+                      Số CCCD/CMND/Hộ chiếu
+                      <span className="text-error ml-1 font-medium">*</span>
                     </FormLabel>
                     <FormControl>
-                      <TextField {...field} required labelSrOnly placeholder="Số CCCD/CMND/Hộ chiếu" />
+                      <TextField
+                        {...field}
+                        required
+                        labelSrOnly
+                        placeholder="Số CCCD/CMND/Hộ chiếu"
+                      />
                     </FormControl>
                   </FormItem>
                 )}
@@ -247,10 +281,16 @@ const OrderForm = (
                 render={({ field }) => (
                   <FormItem className="w-full">
                     <FormLabel className="mt-2">
-                      Số di động<span className="text-error ml-1 font-medium">*</span>
+                      Số di động
+                      <span className="text-error ml-1 font-medium">*</span>
                     </FormLabel>
                     <FormControl>
-                      <TextField {...field} required labelSrOnly placeholder="Số di động" />
+                      <TextField
+                        {...field}
+                        required
+                        labelSrOnly
+                        placeholder="Số di động"
+                      />
                     </FormControl>
                   </FormItem>
                 )}

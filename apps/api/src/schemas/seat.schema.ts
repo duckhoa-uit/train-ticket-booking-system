@@ -33,4 +33,6 @@ export const getTripTimelineBySeatQueryInputSchema = z.object({
 export type SeatCreateInput = z.infer<typeof seatCreateSchema>["body"];
 export type SeatIdParamInput = z.infer<typeof seatIdParamInputSchema>["params"];
 export type SeatUpdateInput = z.infer<typeof seatUpdateSchema>["body"];
-export type GetTripTimelineBySeatInput = z.infer<typeof getTripTimelineBySeatQueryInputSchema>["query"];
+export type GetTripTimelineBySeatInput = z.infer<
+  typeof getTripTimelineBySeatQueryInputSchema
+>["query"];

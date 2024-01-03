@@ -17,7 +17,7 @@ import {
 export const createTripTimelineHandler = async (
   req: Request<{}, {}, tripTimelineCreateInput>,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const { body: reqBody } = tripTimelineCreateSchema.parse(req);
@@ -28,7 +28,11 @@ export const createTripTimelineHandler = async (
   }
 };
 
-export const getTripTimelineHandler = async (req: Request<{}, {}, {}>, res: Response, next: NextFunction) => {
+export const getTripTimelineHandler = async (
+  req: Request<{}, {}, {}>,
+  res: Response,
+  next: NextFunction,
+) => {
   try {
     const allTrips = await getAllTripTimelines();
     return res.status(200).json({ status: "success", data: allTrips });
@@ -40,7 +44,7 @@ export const getTripTimelineHandler = async (req: Request<{}, {}, {}>, res: Resp
 export const getTripTimelineByIdHandler = async (
   req: Request<tripTimelineIdParamInput, {}, {}>,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const tripTimelineID = Number(req.params.id);
@@ -55,7 +59,7 @@ export const getTripTimelineByIdHandler = async (
 export const updateTripTimelineHandler = async (
   req: Request<tripTimelineIdParamInput, {}, tripTimelineUpdateInput>,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const { body: reqBody } = tripTimelineUpdateSchema.parse(req);
