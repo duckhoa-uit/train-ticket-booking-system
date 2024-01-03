@@ -1,5 +1,7 @@
 "use client";
 
+// eslint-disable-next-line no-restricted-imports
+import get from "lodash/get";
 import type { FieldValues } from "react-hook-form";
 import { useFormContext } from "react-hook-form";
 
@@ -22,7 +24,8 @@ export function HintsOrErrors<T extends FieldValues = FieldValues>({
   const { formState } = methods;
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
-  const fieldErrors: FieldErrors<T> | undefined = formState.errors[fieldName];
+
+  const fieldErrors: FieldErrors<T> | undefined = get(formState.errors, fieldName);
 
   if (!hintErrors && fieldErrors && !fieldErrors.message) {
     // no hints passed, field errors exist and they are custom ones
@@ -52,7 +55,8 @@ export function HintsOrErrors<T extends FieldValues = FieldValues>({
             return (
               <li
                 key={key}
-                className={error !== undefined ? (submitted ? "text-red-700" : "") : "text-green-600"}>
+                className={error !== undefined ? (submitted ? "text-red-700" : "") : "text-green-600"}
+              >
                 {error !== undefined ? (
                   submitted ? (
                     <X size="12" strokeWidth="3" className="-ml-1 inline-block ltr:mr-2 rtl:ml-2" />

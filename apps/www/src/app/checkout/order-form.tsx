@@ -129,7 +129,7 @@ const OrderForm = (
               {lineItems.map((item, idx) => (
                 <TableRow key={item.id}>
                   <TableCell className="text-center">
-                    <div className="flex flex-col">
+                    <div className="flex flex-col gap-2">
                       <FormField
                         control={formMethods.control}
                         name={`tickets.${idx}.userName`}
@@ -145,6 +145,13 @@ const OrderForm = (
                                 addOnLeading="Họ tên"
                                 addOnFilled={false}
                                 addOnClassname="hover:border-default w-24 group-hover:border-emphasis"
+                                onChange={(e) => {
+                                  const val = e.target.value;
+                                  field.onChange(val);
+
+                                  if (idx === 0 && !formMethods.formState.dirtyFields["buyerName"])
+                                    formMethods.setValue("buyerName", val);
+                                }}
                               />
                             </FormControl>
                           </FormItem>
@@ -165,6 +172,13 @@ const OrderForm = (
                                 addOnFilled={false}
                                 addOnClassname="hover:border-default w-24 group-hover:border-emphasis"
                                 className={cn("group-hover:border-emphasis mb-0")}
+                                onChange={(e) => {
+                                  const val = e.target.value;
+                                  field.onChange(val);
+
+                                  if (idx === 0 && !formMethods.formState.dirtyFields["buyerIdentification"])
+                                    formMethods.setValue("buyerIdentification", val);
+                                }}
                               />
                             </FormControl>
                           </FormItem>
@@ -186,6 +200,7 @@ const OrderForm = (
             </TableBody>
           </Table>
         </div>
+
         <div>
           <h3 className="text-attention my-5 text-lg font-medium">Thông tin người đặt vé</h3>
           <p className="mb-5">

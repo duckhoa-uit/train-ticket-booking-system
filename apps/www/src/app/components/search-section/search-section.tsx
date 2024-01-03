@@ -9,10 +9,10 @@ export const SearchSection = () => {
       <div className="flex h-auto w-full translate-y-1/2 transform flex-col items-center justify-center gap-3 md:absolute md:left-1/2 md:top-1/2 md:-translate-x-1/2 md:-translate-y-1/2">
         <div className="px-8">
           <div className="relative z-10 mx-auto text-center lg:max-w-lg">
-            <h1 className="text-subtle block text-3xl font-semibold leading-5 tracking-normal antialiased md:text-5xl">
+            <h1 className="text-inverted block text-3xl font-semibold leading-5 tracking-normal antialiased md:text-5xl">
               Book your next trip
             </h1>
-            <p className="text-subtle mb-10 mt-6 block w-full text-base font-normal leading-7 tracking-normal antialiased md:text-xl lg:max-w-2xl">
+            <p className="text-inverted mb-10 mt-6 block w-full text-base font-normal leading-7 tracking-normal antialiased md:text-xl lg:max-w-2xl">
               We&apos;re constantly trying to express ourselves and actualize our dreams. If you have the
               opportunity to play this game
             </p>
