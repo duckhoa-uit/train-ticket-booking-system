@@ -1,5 +1,5 @@
 import prisma from ".";
-import { createStations, createUser } from "./seed-utils";
+import { createStations, createUser, createSeatTypes, createTrains, createJourneys } from "./seed-utils";
 
 async function main() {
   await createUser({
@@ -21,6 +21,9 @@ async function main() {
   });
 
   await createStations();
+  await createSeatTypes();
+  await createTrains();
+  await createJourneys();
 }
 
 main()
