@@ -1,4 +1,10 @@
-import { INITIAL_STATIONS, INIT_SEATTYPES, INIT_TRAINS, INIT_JOURNEYS } from "@ttbs/lib/constants";
+import {
+  INITIAL_STATIONS,
+  INIT_SEATTYPES,
+  INIT_TRAINS,
+  INIT_JOURNEYS,
+  INIT_TRIPS,
+} from "@ttbs/lib/constants";
 import { hashPassword } from "@ttbs/lib/password";
 
 import prisma from ".";
@@ -88,7 +94,7 @@ export async function createTrains() {
 export async function createJourneys() {
   return await Promise.all(
     INIT_JOURNEYS.map(async (journey) => {
-      const { name, journeyStations, trips } = journey;
+      const { name, journeyStations } = journey;
 
       const createdJourney = await prisma.journey.create({
         data: {
@@ -101,20 +107,39 @@ export async function createJourneys() {
               })),
             },
           },
-          trips: {
+        },
+      });
+
+      console.log(`🚄 Created journey ${createdJourney.name}`);
+    })
+  );
+}
+
+export async function createTrips() {
+  return await Promise.all(
+    INIT_TRIPS.map(async (trip) => {
+      const { name, journeyId, trainId, timelines } = trip;
+
+      const createdTrip = await prisma.trip.create({
+        data: {
+          name,
+          journeyId,
+          trainId,
+          arrivalDate: new Date(`2024-01-01T01:00:00Z`),
+          departDate: new Date(`2024-01-01T05:00:00Z`),
+          timelines: {
             createMany: {
-              data: trips.map((trip) => ({
-                name: trip.name,
-                trainId: trip.trainId,
-                arrivalDate: new Date("2024-01-01T08:00:00Z"),
-                departDate: new Date("2024-01-01T16:00:00Z"),
+              data: timelines.map((timeline, index) => ({
+                journeyStationId: timeline.journeyStationId,
+                arrivalDate: new Date(`2024-01-01T0${index + 1}:00:00Z`),
+                departDate: new Date(`2024-01-01T0${index + 2}:00:00Z`),
               })),
             },
           },
         },
       });
 
-      console.log(`🚄 Created journey ${createdJourney.name}`);
+      console.log(`🚂 Created trip ${createdTrip.name}`);
     })
   );
 }

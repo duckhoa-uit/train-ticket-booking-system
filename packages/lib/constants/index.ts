@@ -42,4 +42,6 @@ export { INIT_JOURNEYS } from "./journeys";
 
 export { INIT_TRAINS } from "./trains";
 
+export { INIT_TRIPS } from "./trips";
+
 export { booleanParamSchema } from "./zod";

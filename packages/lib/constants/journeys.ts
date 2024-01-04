@@ -19,11 +19,5 @@ export const INIT_JOURNEYS = [
         order: 4,
       },
     ],
-    trips: [
-      {
-        name: "Sài Gòn - Hà Nội",
-        trainId: 1,
-      },
-    ],
   },
 ] as const;
