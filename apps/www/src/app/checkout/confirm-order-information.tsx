@@ -48,7 +48,11 @@ const ConfirmOrderInformation = (
   >
 ) => {
   const { onSubmit, onSuccess = noop, ...rest } = props;
-  const { lineItems, buyer } = useCart();
+  const {
+    lineItems,
+    buyer,
+    actions: { clear },
+  } = useCart();
 
   const mutation = useMutation({
     mutationFn: async (values: Omit<OrderFormValues, "agreeRule">) => {
@@ -65,6 +69,7 @@ const ConfirmOrderInformation = (
 
         toast.error(respError.message);
       } else {
+        clear();
         onSuccess(res.data as Order);
       }
     },

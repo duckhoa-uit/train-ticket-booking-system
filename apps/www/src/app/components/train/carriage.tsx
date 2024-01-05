@@ -9,6 +9,7 @@ import { useCart } from "@/app/cart/context";
 import { get } from "@/app/lib/fetch";
 import { tripDetailsQuerySchema } from "@/app/trips/[tripId]/query-schema";
 
+import type { SeatInTrip } from "./seat";
 import { SeatButton } from "./seat";
 
 type CarriageWithSeatsProps = {
@@ -43,8 +44,8 @@ export const CarriageWithSeats = ({ carriage, tripId, price }: CarriageWithSeats
       const res = await get(
         `${env.NEXT_PUBLIC_API_BASE_URI}/api/trips/${tripId}/seats?${searchParams.toString()}`
       );
-      const seats = res.data as Seat[];
-      return seats.reduce<Record<number, Seat>>(
+      const seats = res.data as Array<SeatInTrip>;
+      return seats.reduce<Record<number, SeatInTrip>>(
         (prev, curr) => ({
           ...prev,
           [curr.order]: curr,
@@ -108,6 +109,7 @@ export const CarriageWithSeats = ({ carriage, tripId, price }: CarriageWithSeats
                       return (
                         <SeatButton
                           price={price}
+                          status={seat?.status}
                           key={`${row}_${idx}`}
                           seat={seat}
                           onClick={() => handleSelectSeat(seat)}

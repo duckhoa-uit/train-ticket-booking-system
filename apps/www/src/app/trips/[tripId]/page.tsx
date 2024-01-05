@@ -25,7 +25,7 @@ import { TableBody, TableCaption, TableCell, TableRow } from "@ttbs/ui/component
 
 import SelectedSeat from "@/app/cart/cart-item";
 import { useCart } from "@/app/cart/context";
-import { CarriageIcon, TrainVisualization, CarriageWithSeats } from "@/app/components/train";
+import { CarriageIcon, TrainVisualization, CarriageWithSeats, SeatButton } from "@/app/components/train";
 import { get } from "@/app/lib/fetch";
 import type { SearchTripItemApiResponse } from "@/types";
 
@@ -181,21 +181,13 @@ const TripDetails = ({ params: { tripId } }: TripDetailsPageProps) => {
                     </TableCell>
                     <TableCell>
                       <div className="flex items-center justify-start gap-2">
-                        <Button
-                          variant="icon"
-                          color="secondary"
-                          className={cn("text-inverted h-9 w-9 bg-[#a6b727] text-sm hover:bg-[#a6b727]")}
-                        />
+                        <SeatButton selected hideContent />
                         <p>Chỗ đang chọn</p>
                       </div>
                     </TableCell>
                     <TableCell>
                       <div className="flex items-center justify-start gap-2">
-                        <Button
-                          variant="icon"
-                          color="secondary"
-                          className={cn("text-inverted h-9 w-9 bg-red-600 text-sm hover:bg-red-600")}
-                        />
+                        <SeatButton status="bought" hideContent />
                         <p>Chỗ đã bán, không bán</p>
                       </div>
                     </TableCell>

@@ -281,8 +281,70 @@ export const updateTrip = async (id: number, input: TripUpdateInput) => {
 };
 
 export const getSeatsOnTripById = async (tripId: number, query: GetSeatsOnTripQueryInput) => {
-  // TODO: update function for seat statsu
-  const { carriageId } = query;
+  const { carriageId, arrivalStationId, departStationId } = query;
+
+  // TODO: double check here
+  const fromTimeline = await prisma.tripTimeline.findFirstOrThrow({
+    where: {
+      tripId,
+      journeyStation: {
+        stationId: departStationId,
+      },
+    },
+    include: {
+      journeyStation: true,
+    },
+  });
+  const toTimeline = await prisma.tripTimeline.findFirstOrThrow({
+    where: {
+      tripId,
+      journeyStation: {
+        stationId: arrivalStationId,
+      },
+    },
+    include: {
+      journeyStation: true,
+    },
+  });
+
+  const fromOrderInJourney = fromTimeline.journeyStation.order;
+  const toOrderInJourney = toTimeline.journeyStation.order;
+
+  const boughtTickets = await prisma.ticket.findMany({
+    where: {
+      order: {
+        paymentStatus: "PAID",
+      },
+      seat: {
+        tripId,
+        carriageId,
+      },
+    },
+    include: {
+      seat: true,
+      fromTineline: {
+        include: {
+          journeyStation: true,
+        },
+      },
+      toTineline: {
+        include: {
+          journeyStation: true,
+        },
+      },
+    },
+  });
+
+  const boughtSeatIdsInQuery = boughtTickets
+    .filter((ticket) => {
+      const ticketFromOrderInJourney = ticket.fromTineline.journeyStation.order;
+      const ticketToOrderInJourney = ticket.toTineline.journeyStation.order;
+
+      if (ticketFromOrderInJourney > toOrderInJourney || ticketToOrderInJourney < fromOrderInJourney)
+        return false;
+      return true;
+    })
+    .map((_) => _.seatId);
 
   const seats = await prisma.seat.findMany({
     where: {
@@ -291,7 +353,18 @@ export const getSeatsOnTripById = async (tripId: number, query: GetSeatsOnTripQu
     },
   });
 
-  return seats;
+  return seats.map((seat) => {
+    if (boughtSeatIdsInQuery.includes(seat.id))
+      return {
+        ...seat,
+        status: "bought",
+      };
+
+    return {
+      ...seat,
+      status: "free",
+    };
+  });
 };
 
 export const getPricesOnTrip = async ({
