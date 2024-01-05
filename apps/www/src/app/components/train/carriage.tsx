@@ -16,7 +16,11 @@ type CarriageWithSeatsProps = {
   tripId: number;
   carriage: CarriageType & { seatType: SeatType };
 };
-export const CarriageWithSeats = ({ carriage, tripId, price }: CarriageWithSeatsProps) => {
+export const CarriageWithSeats = ({
+  carriage,
+  tripId,
+  price,
+}: CarriageWithSeatsProps) => {
   const {
     data: { arrivalStation: arrivalStationId, departStation: departStationId },
   } = useTypedQuery(tripDetailsQuerySchema);
@@ -29,7 +33,9 @@ export const CarriageWithSeats = ({ carriage, tripId, price }: CarriageWithSeats
   const floors = carriage.seatType.floors;
   const numOfCabins = carriage.numOfCabins ?? 1;
   const seatsPerRow = carriage.seatType.seatsPerRow;
-  const numOfRows = Math.round((carriage.seatsPerCabin * numOfCabins) / seatsPerRow);
+  const numOfRows = Math.round(
+    (carriage.seatsPerCabin * numOfCabins) / seatsPerRow,
+  );
 
   const { data: seatsAsObject = {} } = useQuery({
     queryKey: ["seats", tripId, carriage, departStationId, arrivalStationId],
@@ -41,7 +47,9 @@ export const CarriageWithSeats = ({ carriage, tripId, price }: CarriageWithSeats
       });
 
       const res = await get(
-        `${env.NEXT_PUBLIC_API_BASE_URI}/api/trips/${tripId}/seats?${searchParams.toString()}`
+        `${
+          env.NEXT_PUBLIC_API_BASE_URI
+        }/api/trips/${tripId}/seats?${searchParams.toString()}`,
       );
       const seats = res.data as Seat[];
       return seats.reduce<Record<number, Seat>>(
@@ -49,7 +57,7 @@ export const CarriageWithSeats = ({ carriage, tripId, price }: CarriageWithSeats
           ...prev,
           [curr.order]: curr,
         }),
-        {}
+        {},
       );
     },
     enabled: !!carriage,
@@ -88,8 +96,13 @@ export const CarriageWithSeats = ({ carriage, tripId, price }: CarriageWithSeats
             /**
              * Render cabins
              */
-            <div className="col-span-1 flex h-full w-fit flex-col gap-2" key={cabinIdx}>
-              {numOfCabins > 1 ? <span className="text-center">{`Khoang ${cabinIdx + 1}`}</span> : null}
+            <div
+              className="col-span-1 flex h-full w-fit flex-col gap-2"
+              key={cabinIdx}
+            >
+              {numOfCabins > 1 ? (
+                <span className="text-center">{`Khoang ${cabinIdx + 1}`}</span>
+              ) : null}
               <div className="flex gap-3">
                 {Array.from({
                   length: numOfRows / numOfCabins,
@@ -102,7 +115,10 @@ export const CarriageWithSeats = ({ carriage, tripId, price }: CarriageWithSeats
                       /**
                        * Render Seat
                        */
-                      const order = cabinIdx * carriage.seatsPerCabin + seatsPerRow * row + (idx + 1);
+                      const order =
+                        cabinIdx * carriage.seatsPerCabin +
+                        seatsPerRow * row +
+                        (idx + 1);
                       const seat = seatsAsObject[order];
 
                       return (

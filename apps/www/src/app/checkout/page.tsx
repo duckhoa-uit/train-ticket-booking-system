@@ -52,7 +52,9 @@ const Checkout = () => {
               setIsLoading(true);
             }}
             onSuccess={(order) => {
-              const _searchParams = new URLSearchParams(searchParams ?? undefined);
+              const _searchParams = new URLSearchParams(
+                searchParams ?? undefined,
+              );
               _searchParams.set("orderId", order.id.toString());
               _searchParams.set("step", "3");
 
@@ -64,7 +66,8 @@ const Checkout = () => {
     },
     {
       title: "Thanh toán",
-      description: "Mở App Ngân hàng bất kỳ để quét mã QR hoặc chuyển khoản chính xác nội dung bên dưới",
+      description:
+        "Mở App Ngân hàng bất kỳ để quét mã QR hoặc chuyển khoản chính xác nội dung bên dưới",
       hidePrev: true,
       content: (setIsLoading) => {
         return (
@@ -114,7 +117,9 @@ const Checkout = () => {
             nextLabel="Tiếp theo"
             finishLabel="Hoàn tất"
             prevLabel="Quay lại"
-            stepLabel={(currentStep, maxSteps) => `Bước ${currentStep}/${maxSteps}`}
+            stepLabel={(currentStep, maxSteps) =>
+              `Bước ${currentStep}/${maxSteps}`
+            }
           />
         </CardContent>
       </Card>

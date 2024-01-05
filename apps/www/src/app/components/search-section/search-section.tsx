@@ -13,8 +13,8 @@ export const SearchSection = () => {
               Book your next trip
             </h1>
             <p className="text-inverted mb-10 mt-6 block w-full text-base font-normal leading-7 tracking-normal antialiased md:text-xl lg:max-w-2xl">
-              We&apos;re constantly trying to express ourselves and actualize our dreams. If you have the
-              opportunity to play this game
+              We&apos;re constantly trying to express ourselves and actualize
+              our dreams. If you have the opportunity to play this game
             </p>
           </div>
         </div>

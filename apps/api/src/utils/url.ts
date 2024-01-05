@@ -4,7 +4,8 @@ export function autoPrependHttps(inputUrl: string): string {
     return inputUrl; // No need to prepend, return as is
   } else {
     // If the domain is 'localhost', prepend 'http://'; otherwise, prepend 'https://'
-    const protocol = window.location.hostname === "localhost" ? "http://" : "https://";
+    const protocol =
+      window.location.hostname === "localhost" ? "http://" : "https://";
     return protocol + inputUrl;
   }
 }

@@ -29,7 +29,9 @@ export const createTrip = async (input: TripCreateInput) => {
         journeyId: input.journeyId,
         trainId: input.trainId,
         arrivalDate: input.arrivalDate ?? input.timelines[0].arrivalDate,
-        departDate: input.departDate ?? input.timelines[input.timelines.length - 1].departDate,
+        departDate:
+          input.departDate ??
+          input.timelines[input.timelines.length - 1].departDate,
         timelines: {
           createMany: {
             data: input.timelines.map((timeline) => ({
@@ -47,18 +49,19 @@ export const createTrip = async (input: TripCreateInput) => {
               }).map((_, idx) => ({
                 carriageId: c.id,
                 order: idx + 1,
-              }))
+              })),
             ),
           },
         },
       },
     });
 
-    const prices = input.timelines.flatMap<Prisma.PricingCreateManyInput>((timeline) =>
-      (timeline.prices ?? []).map((price) => ({
-        ...price,
-        tripId: newTrip.id,
-      }))
+    const prices = input.timelines.flatMap<Prisma.PricingCreateManyInput>(
+      (timeline) =>
+        (timeline.prices ?? []).map((price) => ({
+          ...price,
+          tripId: newTrip.id,
+        })),
     );
 
     await tx.pricing.createMany({
@@ -70,7 +73,15 @@ export const createTrip = async (input: TripCreateInput) => {
 };
 
 export const getAllTrips = async (query: SearchTripQueryInput) => {
-  const { departDate, skip, limit, departStationId, arrivalStationId, orderBy, timeRange } = query;
+  const {
+    departDate,
+    skip,
+    limit,
+    departStationId,
+    arrivalStationId,
+    orderBy,
+    timeRange,
+  } = query;
 
   const [timeFrom, timeTo] = timeRange ? timeRange.split("-") : [];
 
@@ -173,11 +184,13 @@ export const getAllTrips = async (query: SearchTripQueryInput) => {
   });
 
   const modifiedTrips = trips.map(({ timelines, ...tripWithoutTimelines }) => {
-    const _timelines = timelines.map(({ departDate, arrivalDate, journeyStation: { station } }) => ({
-      departDate,
-      arrivalDate,
-      station,
-    }));
+    const _timelines = timelines.map(
+      ({ departDate, arrivalDate, journeyStation: { station } }) => ({
+        departDate,
+        arrivalDate,
+        station,
+      }),
+    );
 
     return {
       ...tripWithoutTimelines,
@@ -250,11 +263,13 @@ export const getTripByID = async (id: number) => {
   });
 
   const { timelines, ...tripWithoutTimelines } = trip ?? {};
-  const _timelines = (timelines ?? []).map(({ departDate, arrivalDate, journeyStation: { station } }) => ({
-    departDate,
-    arrivalDate,
-    station,
-  }));
+  const _timelines = (timelines ?? []).map(
+    ({ departDate, arrivalDate, journeyStation: { station } }) => ({
+      departDate,
+      arrivalDate,
+      station,
+    }),
+  );
 
   return {
     ...tripWithoutTimelines,
@@ -280,7 +295,10 @@ export const updateTrip = async (id: number, input: TripUpdateInput) => {
   });
 };
 
-export const getSeatsOnTripById = async (tripId: number, query: GetSeatsOnTripQueryInput) => {
+export const getSeatsOnTripById = async (
+  tripId: number,
+  query: GetSeatsOnTripQueryInput,
+) => {
   // TODO: update function for seat statsu
   const { carriageId } = query;
 
@@ -335,7 +353,10 @@ export const getPricesOnTrip = async ({
     where: {
       tripId,
       seatTypeId,
-      OR: [{ departStationId: { in: stationIdsRange } }, { arrivalStationId: lastStation }],
+      OR: [
+        { departStationId: { in: stationIdsRange } },
+        { arrivalStationId: lastStation },
+      ],
     },
   });
 

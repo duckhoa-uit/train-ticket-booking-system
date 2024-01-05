@@ -19,10 +19,11 @@ import { generateVietQrUrl } from "../lib/helpers";
 import { orderCheckoutQuerySchema } from "./query-schema";
 
 const OrderPayment = (
-  props: { onSubmit: () => void; onSuccess?: () => void; onError?: () => void } & Omit<
-    JSX.IntrinsicElements["form"],
-    "onSubmit" | "ref"
-  >
+  props: {
+    onSubmit: () => void;
+    onSuccess?: () => void;
+    onError?: () => void;
+  } & Omit<JSX.IntrinsicElements["form"], "onSubmit" | "ref">,
 ) => {
   const {
     data: { orderId },
@@ -34,7 +35,9 @@ const OrderPayment = (
   const { data: order } = useQuery({
     queryKey: ["orders", orderId],
     queryFn: async () => {
-      const res = await get(`${env.NEXT_PUBLIC_API_BASE_URI}/api/orders/${orderId}`);
+      const res = await get(
+        `${env.NEXT_PUBLIC_API_BASE_URI}/api/orders/${orderId}`,
+      );
 
       const order = res.data as Order;
       // if (order.paymentStatus === "PAID") onSuccess();
@@ -46,7 +49,9 @@ const OrderPayment = (
   useQuery({
     queryKey: ["orders-payment-status", orderId],
     queryFn: async () => {
-      const res = await get(`${env.NEXT_PUBLIC_API_BASE_URI}/api/orders/${orderId}/payment-status`);
+      const res = await get(
+        `${env.NEXT_PUBLIC_API_BASE_URI}/api/orders/${orderId}/payment-status`,
+      );
 
       const status = res.data as PaymentStatus;
 
@@ -64,7 +69,9 @@ const OrderPayment = (
       if (failureCount > 4) {
         toast.dismiss();
         setFetchedStatus(false);
-        toast.error("Hệ thống chưa nhận được chuyển khoản, vui lòng thử lại sau");
+        toast.error(
+          "Hệ thống chưa nhận được chuyển khoản, vui lòng thử lại sau",
+        );
         onError();
 
         return false;
@@ -72,7 +79,10 @@ const OrderPayment = (
       return true;
     },
     retryDelay(failureCount) {
-      return Math.min(failureCount > 1 ? 2 ** failureCount * 1000 : 1000, 30 * 1000);
+      return Math.min(
+        failureCount > 1 ? 2 ** failureCount * 1000 : 1000,
+        30 * 1000,
+      );
     },
     enabled: fetchedStatus,
   });
@@ -91,11 +101,18 @@ const OrderPayment = (
   return (
     <form onSubmit={handleSubmit} {...rest}>
       <div>
-        <h3 className="text-attention mb-3 text-lg font-medium">Thông tin chuyển khoản</h3>
+        <h3 className="text-attention mb-3 text-lg font-medium">
+          Thông tin chuyển khoản
+        </h3>
         <div className="flex w-full flex-col items-center justify-center gap-5 md:flex-row">
           <div className="relative aspect-[54/64] w-full min-w-[250px] max-w-[540px]">
             {order ? (
-              <Image src={generateVietQrUrl(order)} alt="" fill className="relative" />
+              <Image
+                src={generateVietQrUrl(order)}
+                alt=""
+                fill
+                className="relative"
+              />
             ) : (
               <div>lmao</div>
             )}
@@ -136,7 +153,9 @@ const OrderPayment = (
                   <div>
                     <div className="text-subtle text-sm">Số tiền:</div>
                     {order ? (
-                      <div className="text-sm font-semibold">{currencyFormatter.format(order.amount)}</div>
+                      <div className="text-sm font-semibold">
+                        {currencyFormatter.format(order.amount)}
+                      </div>
                     ) : (
                       <SkeletonText className="h-6 w-10" />
                     )}
@@ -161,7 +180,12 @@ const OrderPayment = (
 
             <div className="text-subtle mt-4 text-sm md:mt-10">
               Lưu ý: Nhập chính xác số tiền{" "}
-              {order ? <span>{order.amount}</span> : <SkeletonText className="h-5 w-6" />} khi chuyển khoản
+              {order ? (
+                <span>{order.amount}</span>
+              ) : (
+                <SkeletonText className="h-5 w-6" />
+              )}{" "}
+              khi chuyển khoản
             </div>
           </div>
         </div>

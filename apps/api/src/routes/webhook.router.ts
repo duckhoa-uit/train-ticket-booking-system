@@ -6,4 +6,8 @@ import { webhookPaymentSchema } from "@/schemas/webhook.schema";
 
 export const webhookRouter = Router();
 
-webhookRouter.post("/payment", validate(webhookPaymentSchema), webhookPaymentHandler);
+webhookRouter.post(
+  "/payment",
+  validate(webhookPaymentSchema),
+  webhookPaymentHandler,
+);

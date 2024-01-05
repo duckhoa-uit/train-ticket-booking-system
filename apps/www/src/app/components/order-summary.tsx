@@ -5,7 +5,16 @@ import React from "react";
 import { useForm } from "react-hook-form";
 
 import { env } from "@ttbs/env";
-import type { Seat, Order, SeatType, Ticket, Train, Station, TripTimeline, Carriage } from "@ttbs/prisma";
+import type {
+  Seat,
+  Order,
+  SeatType,
+  Ticket,
+  Train,
+  Station,
+  TripTimeline,
+  Carriage,
+} from "@ttbs/prisma";
 import { Form, SkeletonText } from "@ttbs/ui";
 import {
   Table,
@@ -47,14 +56,19 @@ const TABLE_HEAD_ITEMS = [
 ] as const;
 
 const OrderSummary = (
-  props: { onSubmit?: () => void; orderId?: number } & Omit<JSX.IntrinsicElements["form"], "onSubmit" | "ref">
+  props: { onSubmit?: () => void; orderId?: number } & Omit<
+    JSX.IntrinsicElements["form"],
+    "onSubmit" | "ref"
+  >,
 ) => {
   const { onSubmit = noop, orderId, ...rest } = props;
 
   const { data: order } = useQuery({
     queryKey: ["orders", orderId],
     queryFn: async () => {
-      const res = await get(`${env.NEXT_PUBLIC_API_BASE_URI}/api/orders/${orderId}`);
+      const res = await get(
+        `${env.NEXT_PUBLIC_API_BASE_URI}/api/orders/${orderId}`,
+      );
 
       const order = res.data as Order & {
         tickets: Array<
@@ -92,14 +106,33 @@ const OrderSummary = (
     <Form form={formMethods} handleSubmit={handleSubmit} {...rest}>
       <div className="flex flex-col">
         <div>
-          <h3 className="text-attention mb-2 text-lg font-medium">Thông tin người đặt vé</h3>
+          <h3 className="text-attention mb-2 text-lg font-medium">
+            Thông tin người đặt vé
+          </h3>
           <div>
-            <p> - họ và tên: {order ? order.buyerName : <SkeletonText className="h-4 w-20" />}</p>
             <p>
-              - số CMND/Hộ chiếu: {order ? order.buyerIdentification : <SkeletonText className="h-4 w-20" />}
+              {" "}
+              - họ và tên:{" "}
+              {order ? order.buyerName : <SkeletonText className="h-4 w-20" />}
             </p>
-            <p> - Số di động: {order ? order.buyerPhone : <SkeletonText className="h-4 w-20" />}</p>
-            <p> - Email: {order ? order.buyerEmail : <SkeletonText className="h-4 w-20" />}</p>
+            <p>
+              - số CMND/Hộ chiếu:{" "}
+              {order ? (
+                order.buyerIdentification
+              ) : (
+                <SkeletonText className="h-4 w-20" />
+              )}
+            </p>
+            <p>
+              {" "}
+              - Số di động:{" "}
+              {order ? order.buyerPhone : <SkeletonText className="h-4 w-20" />}
+            </p>
+            <p>
+              {" "}
+              - Email:{" "}
+              {order ? order.buyerEmail : <SkeletonText className="h-4 w-20" />}
+            </p>
           </div>
         </div>
 
@@ -118,19 +151,32 @@ const OrderSummary = (
               {order
                 ? order.tickets.map((ticket) => (
                     <TableRow key={ticket.id}>
-                      <TableCell className="text-center">{ticket.userName}</TableCell>
-                      <TableCell className="text-center">{ticket.userIdentification}</TableCell>
-                      <TableCell className="text-center">{ticket.seatType.name}</TableCell>
+                      <TableCell className="text-center">
+                        {ticket.userName}
+                      </TableCell>
+                      <TableCell className="text-center">
+                        {ticket.userIdentification}
+                      </TableCell>
+                      <TableCell className="text-center">
+                        {ticket.seatType.name}
+                      </TableCell>
                       <TableCell className="text-left">
                         <p>
                           {ticket.train.name} - {ticket.train.code}
                         </p>
-                        <p>{dayjs(ticket.fromTineline.departDate).format("L HH:mm")}</p>
                         <p>
-                          Toa: {ticket.carriage.order} Chỗ số: {ticket.seat.order}
+                          {dayjs(ticket.fromTineline.departDate).format(
+                            "L HH:mm",
+                          )}
+                        </p>
+                        <p>
+                          Toa: {ticket.carriage.order} Chỗ số:{" "}
+                          {ticket.seat.order}
                         </p>
                       </TableCell>
-                      <TableCell className="text-center">{currencyFormatter.format(ticket.amount)}</TableCell>
+                      <TableCell className="text-center">
+                        {currencyFormatter.format(ticket.amount)}
+                      </TableCell>
                     </TableRow>
                   ))
                 : Array.from({ length: 3 }).map((_, idx) => (
@@ -160,7 +206,9 @@ const OrderSummary = (
                 </TableCell>
                 <TableCell colSpan={1} className="text-center font-semibold">
                   {order ? (
-                    currencyFormatter.format(order.tickets.reduce((p, a) => p + a.amount, 0))
+                    currencyFormatter.format(
+                      order.tickets.reduce((p, a) => p + a.amount, 0),
+                    )
                   ) : (
                     <SkeletonText className="h-5 w-20" />
                   )}

@@ -8,7 +8,12 @@ import {
   OrderUpdateInput,
   orderCreateSchema,
 } from "@/schemas/order.schema";
-import { createOrder, getAllOrders, getOrderByID, updateOrder } from "@/services/order.service";
+import {
+  createOrder,
+  getAllOrders,
+  getOrderByID,
+  updateOrder,
+} from "@/services/order.service";
 import { getSeatByID } from "@/services/seat.service";
 import { getTripTimelineByStationId } from "@/services/tripTimeline.service";
 import AppError from "@/utils/app-error";
@@ -16,7 +21,7 @@ import AppError from "@/utils/app-error";
 export const createOrderHandler = async (
   req: Request<{}, {}, OrderCreateInput>,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const { body: reqBody } = orderCreateSchema.parse(req);
@@ -28,9 +33,16 @@ export const createOrderHandler = async (
         const seat = await getSeatByID(t.seatId);
         if (!seat) throw new AppError(404, "Invalid seat");
 
-        const fromTimeline = await getTripTimelineByStationId(seat.tripId, t.fromStationId);
-        const toTimeline = await getTripTimelineByStationId(seat.tripId, t.toStationId);
-        if (!fromTimeline || !toTimeline) throw new AppError(404, "Invalid seat");
+        const fromTimeline = await getTripTimelineByStationId(
+          seat.tripId,
+          t.fromStationId,
+        );
+        const toTimeline = await getTripTimelineByStationId(
+          seat.tripId,
+          t.toStationId,
+        );
+        if (!fromTimeline || !toTimeline)
+          throw new AppError(404, "Invalid seat");
 
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { fromStationId, toStationId, ...ticketWithoutStations } = t;
@@ -40,10 +52,13 @@ export const createOrderHandler = async (
           fromTimelineId: fromTimeline.id,
           toTimelineId: toTimeline.id,
         };
-      })
+      }),
     );
 
-    const newOrder = await createOrder({ ...bodyWithoutTickets, tickets: modifiedTickets });
+    const newOrder = await createOrder({
+      ...bodyWithoutTickets,
+      tickets: modifiedTickets,
+    });
 
     // const _body: CheckoutRequestType = {
     //   orderCode: newOrder.id,
@@ -73,7 +88,11 @@ export const createOrderHandler = async (
   }
 };
 
-export const getOrderHandler = async (req: Request<{}, {}, {}>, res: Response, next: NextFunction) => {
+export const getOrderHandler = async (
+  req: Request<{}, {}, {}>,
+  res: Response,
+  next: NextFunction,
+) => {
   try {
     const allOrders = await getAllOrders();
     return res.status(200).json({ status: "success", data: allOrders });
@@ -85,7 +104,7 @@ export const getOrderHandler = async (req: Request<{}, {}, {}>, res: Response, n
 export const getOrderById = async (
   req: Request<OrderIdParamInput, {}, {}>,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const OrderID = Number(req.params.id);
@@ -94,29 +113,31 @@ export const getOrderById = async (
     if (!order) throw new AppError(404, "Invalid order id");
 
     const { tickets, ...orderWithoutTickets } = order;
-    const modifiedTickets = tickets.map(({ seat, fromTineline, toTineline, ...ticket }) => {
-      const { carriage } = seat;
-      const { seatType, train } = carriage;
+    const modifiedTickets = tickets.map(
+      ({ seat, fromTineline, toTineline, ...ticket }) => {
+        const { carriage } = seat;
+        const { seatType, train } = carriage;
 
-      const {
-        journeyStation: { station: fromStation },
-      } = fromTineline;
-      const {
-        journeyStation: { station: toStation },
-      } = toTineline;
+        const {
+          journeyStation: { station: fromStation },
+        } = fromTineline;
+        const {
+          journeyStation: { station: toStation },
+        } = toTineline;
 
-      return {
-        ...ticket,
-        seat,
-        carriage,
-        train,
-        seatType,
-        fromTineline,
-        fromStation,
-        toTineline,
-        toStation,
-      };
-    });
+        return {
+          ...ticket,
+          seat,
+          carriage,
+          train,
+          seatType,
+          fromTineline,
+          fromStation,
+          toTineline,
+          toStation,
+        };
+      },
+    );
     return res.status(200).json({
       status: "success",
       data: {
@@ -131,7 +152,7 @@ export const getOrderById = async (
 export const getOrderPaymentStatus = async (
   req: Request<OrderIdParamInput, {}, {}>,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const OrderID = Number(req.params.id);
@@ -139,7 +160,9 @@ export const getOrderPaymentStatus = async (
     const order = await getOrderByID(OrderID);
     if (!order) throw new AppError(404, "Invalid order id");
 
-    return res.status(200).json({ status: "success", data: order.paymentStatus });
+    return res
+      .status(200)
+      .json({ status: "success", data: order.paymentStatus });
   } catch (error) {
     return next(error);
   }
@@ -148,7 +171,7 @@ export const getOrderPaymentStatus = async (
 export const updateOrderHandler = async (
   req: Request<OrderIdParamInput, {}, OrderUpdateInput>,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const orderID = +req.params.id;

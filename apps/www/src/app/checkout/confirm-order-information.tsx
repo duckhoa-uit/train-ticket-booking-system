@@ -45,7 +45,7 @@ const ConfirmOrderInformation = (
   props: { onSubmit: () => void; onSuccess?: (order: Order) => void } & Omit<
     JSX.IntrinsicElements["form"],
     "onSubmit" | "ref"
-  >
+  >,
 ) => {
   const { onSubmit, onSuccess = noop, ...rest } = props;
   const { lineItems, buyer } = useCart();
@@ -97,7 +97,9 @@ const ConfirmOrderInformation = (
   return (
     <form onSubmit={handleSubmit} {...rest}>
       <div>
-        <h3 className="text-attention text-lg font-medium">Thông tin người mua vé</h3>
+        <h3 className="text-attention text-lg font-medium">
+          Thông tin người mua vé
+        </h3>
         <div>
           <p> - họ và tên: {buyer.name ?? ""}</p>
           <p> - số CMND/Hộ chiếu: {buyer.identification ?? ""}</p>
@@ -105,7 +107,9 @@ const ConfirmOrderInformation = (
           <p> - Email: {buyer.email}</p>
         </div>
 
-        <h3 className="text-attention mb-3 mt-5 text-lg font-medium">Thông tin vé mua</h3>
+        <h3 className="text-attention mb-3 mt-5 text-lg font-medium">
+          Thông tin vé mua
+        </h3>
         <div className="md:overflow-x-auto">
           <Table className="border md:w-full">
             <TableHeader>
@@ -135,7 +139,9 @@ const ConfirmOrderInformation = (
                       </div>
                     </div>
                   </TableCell>
-                  <TableCell className="text-center">{currencyFormatter.format(item.amount)}</TableCell>
+                  <TableCell className="text-center">
+                    {currencyFormatter.format(item.amount)}
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -145,7 +151,9 @@ const ConfirmOrderInformation = (
                   Tổng tiền
                 </TableCell>
                 <TableCell colSpan={1} className="text-center font-semibold">
-                  {currencyFormatter.format(lineItems.reduce((p, a) => p + a.amount, 0))}
+                  {currencyFormatter.format(
+                    lineItems.reduce((p, a) => p + a.amount, 0),
+                  )}
                 </TableCell>
               </TableRow>
             </TableFooter>
@@ -153,9 +161,10 @@ const ConfirmOrderInformation = (
         </div>
 
         <p className="text-subtle mt-6">
-          Quý khách vui lòng kiểm tra kỹ và xác nhận các thông tin đã nhập trước khi thực hiện giao dịch mua
-          vé. Sau khi thực hiện giao dịch thanh toán ở trang tiếp theo quý khách sẽ không thể thay đổi được
-          thông tin mua vé ở trên
+          Quý khách vui lòng kiểm tra kỹ và xác nhận các thông tin đã nhập trước
+          khi thực hiện giao dịch mua vé. Sau khi thực hiện giao dịch thanh toán
+          ở trang tiếp theo quý khách sẽ không thể thay đổi được thông tin mua
+          vé ở trên
         </p>
       </div>
     </form>
