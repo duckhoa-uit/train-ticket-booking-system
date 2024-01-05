@@ -40,7 +40,7 @@
     },
     "@ttbs/prisma#db-migrate": {
       "cache": false,
-      "dependsOn": [],
+      "dependsOn": ["@ttbs/prisma#db-up"],
       "inputs": ["./schema.prisma", "./migrations/**/*.sql"]
     },
     "@ttbs/prisma#db-up": {
@@ -90,6 +90,10 @@
       "dependsOn": [],
       "outputs": ["../../node_modules/@prisma/client/**"],
       "inputs": ["./schema.prisma", "./prisma/schema.prisma"]
+    },
+    "db-deploy": {
+      "cache": false,
+      "inputs": ["./migrations/**/*.sql", "./prisma/migrations/**/*.sql"]
     },
     "db-seed": {
       "dependsOn": ["@ttbs/lib#build"]
