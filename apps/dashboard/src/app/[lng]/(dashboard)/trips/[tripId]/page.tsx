@@ -2,14 +2,15 @@
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { notFound, useRouter } from "next/navigation";
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
 
 import { env } from "@ttbs/env";
 import { useClientTranslation } from "@ttbs/i18n";
+import dayjs from "@ttbs/lib/dayjs";
 import { HttpError } from "@ttbs/lib/http-error";
-import type { Carriage, Train } from "@ttbs/prisma";
+import type { SeatType } from "@ttbs/prisma";
 import { Button, ConfirmationDialogContent, Dialog, DialogTrigger, Form, VerticalDivider } from "@ttbs/ui";
 import { Trash } from "@ttbs/ui/components/icons";
 
@@ -17,74 +18,127 @@ import EditableHeading from "@/components/editable-heading";
 import Shell from "@/components/layout/common";
 import { delete_, get, patch } from "@/lib/common/fetch";
 import type { ResponseError } from "@/types";
+import type {
+  JourneyItemDetailsApiResponse,
+  TrainItemDetailsApiResponse,
+  TripItemDetailsApiResponse,
+} from "@/types";
 
 import { TripBasicInfo } from "../_components/trip-basic-info";
 import { TripTimelines } from "../_components/trip-timelines";
 
-type TrainDetailsPageProps = {
+type TripDetailsPageProps = {
   params: {
     lng: string;
-    trainId: string;
+    tripId: string;
   };
 };
 
-export type UpdateTrainFormValues = {
-  code: string;
+export type UpdateTripFormValues = {
   name: string;
-  carriages: {
-    order: number;
-    code: string;
-    name: string;
-    seatTypeId: number | null;
-    seatsPerCabin: number;
-    numOfCabins?: number;
+  journeyId: number | null;
+  trainId: number | null;
+  timelines: {
+    journeyStationId: number;
+    arrivalDate: Date | null;
+    departDate: Date | null;
+    prices?: {
+      seatTypeId: number;
+      departStationId: number;
+      arrivalStationId: number;
+      amount: number | null;
+    }[];
   }[];
 };
 
-const TrainDetailsPage = ({ params: { trainId } }: TrainDetailsPageProps) => {
+const TripDetailsPage = ({ params: { tripId } }: TripDetailsPageProps) => {
   const { t } = useClientTranslation();
   const router = useRouter();
-
-  // Get QueryClient from the context
   const queryClient = useQueryClient();
 
   const {
-    data: train,
+    data: trip,
     isLoading,
     status,
   } = useQuery({
-    queryKey: ["trains", trainId],
+    queryKey: ["trips", tripId],
     queryFn: async () => {
-      const res = await get(`${env.NEXT_PUBLIC_API_BASE_URI}/api/trains/${trainId}`);
+      const res = await get(`${env.NEXT_PUBLIC_API_BASE_URI}/api/trips/${tripId}`);
       if (res.error) throw new Error(res.error);
 
-      return res.data as Train & { carriages: Carriage[] };
+      return res.data as TripItemDetailsApiResponse;
     },
   });
+
+  const { data: selectedJourney } = useQuery({
+    queryKey: ["journeys", trip?.journeyId],
+    queryFn: async () => {
+      const res = await get(`${env.NEXT_PUBLIC_API_BASE_URI}/api/journeys/${trip?.journeyId}`);
+      const journey = res.data as JourneyItemDetailsApiResponse;
+
+      return { ...journey, journeyStations: journey.journeyStations.sort((a, b) => a.order - b.order) };
+    },
+    enabled: !!trip,
+  });
+
+  const { data: selectedTrain } = useQuery({
+    queryKey: ["trains", trip?.train.id],
+    queryFn: async () => {
+      const res = await get(`${env.NEXT_PUBLIC_API_BASE_URI}/api/trains/${trip?.train.id}`);
+      return res.data as TrainItemDetailsApiResponse;
+    },
+    enabled: !!trip,
+  });
+
+  const selectedTrainSeatTypes = useMemo(
+    () =>
+      selectedTrain
+        ? selectedTrain.carriages.reduce<SeatType[]>((prev, curr) => {
+            const index = prev.findIndex((item) => item.id === curr.id);
+            if (index < 0) return [...prev, curr.seatType];
+
+            return prev;
+          }, [])
+        : [],
+    [selectedTrain]
+  );
+
   useEffect(() => {
     if (status === "error") return notFound();
   }, [status]);
 
-  const form = useForm<UpdateTrainFormValues>({
-    values: train && {
-      code: train.code,
-      name: train.name,
-      carriages: (train.carriages || [])
-        .sort((a, b) => a.order - b.order)
-        .map((_) => ({
-          order: _.order,
-          code: _.code,
-          name: _.name,
-          seatTypeId: _.seatTypeId,
-          seatsPerCabin: _.seatsPerCabin,
-          numOfCabins: _.numOfCabins ?? undefined,
-        })),
+  const form = useForm<UpdateTripFormValues>({
+    values: trip && {
+      name: trip.name ?? "",
+      journeyId: trip.journeyId,
+      trainId: trip.trainId,
+      timelines: (trip.timelines || [])
+        .sort((a, b) => a.journeyStation.order - b.journeyStation.order)
+        .map((timeline, idx) => {
+          if (idx + 1 === trip.timelines.length || !selectedTrainSeatTypes.length || !selectedJourney)
+            return {
+              arrivalDate: dayjs(timeline.arrivalDate).toDate(),
+              departDate: dayjs(timeline.departDate).toDate(),
+              journeyStationId: timeline.journeyStation.id,
+            };
+
+          const prices = trip.pricings.filter(
+            (price) => price.departStationId === timeline.journeyStation.stationId
+          );
+
+          return {
+            arrivalDate: dayjs(timeline.arrivalDate).toDate(),
+            departDate: dayjs(timeline.departDate).toDate(),
+            journeyStationId: timeline.journeyStation.id,
+            prices,
+          };
+        }),
     },
   });
 
   const updateMutation = useMutation({
-    mutationFn: async (values: UpdateTrainFormValues) => {
-      const res = await patch(`${env.NEXT_PUBLIC_API_BASE_URI}/api/trains/${trainId}`, values);
+    mutationFn: async (values: UpdateTripFormValues) => {
+      const res = await patch(`${env.NEXT_PUBLIC_API_BASE_URI}/api/trips/${tripId}`, values);
 
       if (res.error) {
         const respError = res.error as ResponseError;
@@ -93,7 +147,7 @@ const TrainDetailsPage = ({ params: { trainId } }: TrainDetailsPageProps) => {
           respError.errors.forEach((err) => {
             if (err.path && Array.isArray(err.path) && err.message) {
               const fieldName = err.path[err.path.length - 1];
-              form.setError(fieldName as keyof UpdateTrainFormValues, {
+              form.setError(fieldName as keyof UpdateTripFormValues, {
                 message: err.message,
               });
             }
@@ -102,11 +156,11 @@ const TrainDetailsPage = ({ params: { trainId } }: TrainDetailsPageProps) => {
           toast.error(respError.message);
         }
       } else {
-        queryClient.invalidateQueries({ queryKey: ["trains"] });
-        queryClient.invalidateQueries({ queryKey: ["trains", trainId] });
+        queryClient.invalidateQueries({ queryKey: ["trips"] });
+        queryClient.invalidateQueries({ queryKey: ["trips", tripId] });
         toast.success(
-          t("train_updated_successfully", {
-            trainName: res.data.name,
+          t("trip_updated_successfully", {
+            tripName: res.data.name,
           })
         );
       }
@@ -121,17 +175,17 @@ const TrainDetailsPage = ({ params: { trainId } }: TrainDetailsPageProps) => {
 
   const deleteMutation = useMutation({
     mutationFn: async () => {
-      const res = await delete_(`${env.NEXT_PUBLIC_API_BASE_URI}/api/trains/${trainId}`);
+      const res = await delete_(`${env.NEXT_PUBLIC_API_BASE_URI}/api/trips/${tripId}`);
       console.log("🚀 ~ file: page.tsx:53 ~ mutationFn: ~ res:", res);
 
-      queryClient.invalidateQueries({ queryKey: ["trains"] });
+      queryClient.invalidateQueries({ queryKey: ["trips"] });
 
       if (res.error) {
         const respError = res.error as ResponseError;
         toast.error(respError.message);
       } else {
-        toast.success(t("train_deleted_successfully"));
-        router.push("/trains");
+        toast.success(t("trip_deleted_successfully"));
+        router.push("/trips");
       }
     },
     onError: (err) => {
@@ -144,8 +198,8 @@ const TrainDetailsPage = ({ params: { trainId } }: TrainDetailsPageProps) => {
 
   return (
     <Shell
-      backPath="/trains"
-      title={train?.name ? `${train.name} | ${t("trains")}` : t("trains")}
+      backPath="/trips"
+      title={trip?.name ? `${trip.name} | ${t("trips")}` : t("trips")}
       heading={
         <Controller
           control={form.control}
@@ -172,7 +226,7 @@ const TrainDetailsPage = ({ params: { trainId } }: TrainDetailsPageProps) => {
               confirmBtnText={t("delete")}
               loadingText={t("delete")}
               onConfirm={() => {
-                trainId && deleteMutation.mutate();
+                tripId && deleteMutation.mutate();
               }}
             >
               {t("delete_schedule_description")}
@@ -183,7 +237,7 @@ const TrainDetailsPage = ({ params: { trainId } }: TrainDetailsPageProps) => {
           <Button
             className="ml-4 lg:ml-0"
             type="submit"
-            form="update-train-form"
+            form="update-trip-form"
             loading={updateMutation.isPending}
           >
             {t("save")}
@@ -194,7 +248,7 @@ const TrainDetailsPage = ({ params: { trainId } }: TrainDetailsPageProps) => {
       <div className="mt-4 w-full md:mt-0">
         <Form
           form={form}
-          id="update-train-form"
+          id="update-trip-form"
           handleSubmit={async (values) => updateMutation.mutate(values)}
           className="flex flex-col sm:mx-0 xl:flex-row xl:space-x-6"
         >
@@ -205,8 +259,8 @@ const TrainDetailsPage = ({ params: { trainId } }: TrainDetailsPageProps) => {
             </div>
           </div>
 
-          <div className="min-w-40 col-span-3 hidden space-y-2 md:block lg:col-span-1">
-            <div className="xl:max-w-80 w-full pr-4 sm:ml-0 sm:mr-36 sm:p-0">
+          <div className="col-span-3 hidden min-w-40 space-y-2 md:block lg:col-span-1">
+            <div className="w-full pr-4 sm:ml-0 sm:mr-36 sm:p-0 xl:max-w-80">
               {/* <div className="w-72">ABC</div> */}
             </div>
           </div>
@@ -216,4 +270,4 @@ const TrainDetailsPage = ({ params: { trainId } }: TrainDetailsPageProps) => {
   );
 };
 
-export default TrainDetailsPage;
+export default TripDetailsPage;

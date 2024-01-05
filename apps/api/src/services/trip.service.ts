@@ -237,6 +237,7 @@ export const getTripByID = async (id: number) => {
         },
       },
       journey: true,
+      pricings: true,
       timelines: {
         include: {
           journeyStation: {
@@ -250,10 +251,11 @@ export const getTripByID = async (id: number) => {
   });
 
   const { timelines, ...tripWithoutTimelines } = trip ?? {};
-  const _timelines = (timelines ?? []).map(({ departDate, arrivalDate, journeyStation: { station } }) => ({
+  const _timelines = (timelines ?? []).map(({ departDate, arrivalDate, journeyStation }) => ({
+    journeyStation,
     departDate,
     arrivalDate,
-    station,
+    station: journeyStation.station,
   }));
 
   return {
@@ -268,7 +270,7 @@ export const updateTrip = async (id: number, input: TripUpdateInput) => {
   });
   if (!existTrip) return null;
 
-  return await prisma.trip.update({
+  const trip = await prisma.trip.update({
     where: { id },
     data: {
       name: input.name,
@@ -276,8 +278,43 @@ export const updateTrip = async (id: number, input: TripUpdateInput) => {
       trainId: input.trainId,
       arrivalDate: input.arrivalDate,
       departDate: input.departDate,
+      ...(input.timelines
+        ? {
+            timelines: {
+              updateMany: input.timelines.map((timeline) => ({
+                data: {
+                  arrivalDate: timeline.arrivalDate,
+                  departDate: timeline.departDate,
+                },
+                where: {
+                  journeyStationId: timeline.journeyStationId,
+                },
+              })),
+            },
+          }
+        : {}),
+      ...(input.timelines
+        ? {
+            pricings: {
+              updateMany: input.timelines
+                .flatMap((t) => t.prices ?? [])
+                .map((price) => ({
+                  where: {
+                    departStationId: price.departStationId,
+                    arrivalStationId: price.arrivalStationId,
+                    seatTypeId: price.seatTypeId,
+                  },
+                  data: {
+                    amount: price.amount,
+                  },
+                })),
+            },
+          }
+        : {}),
     },
   });
+
+  return trip;
 };
 
 export const getSeatsOnTripById = async (tripId: number, query: GetSeatsOnTripQueryInput) => {

@@ -53,6 +53,23 @@ export const tripUpdateSchema = z.object({
       trainId: z.number(),
       arrivalDate: z.date(),
       departDate: z.date(),
+      timelines: z.array(
+        z.object({
+          journeyStationId: z.number(),
+          arrivalDate: z.coerce.date(),
+          departDate: z.coerce.date(),
+          prices: z
+            .array(
+              z.object({
+                seatTypeId: z.number(),
+                departStationId: z.number(),
+                arrivalStationId: z.number(),
+                amount: z.number(),
+              })
+            )
+            .optional(),
+        })
+      ),
     })
     .partial(),
 });

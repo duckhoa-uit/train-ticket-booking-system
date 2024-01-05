@@ -18,4 +18,4 @@ tripRouter.get("/", getTripsHandler);
 tripRouter.get("/:id", getTripById);
 tripRouter.get("/:id/prices", validate(getPriceOnTripQueryInputSchema), getPriceOnTripHandler);
 tripRouter.get("/:id/seats", getSeatsOnTripHandler);
-tripRouter.put("/:id", validate(tripUpdateSchema), updateTripHandler);
+tripRouter.patch("/:id", validate(tripUpdateSchema), updateTripHandler);

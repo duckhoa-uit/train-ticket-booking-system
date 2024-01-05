@@ -205,8 +205,8 @@ const TrainDetailsPage = ({ params: { trainId } }: TrainDetailsPageProps) => {
             </div>
           </div>
 
-          <div className="min-w-40 col-span-3 hidden space-y-2 md:block lg:col-span-1">
-            <div className="xl:max-w-80 w-full pr-4 sm:ml-0 sm:mr-36 sm:p-0">
+          <div className="col-span-3 hidden min-w-40 space-y-2 md:block lg:col-span-1">
+            <div className="w-full pr-4 sm:ml-0 sm:mr-36 sm:p-0 xl:max-w-80">
               {/* <div className="w-72">ABC</div> */}
             </div>
           </div>
