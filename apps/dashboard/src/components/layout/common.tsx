@@ -19,6 +19,7 @@ import {
   Train,
   CalendarDays,
   Luggage,
+  ShoppingCart,
 } from "@ttbs/ui/components/icons";
 
 import { KBarTrigger } from "@/components/kbar/Kbar";
@@ -38,10 +39,10 @@ export const Layout = (props: LayoutProps) => {
         />
       )} */}
 
-      <div className="flex min-h-screen flex-col">
-        <div className="flex max-h-screen flex-1" data-testid="dashboard-shell">
+      <div className="flex max-h-dvh w-full flex-col">
+        <div className="flex h-full w-full flex-1" data-testid="dashboard-shell">
           {props.SidebarContainer ? cloneElement(props.SidebarContainer) : <SideBarContainer />}
-          <div className="flex w-0 flex-1 flex-col">
+          <div className="flex flex-1 flex-col">
             <MainContainer {...props} />
           </div>
         </div>
@@ -165,6 +166,14 @@ const navigation: NavigationItemType[] = [
     name: "trips_page_title",
     href: "/trips",
     icon: Luggage,
+    isCurrent: ({ pathname: path, item }) => {
+      return path?.includes(item.href);
+    },
+  },
+  {
+    name: "orders_page_title",
+    href: "/orders",
+    icon: ShoppingCart,
     isCurrent: ({ pathname: path, item }) => {
       return path?.includes(item.href);
     },
@@ -526,7 +535,7 @@ function MainContainer({
   ...props
 }: LayoutProps) {
   return (
-    <main className="bg-default relative z-0 flex-1 focus:outline-none">
+    <main className="bg-default relative z-0 min-h-dvh flex-1 focus:outline-none">
       {/* show top navigation for md and smaller (tablet and phones) */}
       {TopNavContainerProp}
       <div className="max-w-full px-2 py-4 lg:px-6">

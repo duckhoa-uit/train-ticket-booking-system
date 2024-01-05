@@ -4,6 +4,7 @@ import type { Table } from "@tanstack/react-table";
 import { Button } from "../button";
 import {
   Dropdown,
+  DropdownItem,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuLabel,
@@ -43,7 +44,6 @@ export function DataTableViewOptions<TData>({ table }: DataTableViewOptionsProps
             .getAllColumns()
             .filter((column) => typeof column.accessorFn !== "undefined" && column.getCanHide())
             .map((column) => {
-              console.log("🚀 ~ file: view-options.tsx:46 ~ column:", column);
               return (
                 <DropdownMenuCheckboxItem
                   key={column.id}
@@ -51,7 +51,7 @@ export function DataTableViewOptions<TData>({ table }: DataTableViewOptionsProps
                   checked={column.getIsVisible()}
                   onCheckedChange={(value) => column.toggleVisibility(!!value)}
                 >
-                  {transformColumnIdToName(column.id)}
+                  <DropdownItem>{transformColumnIdToName(column.id)}</DropdownItem>
                 </DropdownMenuCheckboxItem>
               );
             })}
