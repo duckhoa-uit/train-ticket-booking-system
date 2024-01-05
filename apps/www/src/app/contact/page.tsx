@@ -2,7 +2,7 @@ import React from "react";
 
 const contact = () => {
   return (
-    <div className="md:text-normal mx-auto mb-5 mt-5 min-h-[100vh] w-full max-w-7xl rounded-md bg-white p-5 text-sm md:mt-10 md:text-center">
+    <div className="md:text-normal mx-auto mb-5 mt-5 min-h-[50vh] w-full max-w-7xl rounded-md bg-white p-5 text-sm md:mt-10 md:text-center">
       <h1 className="text-attention text-xl font-medium uppercase md:text-2xl">Thông tin liên hệ</h1>
       <div className="md:flex md:gap-20 md:text-left">
         <div className="md:flex-1">
