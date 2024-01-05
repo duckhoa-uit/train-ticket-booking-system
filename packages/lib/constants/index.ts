@@ -29,6 +29,11 @@ export { ErrorCode } from "./error-code";
 
 export { INITIAL_STATIONS } from "./stations";
 
-export { timeRangeRegex, identificationRegex, vietnamesePhoneNumberRegex } from "./regex";
+export {
+  timeRangeRegex,
+  identificationRegex,
+  vietnamesePhoneNumberRegex,
+  transactionMessageRegex,
+} from "./regex";
 
 export { booleanParamSchema } from "./zod";

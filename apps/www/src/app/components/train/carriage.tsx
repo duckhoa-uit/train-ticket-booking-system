@@ -32,10 +32,16 @@ export const CarriageWithSeats = ({ carriage, tripId, price }: CarriageWithSeats
   const numOfRows = Math.round((carriage.seatsPerCabin * numOfCabins) / seatsPerRow);
 
   const { data: seatsAsObject = {} } = useQuery({
-    queryKey: ["seats", tripId, carriage],
+    queryKey: ["seats", tripId, carriage, departStationId, arrivalStationId],
     queryFn: async () => {
+      const searchParams = new URLSearchParams({
+        arrivalStationId: `${arrivalStationId}`,
+        departStationId: `${departStationId}`,
+        carriageId: `${carriage?.id}`,
+      });
+
       const res = await get(
-        `${env.NEXT_PUBLIC_API_BASE_URI}/api/trips/${tripId}/carriages/${carriage?.id}/seats`
+        `${env.NEXT_PUBLIC_API_BASE_URI}/api/trips/${tripId}/seats?${searchParams.toString()}`
       );
       const seats = res.data as Seat[];
       return seats.reduce<Record<number, Seat>>(

@@ -295,7 +295,7 @@ model Pricing {
 }
 
 model Ticket {
-  id                 Int          @id @default(autoincrement())
+  id                 String       @id @default(cuid())
   orderId            Int
   order              Order        @relation(fields: [orderId], references: [id], onDelete: Cascade)
   seatId             Int
@@ -308,16 +308,32 @@ model Ticket {
   userName           String
   userIdentification String
 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   @@map("tickets")
 }
 
+enum PaymentStatus {
+  PENDING
+  PAID
+  REFUNDED
+  PROCESSING
+  CANCELED
+}
+
 model Order {
-  id                  Int      @id @default(autoincrement())
+  id                  Int           @id @default(autoincrement())
   tickets             Ticket[]
   buyerName           String
   buyerIdentification String
   buyerPhone          String
   buyerEmail          String
+  paymentStatus       PaymentStatus @default(PENDING)
+  amount              Int
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@map("orders")
 }

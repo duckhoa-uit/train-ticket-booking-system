@@ -1,20 +1,34 @@
 "use client";
 
+import { usePathname, useRouter } from "next/navigation";
 import React from "react";
 
+import { useCompatSearchParams, useTypedQuery } from "@ttbs/lib";
 import { WizardForm } from "@ttbs/ui";
 import { Card, CardContent } from "@ttbs/ui";
 
+import OrderSummary from "../components/order-summary";
+import ConfirmOrderInformation from "./confirm-order-information";
 import OrderForm from "./order-form";
+import OrderPayment from "./payment";
+import { orderCheckoutQuerySchema } from "./query-schema";
 import { useSetStep } from "./use-set-step";
 
 const Checkout = () => {
+  const searchParams = useCompatSearchParams();
+  const router = useRouter();
+  const pathname = usePathname();
+
   const setStep = useSetStep();
+
+  const {
+    data: { orderId },
+  } = useTypedQuery(orderCheckoutQuerySchema);
 
   const steps: React.ComponentProps<typeof WizardForm>["steps"] = [
     {
-      title: "Thông tin đơn hàng",
-      description: "Nhập thông tin hành khách cho từng vé và người mua ",
+      title: "Thông tin đặt vé",
+      description: "Nhập thông tin hành khách",
       content: (setIsLoading) => (
         <OrderForm
           id="wizard-step-1"
@@ -31,12 +45,18 @@ const Checkout = () => {
       description: "Kiểm tra thông tin trước khi thanh toán",
       content: (setIsLoading) => {
         return (
-          <OrderForm
+          <ConfirmOrderInformation
             id="wizard-step-2"
             name="wizard-step-2"
             onSubmit={() => {
               setIsLoading(true);
-              setStep(3);
+            }}
+            onSuccess={(order) => {
+              const _searchParams = new URLSearchParams(searchParams ?? undefined);
+              _searchParams.set("orderId", order.id.toString());
+              _searchParams.set("step", "3");
+
+              router.replace(`${pathname}?${_searchParams.toString()}`);
             }}
           />
         );
@@ -44,15 +64,21 @@ const Checkout = () => {
     },
     {
       title: "Thanh toán",
-      description: "Thanh toán đơn hàng bằng cách chuyển khoản hoặc trả sau",
+      description: "Mở App Ngân hàng bất kỳ để quét mã QR hoặc chuyển khoản chính xác nội dung bên dưới",
+      hidePrev: true,
       content: (setIsLoading) => {
         return (
-          <OrderForm
+          <OrderPayment
             id="wizard-step-3"
             name="wizard-step-3"
             onSubmit={() => {
               setIsLoading(true);
+            }}
+            onSuccess={() => {
               setStep(4);
+            }}
+            onError={() => {
+              setIsLoading(false);
             }}
           />
         );
@@ -60,15 +86,17 @@ const Checkout = () => {
     },
     {
       title: "Hoàn tất",
-      description: "",
+      description: "Giao dịch hoàn tất",
+      hidePrev: true,
       content: (setIsLoading) => {
         return (
-          <OrderForm
+          <OrderSummary
             id="wizard-step-4"
             name="wizard-step-4"
+            orderId={orderId}
             onSubmit={() => {
               setIsLoading(true);
-              setStep(5);
+              router.replace("/");
             }}
           />
         );

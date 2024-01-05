@@ -1,11 +1,14 @@
 import { z } from "zod";
 
+import { PaymentStatus } from "@ttbs/prisma";
+
 export const orderCreateSchema = z.object({
   body: z.object({
     buyerName: z.string(),
     buyerIdentification: z.string(),
     buyerPhone: z.string(),
     buyerEmail: z.string(),
+    amount: z.number(),
     tickets: z.array(
       z.object({
         seatId: z.number(),
@@ -42,6 +45,7 @@ export const orderUpdateSchema = z.object({
           userIdentification: z.string(),
         })
       ),
+      paymentStatus: z.nativeEnum(PaymentStatus),
     })
     .partial(),
 });

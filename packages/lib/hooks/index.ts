@@ -9,3 +9,5 @@ export * from "./use-debounce";
 
 export { useArray } from "./use-array";
 export type { UseArray, UseArrayActions } from "./use-array";
+
+export { useCopyToClipboard } from "./use-copy";

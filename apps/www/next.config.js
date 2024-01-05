@@ -1,10 +1,18 @@
-const {
-  withHydrationOverlay,
-} = require("@builder.io/react-hydration-overlay/next");
+const { withHydrationOverlay } = require("@builder.io/react-hydration-overlay/next");
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   transpilePackages: ["@ttbs/lib", "@ttbs/ui", "@ttbs/i18n"],
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "api.vietqr.io",
+        port: "",
+        pathname: "/image/**",
+      },
+    ],
+  },
 };
 
 // module.exports = nextConfig;

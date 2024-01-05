@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-imports */
 import { zodResolver } from "@hookform/resolvers/zod";
 import React from "react";
 import { useForm } from "react-hook-form";
@@ -50,7 +51,7 @@ const orderFormSchema = z.object({
   buyerName: z.string().min(5, "Độ dài tên quá ngắn"),
   buyerIdentification: z.string().regex(identificationRegex, "Mã không hợp lệ"),
   buyerPhone: z.string().regex(vietnamesePhoneNumberRegex, "Số điện thoại không hợp lệ"),
-  buyerEmail: z.string().email().or(z.literal("")),
+  buyerEmail: z.string().email("Email không đúng format"),
   tickets: z.array(
     z.object({
       seatId: z.number(),
@@ -66,7 +67,7 @@ const orderFormSchema = z.object({
   }),
 });
 
-type OrderFormValues = z.infer<typeof orderFormSchema>;
+export type OrderFormValues = z.infer<typeof orderFormSchema>;
 
 const OrderForm = (
   props: { onSubmit: () => void } & Omit<JSX.IntrinsicElements["form"], "onSubmit" | "ref">
@@ -95,10 +96,8 @@ const OrderForm = (
     },
     resolver: zodResolver(orderFormSchema),
   });
-  const handleSubmit = (values: OrderFormValues) => {
-    console.log("🚀 ~ file: checkout-input.tsx:204 ~ handleSubmit ~ values:", values);
-    onSubmit();
 
+  const handleSubmit = (values: OrderFormValues) => {
     setBuyer({
       email: values.buyerEmail ?? "",
       identification: values.buyerIdentification,
@@ -109,6 +108,8 @@ const OrderForm = (
     values.tickets.forEach((ticket) => {
       modifyById(ticket.seatId, ticket);
     });
+
+    onSubmit();
   };
 
   return (
@@ -247,9 +248,11 @@ const OrderForm = (
                 name="buyerEmail"
                 render={({ field }) => (
                   <FormItem className="w-full">
-                    <FormLabel className="mt-2">Email</FormLabel>
+                    <FormLabel className="mt-2">
+                      Email<span className="text-error ml-1 font-medium">*</span>
+                    </FormLabel>
                     <FormControl>
-                      <TextField {...field} labelSrOnly placeholder="Email" />
+                      <TextField {...field} required labelSrOnly placeholder="Email" />
                     </FormControl>
                   </FormItem>
                 )}

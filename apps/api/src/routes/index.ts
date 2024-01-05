@@ -13,6 +13,7 @@ import { trainRouter } from "./train.router";
 import { tripRouter } from "./trip.router";
 import { tripTimelineRouter } from "./tripTimeline.router";
 import { userRouter } from "./user.router";
+import { webhookRouter } from "./webhook.router";
 
 export const indexRouter = Router();
 
@@ -29,3 +30,4 @@ indexRouter.use("/trips", tripRouter);
 indexRouter.use("/trip-timelines", tripTimelineRouter);
 indexRouter.use("/search", searchRouter);
 indexRouter.use("/orders", orderRouter);
+indexRouter.use("/webhooks", webhookRouter);

@@ -4,7 +4,7 @@ import type { Prisma } from "@ttbs/prisma";
 import { OrderCreateInput, OrderUpdateInput } from "@/schemas/order.schema";
 
 export const createOrder = async (
-  input: Omit<OrderCreateInput, "tickets"> & {
+  input: Omit<OrderCreateInput, "tickets" | "payment"> & {
     tickets: Prisma.TicketCreateManyOrderInput[];
   }
 ) => {
@@ -14,6 +14,7 @@ export const createOrder = async (
       buyerIdentification: input.buyerIdentification,
       buyerPhone: input.buyerPhone,
       buyerEmail: input.buyerEmail,
+      amount: input.amount,
       tickets: {
         createMany: {
           data: input.tickets.map((ticket) => ({
@@ -42,7 +43,38 @@ export const getOrderByID = async (id: number) => {
   return await prisma.order.findUnique({
     where: { id },
     include: {
-      tickets: true,
+      tickets: {
+        include: {
+          fromTineline: {
+            include: {
+              journeyStation: {
+                include: {
+                  station: true,
+                },
+              },
+            },
+          },
+          toTineline: {
+            include: {
+              journeyStation: {
+                include: {
+                  station: true,
+                },
+              },
+            },
+          },
+          seat: {
+            include: {
+              carriage: {
+                include: {
+                  train: true,
+                  seatType: true,
+                },
+              },
+            },
+          },
+        },
+      },
     },
   });
 };
@@ -60,6 +92,7 @@ export const updateOrder = async (id: number, input: OrderUpdateInput) => {
       buyerIdentification: input.buyerIdentification,
       buyerPhone: input.buyerPhone,
       buyerEmail: input.buyerEmail,
+      paymentStatus: input.paymentStatus,
     },
   });
 };

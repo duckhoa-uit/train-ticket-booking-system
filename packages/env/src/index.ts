@@ -25,6 +25,10 @@ export const env = createEnv({
     REDIS_PORT: envNumberSchema,
 
     RESEND_API_KEY: z.string(),
+
+    // PAYOS_CLIENT_ID: z.string(),
+    // PAYOS_API_KEY: z.string(),
+    // PAYOS_CHECKSUM_KEY: z.string(),
   },
   clientPrefix: "NEXT_PUBLIC_",
   client: {
@@ -45,6 +49,10 @@ export const env = createEnv({
     REDIS_PORT: process.env["REDIS_PORT"],
 
     RESEND_API_KEY: process.env["RESEND_API_KEY"],
+
+    // PAYOS_CLIENT_ID: process.env["PAYOS_CLIENT_ID"],
+    // PAYOS_API_KEY: process.env["PAYOS_API_KEY"],
+    // PAYOS_CHECKSUM_KEY: process.env["PAYOS_CHECKSUM_KEY"],
   },
   skipValidation: !!process.env["SKIP_ENV_VALIDATION"],
 });

@@ -20,6 +20,7 @@ export const createOrderHandler = async (
 ) => {
   try {
     const { body: reqBody } = orderCreateSchema.parse(req);
+    console.log("🚀 ~ file: order.controller.ts:25 ~ reqBody:", reqBody);
     const { tickets, ...bodyWithoutTickets } = reqBody;
 
     const modifiedTickets = await Promise.all(
@@ -43,8 +44,31 @@ export const createOrderHandler = async (
     );
 
     const newOrder = await createOrder({ ...bodyWithoutTickets, tickets: modifiedTickets });
-    return res.status(201).json({ status: "success", data: newOrder });
+
+    // const _body: CheckoutRequestType = {
+    //   orderCode: newOrder.id,
+    //   amount: newOrder.amount,
+    //   // TODO: modify when using discount
+    //   description: `Pay order has id: ${newOrder.id}`,
+    //   cancelUrl,
+    //   returnUrl,
+    //   items: modifiedTickets.map((t) => ({
+    //     quantity: 1,
+    //     price: t.amount,
+    //     name: `Ticket ID: ${t.id}`,
+    //   })),
+    //   buyerName: newOrder.buyerName,
+    //   buyerEmail: newOrder.buyerEmail,
+    //   buyerPhone: newOrder.buyerPhone,
+    // };
+    // const paymentLinkRes = await payOS.createPaymentLink(body);
+
+    return res.status(201).json({
+      status: "success",
+      data: newOrder,
+    });
   } catch (error) {
+    console.log("🚀 ~ file: order.controller.ts:80 ~ error:", error);
     return next(error);
   }
 };
@@ -67,7 +91,55 @@ export const getOrderById = async (
     const OrderID = Number(req.params.id);
 
     const order = await getOrderByID(OrderID);
-    return res.status(200).json({ status: "success", data: order });
+    if (!order) throw new AppError(404, "Invalid order id");
+
+    const { tickets, ...orderWithoutTickets } = order;
+    const modifiedTickets = tickets.map(({ seat, fromTineline, toTineline, ...ticket }) => {
+      const { carriage } = seat;
+      const { seatType, train } = carriage;
+
+      const {
+        journeyStation: { station: fromStation },
+      } = fromTineline;
+      const {
+        journeyStation: { station: toStation },
+      } = toTineline;
+
+      return {
+        ...ticket,
+        seat,
+        carriage,
+        train,
+        seatType,
+        fromTineline,
+        fromStation,
+        toTineline,
+        toStation,
+      };
+    });
+    return res.status(200).json({
+      status: "success",
+      data: {
+        ...orderWithoutTickets,
+        tickets: modifiedTickets,
+      },
+    });
+  } catch (error) {
+    return next(error);
+  }
+};
+export const getOrderPaymentStatus = async (
+  req: Request<OrderIdParamInput, {}, {}>,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const OrderID = Number(req.params.id);
+
+    const order = await getOrderByID(OrderID);
+    if (!order) throw new AppError(404, "Invalid order id");
+
+    return res.status(200).json({ status: "success", data: order.paymentStatus });
   } catch (error) {
     return next(error);
   }

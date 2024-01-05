@@ -58,6 +58,9 @@ importers:
 
   apps/api:
     dependencies:
+      '@payos/node':
+        specifier: ^1.0.5
+        version: 1.0.5
       '@t3-oss/env-core':
         specifier: ^0.7.1
         version: 0.7.1(typescript@5.2.2)(zod@3.22.4)
@@ -2975,6 +2978,15 @@ packages:
 
   /@panva/hkdf@1.1.1:
     resolution: {integrity: sha512-dhPeilub1NuIG0X5Kvhh9lH4iW3ZsHlnzwgwbOlgwQ2wG1IqFzsgHqmKPk3WzsdWAeaxKJxgM0+W433RmN45GA==}
+    dev: false
+
+  /@payos/node@1.0.5:
+    resolution: {integrity: sha512-d5EuHrsnKn7HKH8U9/rgtu7Xu0JLNpdd7HlxG+ILVQBcorn94biuSTzJUe0/LaRrnBEmLOUWW5iVeHaZ1LfKig==}
+    dependencies:
+      axios: 1.6.0
+      crypto: 1.0.1
+    transitivePeerDependencies:
+      - debug
     dev: false
 
   /@pkgjs/parseargs@0.11.0:
@@ -7263,6 +7275,11 @@ packages:
       path-key: 3.1.1
       shebang-command: 2.0.0
       which: 2.0.2
+
+  /crypto@1.0.1:
+    resolution: {integrity: sha512-VxBKmeNcqQdiUQUW2Tzq0t377b54N2bMtXO/qiLa+6eRRmmC4qT3D4OnTGoT/U6O9aklQ/jTwbOtRMTTY8G0Ig==}
+    deprecated: This package is no longer supported. It's now a built-in Node module. If you've depended on crypto, you should switch to the one that's built-in.
+    dev: false
 
   /cssbeautify@0.3.1:
     resolution: {integrity: sha512-ljnSOCOiMbklF+dwPbpooyB78foId02vUrTDogWzu6ca2DCNB7Kc/BHEGBnYOlUYtwXvSW0mWTwaiO2pwFIoRg==}

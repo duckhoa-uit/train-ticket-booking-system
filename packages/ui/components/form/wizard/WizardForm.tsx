@@ -20,6 +20,12 @@ import { Button, Steps } from "../../..";
 /* eslint-disable no-restricted-imports */
 // eslint-disable-next-line no-restricted-imports
 
+/* eslint-disable no-restricted-imports */
+// eslint-disable-next-line no-restricted-imports
+
+/* eslint-disable no-restricted-imports */
+// eslint-disable-next-line no-restricted-imports
+
 type DefaultStep = {
   title: string;
   containerClassname?: string;
@@ -28,6 +34,7 @@ type DefaultStep = {
   content?: ((setIsLoading: Dispatch<SetStateAction<boolean>>) => JSX.Element) | JSX.Element;
   isEnabled?: boolean;
   isLoading?: boolean;
+  hidePrev?: boolean;
 };
 
 function WizardForm<T extends DefaultStep>(props: {
@@ -83,7 +90,7 @@ function WizardForm<T extends DefaultStep>(props: {
         </div>
         {!props.disableNavigation && (
           <div className="flex justify-end px-4 py-4 print:hidden sm:px-6">
-            {step > 1 && (
+            {step > 1 && !currentStep.hidePrev && (
               <Button
                 color="secondary"
                 onClick={() => {

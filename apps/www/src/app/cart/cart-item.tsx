@@ -67,7 +67,9 @@ export const SelectedSeatText = ({ seat, className }: CartItemProps & { classNam
     <div className={cn("flex flex-col items-start", className)}>
       <p>{`${seatFullData.train.code} ${fromStation.name}-${toStation.name}`}</p>
       {seatFullData.departTime ? <p>{dayjs(seatFullData.departTime).format("L HH:mm")}</p> : null}
-      {seatFullData.carriage ? <p>{`${seatFullData.carriage.name}, chỗ ${seatFullData.order}`}</p> : null}
+      {seatFullData.carriage ? (
+        <p>{`${seatFullData.carriage.name}, chỗ ${seatFullData.order} ${seatFullData.seatType.name}`}</p>
+      ) : null}
     </div>
   ) : (
     <SkeletonText />
