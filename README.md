@@ -80,7 +80,6 @@ Learn more about the power of Turborepo:
 - [Configuration Options](https://turbo.build/repo/docs/reference/configuration)
 - [CLI Usage](https://turbo.build/repo/docs/reference/command-line-reference)
 
-
 ## Giới thiệu thành viên
 
 - 19520646 Võ Hoàng Đức Khoa
@@ -98,7 +97,7 @@ a. Lý do nên sử dụng ReactJS
 - Component-Based Architecture: React sử dụng cấu trúc dựa trên các thành phần (component), giúp phát triển ứng dụng trở nên linh hoạt và dễ tái sử dụng code.
 - Virtual DOM: React tạo ra một DOM ảo (Virtual DOM), cho phép ứng dụng cập nhật hiệu quả và nhanh chóng mà không cần tái tải toàn bộ trang.
 - Hỗ trợ Lớn từ Cộng đồng: Với cộng đồng lớn, React có nhiều tài nguyên học tập, thư viện bổ trợ và công cụ phát triển.
-Tối ưu cho Hiệu suất: Kỹ thuật so sánh và cập nhật thông minh giúp tăng hiệu suất ứng dụng.
+  Tối ưu cho Hiệu suất: Kỹ thuật so sánh và cập nhật thông minh giúp tăng hiệu suất ứng dụng.
 - JSX: JSX là cú pháp mở rộng cho JavaScript, giúp viết code giao diện trở nên dễ dàng và rõ ràng hơn.
 - Tích hợp Linh hoạt: React có thể tích hợp với nhiều framework và thư viện khác như Redux, React Router,...
 
@@ -109,9 +108,9 @@ b. Điểm mạnh
 - Cộng đồng lớn và Hhỗ trợ mạnh mẽ: Có rất nhiều tài liệu, hướng dẫn và nguồn lực hỗ trợ từ cộng đồng.
 - Cải tiến liên tục: React liên tục được cập nhật và cải tiến, theo kịp với xu hướng công nghệ mới.
 - Tương thích ngược: Facebook chú trọng đến việc đảm bảo tương thích ngược cho các phiên bản mới của React.
-c. Điểm yếu
+  c. Điểm yếu
 
-- Chỉ là Thư viện, Không phải Framework: React chỉ là một thư viện chuyên về giao diện, không phải là một framework toàn diện; do  đó, cần sự hỗ trợ từ các thư viện khác.
+- Chỉ là Thư viện, Không phải Framework: React chỉ là một thư viện chuyên về giao diện, không phải là một framework toàn diện; do đó, cần sự hỗ trợ từ các thư viện khác.
 - Học JSX có thể Khó khăn: Việc học JSX có thể gây khó khăn cho những người mới làm quen với React.
 - Cập nhật Liên tục: Những cập nhật thường xuyên đôi khi làm cho việc theo kịp với công nghệ trở nên khó khăn.
 - Quản lý Trạng thái: Trong các ứng dụng lớn, việc quản lý trạng thái có thể trở nên phức tạp và đòi hỏi các thư viện bổ trợ như Redux.
@@ -128,7 +127,7 @@ a. Lý do nên sử dụng Next.js
 - Tích hợp dễ dàng với React: Next.js được xây dựng trên nền tảng React, giúp tích hợp với các thành phần React hiện có một cách mượt mà.
 - Tích hợp API Routes: Cung cấp API Routes để xây dựng các API một cách dễ dàng và có thể được tích hợp trực tiếp vào ứng dụng Next.js.
 - Cộng đồng và Hỗ trợ: Next.js có một cộng đồng lớn và đội ngũ phát triển đằng sau được hỗ trợ chặt chẽ.
-b. Điểm mạnh
+  b. Điểm mạnh
 
 - Hiệu suất Cao: SSR và SSG giúp giảm thời gian tải trang, cải thiện trải nghiệm người dùng và tối ưu hóa SEO.
 - Dễ Dàng Tích Hợp với API: Có thể tích hợp dễ dàng với các API bằng cách sử dụng API Routes, làm cho việc xây dựng và quản lý ứng dụng hoạt động trơn tru và hiệu quả.
@@ -196,7 +195,7 @@ d. Điểm yếu
 - Cần Cập Nhật Kiểu Dữ Liệu cho Các Thư viện Bên Ngoài: Một số thư viện JavaScript có thể không có kiểu dữ liệu TypeScript sẵn có, yêu cầu phải tự định nghĩa hoặc tìm kiếm kiểu dữ liệu từ cộng đồng.
 - Khả Năng Tương Thích Ngược: Trong một số trường hợp, việc tích hợp TypeScript
 
-5.PostgreSQL
+  5.PostgreSQL
 
 a. Giới thiệu
 
@@ -253,7 +252,7 @@ d. Điểm yếu của Docker:
 
 7. Prisma
 
-a. Giới thiệu Prisma: 
+a. Giới thiệu Prisma:
 
 Prisma là một ORM (Object-Relational Mapping) tiên tiến cho TypeScript và JavaScript. Nó giúp các nhà phát triển dễ dàng truy vấn cơ sở dữ liệu bằng cách sử dụng cú pháp trực quan và mạnh mẽ. Prisma hoạt động như một lớp trừu tượng giữa cơ sở dữ liệu và mã ứng dụng, cung cấp khả năng tự động tạo ra các truy vấn cơ sở dữ liệu tối ưu từ code.
 
@@ -283,7 +282,7 @@ d. Điểm yếu của Prisma:
 
 Kickbox là một dịch vụ kiểm tra và xác thực địa chỉ email trực tuyến. Nó cung cấp API để kiểm tra tính hợp lệ của địa chỉ email và xác minh tính tồn tại của chúng trong thời gian thực.
 
-a. Tại sao nên sử dụng Kickbox: 
+a. Tại sao nên sử dụng Kickbox:
 
 - Việc sử dụng Kickbox có thể hữu ích trong việc duy trì danh sách địa chỉ email chất lượng và giúp tăng cường hiệu suất của chiến dịch marketing qua email, đảm bảo rằng thông tin được gửi đi đến đúng và có tính khả thi.
 
@@ -301,14 +300,13 @@ c. Điểm yếu:
 
 - Phụ thuộc vào hệ thống bên ngoài: Tính năng và độ tin cậy của dịch vụ có thể phụ thuộc vào việc kết nối với các hệ thống email khác, do đó có thể bị ảnh hưởng nếu có sự cố từ phía hệ thống này.
 
-
 ## Tính năng
 
 - Quản lý tàu hỏa
 
 - Quản lý toa tàu
 
-- Quản lý ghế 
+- Quản lý ghế
 
 - Quản lý loại ghế
 
@@ -332,8 +330,4 @@ Bước 4: pnpm dev:api (Back-end)
 
 Bước 5: pnpm dev (Front-end)
 
-* Database: pnpm db-studio
-
-
-
-
+- Database: pnpm db-studio
