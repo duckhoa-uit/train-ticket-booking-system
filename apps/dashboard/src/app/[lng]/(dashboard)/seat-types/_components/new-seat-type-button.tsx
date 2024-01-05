@@ -32,24 +32,35 @@ const newSeatTypeFormSchema = z.object({
 
 export type NewSeatTypeFormValues = z.infer<typeof newSeatTypeFormSchema>;
 
-export function NewSeatTypeButton({ name = "new-seat-type" }: { name?: string }) {
+export function NewSeatTypeButton({
+  name = "new-seat-type",
+}: {
+  name?: string;
+}) {
   const [open, setOpen] = useState(false);
 
   const { t } = useClientTranslation();
   const queryClient = useQueryClient();
 
-  const form = useForm<NewSeatTypeFormValues>({ resolver: zodResolver(newSeatTypeFormSchema) });
+  const form = useForm<NewSeatTypeFormValues>({
+    resolver: zodResolver(newSeatTypeFormSchema),
+  });
 
   const createMutation = useMutation({
     mutationFn: async (values: NewSeatTypeFormValues) => {
-      const res = await post(`${env.NEXT_PUBLIC_API_BASE_URI}/api/seat-types`, values);
+      const res = await post(
+        `${env.NEXT_PUBLIC_API_BASE_URI}/api/seat-types`,
+        values,
+      );
 
       if (res.error) {
         toast.error(res.error.message);
       } else {
         setOpen(false);
         queryClient.invalidateQueries({ queryKey: ["seat-types"] });
-        toast.success(t("seat_type_created_successfully", { seatType: res.data.name }));
+        toast.success(
+          t("seat_type_created_successfully", { seatType: res.data.name }),
+        );
       }
     },
     onError(err) {

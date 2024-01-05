@@ -34,7 +34,8 @@ export function SeatTypesTable({ data, pageCount }: SeatTypesTableProps) {
   const [selectedRowIds, setSelectedRowIds] = React.useState<number[]>([]);
 
   const deleteSeatTypesMutation = useMutation({
-    mutationFn: (id: number) => delete_(`${env.NEXT_PUBLIC_API_BASE_URI}/api/seat-types/${id}`),
+    mutationFn: (id: number) =>
+      delete_(`${env.NEXT_PUBLIC_API_BASE_URI}/api/seat-types/${id}`),
   });
 
   // Memoize the columns so they don't re-render on every render
@@ -47,7 +48,9 @@ export function SeatTypesTable({ data, pageCount }: SeatTypesTableProps) {
             checked={table.getIsAllPageRowsSelected()}
             onCheckedChange={(value) => {
               table.toggleAllPageRowsSelected(!!value);
-              setSelectedRowIds((prev) => (prev.length === data.length ? [] : data.map((row) => row.id)));
+              setSelectedRowIds((prev) =>
+                prev.length === data.length ? [] : data.map((row) => row.id),
+              );
             }}
             aria-label="Select all"
             className="translate-y-[2px]"
@@ -59,7 +62,9 @@ export function SeatTypesTable({ data, pageCount }: SeatTypesTableProps) {
             onCheckedChange={(value) => {
               row.toggleSelected(!!value);
               setSelectedRowIds((prev) =>
-                value ? [...prev, row.original.id] : prev.filter((id) => id !== row.original.id)
+                value
+                  ? [...prev, row.original.id]
+                  : prev.filter((id) => id !== row.original.id),
               );
             }}
             aria-label="Select row"
@@ -71,30 +76,42 @@ export function SeatTypesTable({ data, pageCount }: SeatTypesTableProps) {
       },
       {
         accessorKey: "id",
-        header: ({ column }) => <DataTableColumnHeader column={column} title="ID" />,
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} title="ID" />
+        ),
         cell: ({ row }) => <div className="w-[80px]">{row.getValue("id")}</div>,
         enableSorting: false,
         enableHiding: false,
       },
       {
         accessorKey: "name",
-        header: ({ column }) => <DataTableColumnHeader column={column} title="Name" />,
-        cell: ({ row }) => <div className="w-[160px]">{row.getValue("name")}</div>,
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} title="Name" />
+        ),
+        cell: ({ row }) => (
+          <div className="w-[160px]">{row.getValue("name")}</div>
+        ),
         enableSorting: false,
         enableHiding: false,
       },
       {
         accessorKey: "floors",
-        header: ({ column }) => <DataTableColumnHeader column={column} title="Num Of. Floors" />,
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} title="Num Of. Floors" />
+        ),
         cell: ({ row }) => (
-          <span className="max-w-[500px] truncate text-center font-medium">{row.getValue("floors")}</span>
+          <span className="max-w-[500px] truncate text-center font-medium">
+            {row.getValue("floors")}
+          </span>
         ),
         enableSorting: false,
         enableHiding: false,
       },
       {
         accessorKey: "seatsPerRow",
-        header: ({ column }) => <DataTableColumnHeader column={column} title="Seats per Row" />,
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} title="Seats per Row" />
+        ),
         cell: ({ row }) => (
           <span className="max-w-[500px] truncate text-center font-medium">
             {row.getValue("seatsPerRow")}
@@ -127,14 +144,20 @@ export function SeatTypesTable({ data, pageCount }: SeatTypesTableProps) {
                   startTransition(() => {
                     row.toggleSelected(false);
 
-                    toast.promise(deleteSeatTypesMutation.mutateAsync(row.original.id), {
-                      loading: "Deleting...",
-                      success: () => "Seat type deleted successfully.",
-                      error: (err: unknown) => {
-                        console.log("🚀 ~ file: stations-table.tsx:128 ~ toast.promise ~ err:", err);
-                        return "Something has error";
+                    toast.promise(
+                      deleteSeatTypesMutation.mutateAsync(row.original.id),
+                      {
+                        loading: "Deleting...",
+                        success: () => "Seat type deleted successfully.",
+                        error: (err: unknown) => {
+                          console.log(
+                            "🚀 ~ file: stations-table.tsx:128 ~ toast.promise ~ err:",
+                            err,
+                          );
+                          return "Something has error";
+                        },
                       },
-                    });
+                    );
                   });
                 }}
               >
@@ -145,22 +168,30 @@ export function SeatTypesTable({ data, pageCount }: SeatTypesTableProps) {
         ),
       },
     ],
-    [data, isPending]
+    [data, isPending],
   );
 
   function deleteSelectedRows() {
-    toast.promise(Promise.all(selectedRowIds.map((id) => deleteSeatTypesMutation.mutateAsync(id))), {
-      loading: "Deleting...",
-      success: () => {
-        setSelectedRowIds([]);
-        return "Stations deleted successfully.";
+    toast.promise(
+      Promise.all(
+        selectedRowIds.map((id) => deleteSeatTypesMutation.mutateAsync(id)),
+      ),
+      {
+        loading: "Deleting...",
+        success: () => {
+          setSelectedRowIds([]);
+          return "Stations deleted successfully.";
+        },
+        error: (err: unknown) => {
+          console.log(
+            "🚀 ~ file: stations-table.tsx:151 ~ toast.promise ~ err:",
+            err,
+          );
+          setSelectedRowIds([]);
+          return "Something has error.";
+        },
       },
-      error: (err: unknown) => {
-        console.log("🚀 ~ file: stations-table.tsx:151 ~ toast.promise ~ err:", err);
-        setSelectedRowIds([]);
-        return "Something has error.";
-      },
-    });
+    );
   }
 
   return (
@@ -194,7 +225,10 @@ export function SeatTypesTable({ data, pageCount }: SeatTypesTableProps) {
       ]}
       // Render floating filters at the bottom of the table on column selection
       floatingBar={(table) => (
-        <SeatTypesTableFloatingBar table={table} deleteRowsAction={deleteSelectedRows} />
+        <SeatTypesTableFloatingBar
+          table={table}
+          deleteRowsAction={deleteSelectedRows}
+        />
       )}
     />
   );

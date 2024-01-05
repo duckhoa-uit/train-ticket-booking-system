@@ -6,7 +6,10 @@ import { Button } from "../button";
 import { Input } from "../form/inputs/TextField";
 import { X } from "../icons";
 import { DataTableFacetedFilter } from "./faceted-filter";
-import type { DataTableFilterableColumn, DataTableSearchableColumn } from "./types";
+import type {
+  DataTableFilterableColumn,
+  DataTableSearchableColumn,
+} from "./types";
 import { DataTableViewOptions } from "./view-options";
 
 interface DataTableToolbarProps<TData> {
@@ -32,11 +35,19 @@ export function DataTableToolbar<TData>({
                 <Input
                   key={String(column.id)}
                   placeholder={`Search ${column.title}...`}
-                  value={(table.getColumn(String(column.id))?.getFilterValue() as string) ?? ""}
-                  onChange={(event) => table.getColumn(String(column.id))?.setFilterValue(event.target.value)}
+                  value={
+                    (table
+                      .getColumn(String(column.id))
+                      ?.getFilterValue() as string) ?? ""
+                  }
+                  onChange={(event) =>
+                    table
+                      .getColumn(String(column.id))
+                      ?.setFilterValue(event.target.value)
+                  }
                   className="mb-0 w-[150px] lg:w-[250px]"
                 />
-              )
+              ),
           )}
         {filterableColumns.length > 0 &&
           filterableColumns.map(
@@ -48,7 +59,7 @@ export function DataTableToolbar<TData>({
                   title={column.title}
                   options={column.options}
                 />
-              )
+              ),
           )}
         {isFiltered && (
           <Button

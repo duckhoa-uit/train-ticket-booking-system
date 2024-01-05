@@ -21,7 +21,8 @@ export default function SeatTypes({ searchParams }: SeatTypesPageProps) {
 
   // Fallback page for invalid page numbers
   const pageAsNumber = Number(page);
-  const fallbackPage = isNaN(pageAsNumber) || pageAsNumber < 1 ? 1 : pageAsNumber;
+  const fallbackPage =
+    isNaN(pageAsNumber) || pageAsNumber < 1 ? 1 : pageAsNumber;
   // Number of items per page
   const perPageAsNumber = Number(per_page);
   const limit = isNaN(perPageAsNumber) ? 10 : perPageAsNumber;
@@ -30,10 +31,10 @@ export default function SeatTypes({ searchParams }: SeatTypesPageProps) {
   // Column and order to sort by
   // Spliting the sort string by "." to get the column and order
   // Example: "title.desc" => ["title", "desc"]
-  const [column, order] = (sort?.split(".") as [keyof Station | undefined, "asc" | "desc" | undefined]) ?? [
-    "title",
-    "desc",
-  ];
+  const [column, order] = (sort?.split(".") as [
+    keyof Station | undefined,
+    "asc" | "desc" | undefined,
+  ]) ?? ["title", "desc"];
 
   // const statuses = (status?.split(".") as Station["status"][]) ?? []
 
