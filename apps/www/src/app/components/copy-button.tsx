@@ -49,7 +49,6 @@ export function CopyButton({ text, disabled = false }: { text: string; disabled?
             }}
           />
           <Check
-            isVisible={copied}
             style={{
               // color: colors.green[5],
               position: "absolute",
