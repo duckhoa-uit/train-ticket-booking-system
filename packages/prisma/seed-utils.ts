@@ -33,7 +33,9 @@ export async function createUser({
     create: userData,
   });
 
-  console.log(`👤 Upserted '${user.username}' with email "${user.email}" & password "${user.password}".`);
+  console.log(
+    `👤 Upserted '${user.username}' with email "${user.email}" & password "${user.password}".`,
+  );
 
   return theUser;
 }
@@ -86,8 +88,10 @@ export async function createTrains() {
         },
       });
 
-      console.log(`🚂 Created train ${createdTrain.code} (${createdTrain.name})`);
-    })
+      console.log(
+        `🚂 Created train ${createdTrain.code} (${createdTrain.name})`,
+      );
+    }),
   );
 }
 
@@ -111,7 +115,7 @@ export async function createJourneys() {
       });
 
       console.log(`🚄 Created journey ${createdJourney.name}`);
-    })
+    }),
   );
 }
 
@@ -150,6 +154,6 @@ export async function createTrips() {
       });
 
       console.log(`🚂 Created trip ${createdTrip.name}`);
-    })
+    }),
   );
 }
