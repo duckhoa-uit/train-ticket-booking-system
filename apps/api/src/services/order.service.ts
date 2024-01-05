@@ -94,5 +94,29 @@ export const updateOrder = async (id: number, input: OrderUpdateInput) => {
       buyerEmail: input.buyerEmail,
       paymentStatus: input.paymentStatus,
     },
+    include: {
+      tickets: {
+        include: {
+          fromTineline: {
+            include: {
+              journeyStation: {
+                include: {
+                  station: true,
+                },
+              },
+            },
+          },
+          toTineline: {
+            include: {
+              journeyStation: {
+                include: {
+                  station: true,
+                },
+              },
+            },
+          },
+        },
+      },
+    },
   });
 };

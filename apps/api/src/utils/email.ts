@@ -4,7 +4,9 @@ import handlebars from "handlebars";
 import { Resend } from "resend";
 import { CreateEmailOptions } from "resend/build/src/emails/interfaces";
 
+import { env } from "@ttbs/env";
 import { WEBAPP_URL } from "@ttbs/lib/constants";
+import { Ticket } from "@ttbs/prisma";
 
 const EMAIL_TEMPLATE_BASE = config.get<string>("email.templatePath");
 const EMAIL_FROM_SUPPORT = config.get<string>("email.fromSupport");
@@ -51,13 +53,31 @@ export function forgotPasswordEmail({
     from: EMAIL_FROM_SUPPORT,
     to: [email],
     subject: `Reset your password`,
-    //text: template('forgot-password.txt', { name, email, action_url }),
     html: template("forgot-password.html", { name, email, action_url: url }),
   };
 }
 
+export function orderCompleteEmail({
+  name,
+  email,
+  tickets,
+  orderId,
+}: {
+  name: string;
+  email: string;
+  orderId: number | string;
+  tickets: Ticket[];
+}): CreateEmailOptions {
+  return {
+    from: EMAIL_FROM_SUPPORT,
+    to: [email],
+    subject: `Thông báo mua vé thành công`,
+    html: template("order-success.html", { name, orderId, tickets }),
+  };
+}
+
 // resetPswEmail, forgotPswEmail, etc.
-const resend = new Resend("re_123456789");
+const resend = new Resend(env.RESEND_API_KEY);
 
 export async function sendEmail(email: CreateEmailOptions) {
   try {
@@ -70,3 +90,10 @@ export async function sendEmail(email: CreateEmailOptions) {
 
 // Utility for plucking addresses from emails
 export const pluckAddresses = (emails: { address: string | null }[]) => emails.map((email) => email.address);
+
+export const validateEmailNotDisposable = async (mailHost: string) => {
+  const response = await fetch(`https://open.kickbox.com/v1/disposable/${mailHost}`);
+  const status = await response.json();
+
+  return status.disposable;
+};

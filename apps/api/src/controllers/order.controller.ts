@@ -12,6 +12,7 @@ import { createOrder, getAllOrders, getOrderByID, updateOrder } from "@/services
 import { getSeatByID } from "@/services/seat.service";
 import { getTripTimelineByStationId } from "@/services/tripTimeline.service";
 import AppError from "@/utils/app-error";
+import { validateEmailNotDisposable } from "@/utils/email";
 
 export const createOrderHandler = async (
   req: Request<{}, {}, OrderCreateInput>,
@@ -20,8 +21,10 @@ export const createOrderHandler = async (
 ) => {
   try {
     const { body: reqBody } = orderCreateSchema.parse(req);
-    console.log("🚀 ~ file: order.controller.ts:25 ~ reqBody:", reqBody);
     const { tickets, ...bodyWithoutTickets } = reqBody;
+
+    const invalidEmail = await validateEmailNotDisposable(reqBody.buyerEmail);
+    if (invalidEmail) throw new AppError(400, "Buyer email is not valid");
 
     const modifiedTickets = await Promise.all(
       tickets.map<Promise<Prisma.TicketCreateManyOrderInput>>(async (t) => {
@@ -44,24 +47,6 @@ export const createOrderHandler = async (
     );
 
     const newOrder = await createOrder({ ...bodyWithoutTickets, tickets: modifiedTickets });
-
-    // const _body: CheckoutRequestType = {
-    //   orderCode: newOrder.id,
-    //   amount: newOrder.amount,
-    //   // TODO: modify when using discount
-    //   description: `Pay order has id: ${newOrder.id}`,
-    //   cancelUrl,
-    //   returnUrl,
-    //   items: modifiedTickets.map((t) => ({
-    //     quantity: 1,
-    //     price: t.amount,
-    //     name: `Ticket ID: ${t.id}`,
-    //   })),
-    //   buyerName: newOrder.buyerName,
-    //   buyerEmail: newOrder.buyerEmail,
-    //   buyerPhone: newOrder.buyerPhone,
-    // };
-    // const paymentLinkRes = await payOS.createPaymentLink(body);
 
     return res.status(201).json({
       status: "success",
