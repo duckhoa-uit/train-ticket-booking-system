@@ -38,17 +38,28 @@ export const SeatButton = ({
   return (
     <Tooltip
       content={
-        status === "bought" ? "Đã bán" : !price ? "loading..." : `Giá: ${currencyFormatter.format(price)}`
+        status === "bought"
+          ? "Đã bán"
+          : !price
+            ? "loading..."
+            : `Giá: ${currencyFormatter.format(price)}`
       }
     >
       <Button
         color="secondary"
         variant="icon"
         disabled={status === "bought"}
-        className={cn("h-9 w-9", _selected && "bg-brand-default text-inverted hover:bg-brand-emphasis")}
+        className={cn(
+          "h-9 w-9",
+          _selected && "bg-brand-default text-inverted hover:bg-brand-emphasis",
+        )}
         onClick={onClick}
       >
-        {hideContent ? null : !seat ? <SkeletonText className="h-4 w-4" /> : <>{seat.order}</>}
+        {hideContent ? null : !seat ? (
+          <SkeletonText className="h-4 w-4" />
+        ) : (
+          <>{seat.order}</>
+        )}
       </Button>
     </Tooltip>
   );
