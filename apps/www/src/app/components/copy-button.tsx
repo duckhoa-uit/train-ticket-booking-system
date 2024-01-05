@@ -5,7 +5,13 @@ import { toast } from "sonner";
 import { useCopyToClipboard } from "@ttbs/lib";
 import { Button, Tooltip } from "@ttbs/ui";
 
-export function CopyButton({ text, disabled = false }: { text: string; disabled?: boolean }) {
+export function CopyButton({
+  text,
+  disabled = false,
+}: {
+  text: string;
+  disabled?: boolean;
+}) {
   const [_, copy] = useCopyToClipboard();
 
   const [copied, setCopied] = React.useState(false);
