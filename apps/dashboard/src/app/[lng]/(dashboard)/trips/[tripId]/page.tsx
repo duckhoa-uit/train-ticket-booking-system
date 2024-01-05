@@ -11,7 +11,14 @@ import { useClientTranslation } from "@ttbs/i18n";
 import dayjs from "@ttbs/lib/dayjs";
 import { HttpError } from "@ttbs/lib/http-error";
 import type { SeatType } from "@ttbs/prisma";
-import { Button, ConfirmationDialogContent, Dialog, DialogTrigger, Form, VerticalDivider } from "@ttbs/ui";
+import {
+  Button,
+  ConfirmationDialogContent,
+  Dialog,
+  DialogTrigger,
+  Form,
+  VerticalDivider,
+} from "@ttbs/ui";
 import { Trash } from "@ttbs/ui/components/icons";
 
 import EditableHeading from "@/components/editable-heading";
@@ -63,7 +70,9 @@ const TripDetailsPage = ({ params: { tripId } }: TripDetailsPageProps) => {
   } = useQuery({
     queryKey: ["trips", tripId],
     queryFn: async () => {
-      const res = await get(`${env.NEXT_PUBLIC_API_BASE_URI}/api/trips/${tripId}`);
+      const res = await get(
+        `${env.NEXT_PUBLIC_API_BASE_URI}/api/trips/${tripId}`,
+      );
       if (res.error) throw new Error(res.error);
 
       return res.data as TripItemDetailsApiResponse;
@@ -73,10 +82,17 @@ const TripDetailsPage = ({ params: { tripId } }: TripDetailsPageProps) => {
   const { data: selectedJourney } = useQuery({
     queryKey: ["journeys", trip?.journeyId],
     queryFn: async () => {
-      const res = await get(`${env.NEXT_PUBLIC_API_BASE_URI}/api/journeys/${trip?.journeyId}`);
+      const res = await get(
+        `${env.NEXT_PUBLIC_API_BASE_URI}/api/journeys/${trip?.journeyId}`,
+      );
       const journey = res.data as JourneyItemDetailsApiResponse;
 
-      return { ...journey, journeyStations: journey.journeyStations.sort((a, b) => a.order - b.order) };
+      return {
+        ...journey,
+        journeyStations: journey.journeyStations.sort(
+          (a, b) => a.order - b.order,
+        ),
+      };
     },
     enabled: !!trip,
   });
@@ -84,7 +100,9 @@ const TripDetailsPage = ({ params: { tripId } }: TripDetailsPageProps) => {
   const { data: selectedTrain } = useQuery({
     queryKey: ["trains", trip?.train.id],
     queryFn: async () => {
-      const res = await get(`${env.NEXT_PUBLIC_API_BASE_URI}/api/trains/${trip?.train.id}`);
+      const res = await get(
+        `${env.NEXT_PUBLIC_API_BASE_URI}/api/trains/${trip?.train.id}`,
+      );
       return res.data as TrainItemDetailsApiResponse;
     },
     enabled: !!trip,
@@ -100,7 +118,7 @@ const TripDetailsPage = ({ params: { tripId } }: TripDetailsPageProps) => {
             return prev;
           }, [])
         : [],
-    [selectedTrain]
+    [selectedTrain],
   );
 
   useEffect(() => {
@@ -115,7 +133,11 @@ const TripDetailsPage = ({ params: { tripId } }: TripDetailsPageProps) => {
       timelines: (trip.timelines || [])
         .sort((a, b) => a.journeyStation.order - b.journeyStation.order)
         .map((timeline, idx) => {
-          if (idx + 1 === trip.timelines.length || !selectedTrainSeatTypes.length || !selectedJourney)
+          if (
+            idx + 1 === trip.timelines.length ||
+            !selectedTrainSeatTypes.length ||
+            !selectedJourney
+          )
             return {
               arrivalDate: dayjs(timeline.arrivalDate).toDate(),
               departDate: dayjs(timeline.departDate).toDate(),
@@ -123,7 +145,8 @@ const TripDetailsPage = ({ params: { tripId } }: TripDetailsPageProps) => {
             };
 
           const prices = trip.pricings.filter(
-            (price) => price.departStationId === timeline.journeyStation.stationId
+            (price) =>
+              price.departStationId === timeline.journeyStation.stationId,
           );
 
           return {
@@ -138,7 +161,10 @@ const TripDetailsPage = ({ params: { tripId } }: TripDetailsPageProps) => {
 
   const updateMutation = useMutation({
     mutationFn: async (values: UpdateTripFormValues) => {
-      const res = await patch(`${env.NEXT_PUBLIC_API_BASE_URI}/api/trips/${tripId}`, values);
+      const res = await patch(
+        `${env.NEXT_PUBLIC_API_BASE_URI}/api/trips/${tripId}`,
+        values,
+      );
 
       if (res.error) {
         const respError = res.error as ResponseError;
@@ -161,7 +187,7 @@ const TripDetailsPage = ({ params: { tripId } }: TripDetailsPageProps) => {
         toast.success(
           t("trip_updated_successfully", {
             tripName: res.data.name,
-          })
+          }),
         );
       }
     },
@@ -175,7 +201,9 @@ const TripDetailsPage = ({ params: { tripId } }: TripDetailsPageProps) => {
 
   const deleteMutation = useMutation({
     mutationFn: async () => {
-      const res = await delete_(`${env.NEXT_PUBLIC_API_BASE_URI}/api/trips/${tripId}`);
+      const res = await delete_(
+        `${env.NEXT_PUBLIC_API_BASE_URI}/api/trips/${tripId}`,
+      );
       console.log("🚀 ~ file: page.tsx:53 ~ mutationFn: ~ res:", res);
 
       queryClient.invalidateQueries({ queryKey: ["trips"] });
@@ -204,7 +232,9 @@ const TripDetailsPage = ({ params: { tripId } }: TripDetailsPageProps) => {
         <Controller
           control={form.control}
           name="name"
-          render={({ field }) => <EditableHeading isReady={!isLoading} {...field} />}
+          render={({ field }) => (
+            <EditableHeading isReady={!isLoading} {...field} />
+          )}
         />
       }
       CTA={
