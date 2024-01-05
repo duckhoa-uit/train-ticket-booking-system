@@ -118,7 +118,7 @@ export async function createJourneys() {
 export async function createTrips() {
   return await Promise.all(
     INIT_TRIPS.map(async (trip) => {
-      const { name, journeyId, trainId, timelines } = trip;
+      const { name, journeyId, trainId, timelines, pricings } = trip;
 
       const createdTrip = await prisma.trip.create({
         data: {
@@ -133,6 +133,16 @@ export async function createTrips() {
                 journeyStationId: timeline.journeyStationId,
                 arrivalDate: new Date(`2024-01-01T0${index + 1}:00:00Z`),
                 departDate: new Date(`2024-01-01T0${index + 2}:00:00Z`),
+              })),
+            },
+          },
+          pricings: {
+            createMany: {
+              data: pricings.map((pricing) => ({
+                seatTypeId: pricing.seatTypeId,
+                departStationId: pricing.departStationId,
+                arrivalStationId: pricing.arrivalStationId,
+                amount: pricing.amount,
               })),
             },
           },

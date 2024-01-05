@@ -17,5 +17,19 @@ export const INIT_TRIPS = [
         journeyStationId: 4,
       },
     ],
+    pricings: [
+      {
+        seatTypeId: 1,
+        departStationId: 1,
+        arrivalStationId: 2,
+        amount: 1200000,
+      },
+      {
+        seatTypeId: 2,
+        departStationId: 1,
+        arrivalStationId: 2,
+        amount: 1800000,
+      },
+    ],
   },
 ] as const;
