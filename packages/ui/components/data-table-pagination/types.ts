@@ -13,7 +13,7 @@ export interface DataTableFilterOption<TData> {
 }
 
 export interface DataTableSearchableColumn<TData> {
-  id: keyof TData;
+  id: keyof TData | string;
   title: string;
 }
 

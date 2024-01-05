@@ -70,5 +70,6 @@
   "train_updated_successfully": "Train updated successfully",
   "train_created_successfully": "{{trainName}} train created successfully",
   "trips_page_title": "Trips",
-  "trip_stations": "Stations"
+  "trip_stations": "Stations",
+  "seat_types_page_title": "Seat Types"
 }

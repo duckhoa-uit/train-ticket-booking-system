@@ -124,7 +124,6 @@ const navigation: NavigationItemType[] = [
       {
         name: "stations_page_title",
         href: "/stations",
-        // icon: MapPin,
         isCurrent: ({ pathname: path, item }) => {
           return path?.includes(item.href);
         },
@@ -142,9 +141,25 @@ const navigation: NavigationItemType[] = [
     name: "trains_page_title",
     href: "/trains",
     icon: Train,
-    isCurrent: ({ pathname: path, item }) => {
-      return path?.includes(item.href);
+    isCurrent: ({ item }) => {
+      return item.href.startsWith("/seat-types") || item.href.startsWith("/trains");
     },
+    child: [
+      {
+        name: "seat_types_page_title",
+        href: "/seat-types",
+        isCurrent: ({ pathname: path, item }) => {
+          return path?.includes(item.href);
+        },
+      },
+      {
+        name: "trains_page_title",
+        href: "/trains",
+        isCurrent: ({ pathname: path, item }) => {
+          return path?.includes(item.href);
+        },
+      },
+    ],
   },
   {
     name: "trips_page_title",
@@ -229,7 +244,7 @@ const NavigationItem: React.FC<{
         >
           {item.icon && (
             <item.icon
-              className="mr-2 h-4 w-4 flex-shrink-0 rtl:ml-2 md:ltr:mx-auto lg:ltr:mr-2 [&[aria-current='page']]:text-inherit"
+              className="mr-2 h-4 w-4 flex-shrink-0 md:ltr:mx-auto lg:ltr:mr-2 rtl:ml-2 [&[aria-current='page']]:text-inherit"
               aria-hidden="true"
               aria-current={current ? "page" : undefined}
             />
@@ -351,7 +366,7 @@ function SideBar({}: SideBarProps) {
   ];
   return (
     <div className="relative">
-      <aside className="desktop-transparent bg-muted border-muted fixed left-0 hidden h-full max-h-screen w-14 flex-col overflow-y-auto overflow-x-hidden border-r dark:bg-gradient-to-tr dark:from-[#2a2a2a] dark:to-[#1c1c1c] md:sticky md:flex lg:w-56 lg:px-3">
+      <aside className="desktop-transparent bg-muted border-muted fixed left-0 hidden h-full max-h-screen w-14 flex-col overflow-y-auto overflow-x-hidden border-r md:sticky md:flex lg:w-56 lg:px-3 dark:bg-gradient-to-tr dark:from-[#2a2a2a] dark:to-[#1c1c1c]">
         <div className="flex h-full flex-col justify-between py-3 lg:pt-4">
           <header className="items-center justify-between md:hidden lg:flex">
             <div data-testid="user-dropdown-trigger">
@@ -464,11 +479,11 @@ export function ShellMain(props: LayoutProps) {
           {props.heading && (
             <header className={cn(props.large && "py-8", "flex w-full max-w-full items-center truncate")}>
               {props.HeadingLeftIcon && <div className="ltr:mr-4">{props.HeadingLeftIcon}</div>}
-              <div className={cn("w-full truncate ltr:mr-4 rtl:ml-4 md:block", props.headerClassName)}>
+              <div className={cn("w-full truncate md:block ltr:mr-4 rtl:ml-4", props.headerClassName)}>
                 {props.heading && (
                   <h3
                     className={cn(
-                      "font-cal max-w-28 sm:max-w-72 md:max-w-80 text-emphasis inline truncate text-lg font-semibold tracking-wide sm:text-xl md:block xl:max-w-full",
+                      "font-cal text-emphasis inline max-w-28 truncate text-lg font-semibold tracking-wide sm:max-w-72 sm:text-xl md:block md:max-w-80 xl:max-w-full",
                       props.smallHeading ? "text-base" : "text-xl",
                       props.hideHeadingOnMobile && "hidden"
                     )}
@@ -488,7 +503,7 @@ export function ShellMain(props: LayoutProps) {
                   className={cn(
                     props.backPath
                       ? "relative"
-                      : "pwa:bottom-24 fixed bottom-20 z-40 ltr:right-4 rtl:left-4 md:z-auto md:ltr:right-0 md:rtl:left-0",
+                      : "pwa:bottom-24 fixed bottom-20 z-40 md:z-auto ltr:right-4 md:ltr:right-0 rtl:left-4 md:rtl:left-0",
                     "flex-shrink-0 md:relative md:bottom-auto md:right-auto"
                   )}
                 >

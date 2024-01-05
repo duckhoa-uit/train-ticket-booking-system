@@ -1,13 +1,5 @@
 {
   "welcome_back": "Chào mừng trở lại",
-  "title": "vi Home",
-  "to-client-page": "vi To client page",
-  "to-second-page": "vi To second page",
-  "welcome": "vi Welcome to Next.js 13 <1>with the new app directory features</1> and i18next",
-  "blog": {
-    "text": "vi Check out the corresponding <1>blog post</1> describing this example.",
-    "link": "https://locize.com/blog/next-13-app-dir-i18n/"
-  },
   "new": "Tạo mới",
   "submit": "Nộp",
   "delete": "Xóa",
@@ -78,5 +70,17 @@
   "train_updated_successfully": "Tàu được cập nhật thành công",
   "train_created_successfully": "Tàu {{trainName}} được tạo thành công",
   "trips_page_title": "Chuyến đi",
-  "trip_stations": "Trạm"
+  "trip_stations": "Trạm",
+  "seat_types_page_title": "Loại ghế",
+  "seat_types_page_subtitle": "Xem/sửa xoá các loại chỗ trong hệ thống",
+  "seat_type_created_successfully": "Loại ghế {{seatType}} được tạo thành công",
+  "add_new_seat_type": "Tạo loại ghế",
+  "seat_type_name": "Tên loại ghế",
+  "default_seat_type_name": "Ghế mềm điều hoà",
+  "seat_type_floors": "Số tầng của loại chỗ",
+  "default_seat_type_floors": "1",
+  "seat_type_floors_hint": "Ghế ngồi -> 1, giường nằm -> tương ứng với số tầng",
+  "seat_type_seat_per_row": "Số ghế theo hàng ngang",
+  "default_seat_type_seat_per_row": "3",
+  "seat_type_seat_per_row_hint": "Giường nằm -> tương ứng với số tầng, ghế ngồi tương ứng với số ghế theo hàng ngang"
 }
