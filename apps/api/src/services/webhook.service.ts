@@ -6,7 +6,9 @@ import { orderCompleteEmail, sendEmail } from "@/utils/email";
 
 import { updateOrder } from "./order.service";
 
-export const confirmPayment = async (transaction: WebhookPaymentInput["payment"]) => {
+export const confirmPayment = async (
+  transaction: WebhookPaymentInput["payment"],
+) => {
   const message = transaction.content.match(transactionMessageRegex);
   if (message) {
     const orderId = +message[0].split(" ")[1];
@@ -34,7 +36,7 @@ export const confirmPayment = async (transaction: WebhookPaymentInput["payment"]
           orderId: updatedOrder.id,
           name: updatedOrder.buyerName,
           email: updatedOrder.buyerEmail,
-        })
+        }),
       );
       return true;
     }

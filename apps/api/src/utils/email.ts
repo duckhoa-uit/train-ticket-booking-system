@@ -89,10 +89,13 @@ export async function sendEmail(email: CreateEmailOptions) {
 }
 
 // Utility for plucking addresses from emails
-export const pluckAddresses = (emails: { address: string | null }[]) => emails.map((email) => email.address);
+export const pluckAddresses = (emails: { address: string | null }[]) =>
+  emails.map((email) => email.address);
 
 export const validateEmailNotDisposable = async (mailHost: string) => {
-  const response = await fetch(`https://open.kickbox.com/v1/disposable/${mailHost}`);
+  const response = await fetch(
+    `https://open.kickbox.com/v1/disposable/${mailHost}`,
+  );
   const status = await response.json();
 
   return status.disposable;
