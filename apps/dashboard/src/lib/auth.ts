@@ -11,10 +11,6 @@ import type { UserRole } from "@ttbs/prisma/enums";
 
 import { post } from "@/lib/common/fetch";
 
-function _isNumber(n: string) {
-  return !isNaN(parseFloat(n)) && !isNaN(+n);
-}
-
 const providers: Provider[] = [
   CredentialsProvider({
     id: "credentials",

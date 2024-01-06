@@ -11,6 +11,7 @@ import { useClientTranslation } from "@ttbs/i18n";
 import { cn } from "@ttbs/lib/cn";
 import type { SVGComponent } from "@ttbs/types/SVGComponent";
 import { Button, ButtonOrLink, Credits, SkeletonText, Tooltip } from "@ttbs/ui";
+import { BarChart3Icon } from "@ttbs/ui/components/icons";
 import {
   ArrowLeft,
   ArrowRight,
@@ -114,6 +115,14 @@ export type NavigationItemType = {
 const MORE_SEPARATOR_NAME = "more";
 
 const navigation: NavigationItemType[] = [
+  {
+    name: "dashboard_page_title",
+    href: "/dashboard",
+    icon: BarChart3Icon,
+    isCurrent: ({ pathname: path, item }) => {
+      return path?.includes(item.href);
+    },
+  },
   {
     name: "journeys_page_title",
     href: "/journeys",

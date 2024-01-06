@@ -20,7 +20,10 @@ export function withAuthMiddleware(middleware: CustomMiddleware) {
 
     if (!token && path === `/${lng}`) {
       response = NextResponse.redirect(new URL(`/${lng}/auth/login`, req.url));
-    } else if (token && (path === `/${lng}/auth/login` || path === `/${lng}/auth/register`)) {
+    } else if (
+      token &&
+      (path === `/${lng}/auth/login` || path === `/${lng}/auth/register` || path === `/${lng}`)
+    ) {
       response = NextResponse.redirect(new URL(`/${lng}/dashboard`, req.url));
     }
 
