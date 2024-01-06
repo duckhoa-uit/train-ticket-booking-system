@@ -23,7 +23,9 @@ const transformColumnIdToName = (id: string) =>
     .map((_) => _.charAt(0).toUpperCase() + _.slice(1))
     .join(" ");
 
-export function DataTableViewOptions<TData>({ table }: DataTableViewOptionsProps<TData>) {
+export function DataTableViewOptions<TData>({
+  table,
+}: DataTableViewOptionsProps<TData>) {
   return (
     <Dropdown>
       <DropdownMenuTrigger asChild>
@@ -42,7 +44,10 @@ export function DataTableViewOptions<TData>({ table }: DataTableViewOptionsProps
           <DropdownMenuSeparator />
           {table
             .getAllColumns()
-            .filter((column) => typeof column.accessorFn !== "undefined" && column.getCanHide())
+            .filter(
+              (column) =>
+                typeof column.accessorFn !== "undefined" && column.getCanHide(),
+            )
             .map((column) => {
               return (
                 <DropdownMenuCheckboxItem
@@ -51,7 +56,9 @@ export function DataTableViewOptions<TData>({ table }: DataTableViewOptionsProps
                   checked={column.getIsVisible()}
                   onCheckedChange={(value) => column.toggleVisibility(!!value)}
                 >
-                  <DropdownItem>{transformColumnIdToName(column.id)}</DropdownItem>
+                  <DropdownItem>
+                    {transformColumnIdToName(column.id)}
+                  </DropdownItem>
                 </DropdownMenuCheckboxItem>
               );
             })}

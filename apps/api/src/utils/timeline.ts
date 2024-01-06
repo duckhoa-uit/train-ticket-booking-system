@@ -2,7 +2,11 @@ import dayjs from "@ttbs/lib/dayjs";
 
 type TimeViewType = "week" | "month" | "year" | "day";
 
-export const getTimeLine = async (timeView: TimeViewType, startDate: dayjs.Dayjs, endDate: dayjs.Dayjs) => {
+export const getTimeLine = async (
+  timeView: TimeViewType,
+  startDate: dayjs.Dayjs,
+  endDate: dayjs.Dayjs,
+) => {
   let resultTimeLine: string[] = [];
 
   if (timeView) {
@@ -28,19 +32,28 @@ export const getTimeLine = async (timeView: TimeViewType, startDate: dayjs.Dayjs
   return resultTimeLine;
 };
 
-function getDailyTimeline(startDate: dayjs.Dayjs, endDate: dayjs.Dayjs): string[] {
+function getDailyTimeline(
+  startDate: dayjs.Dayjs,
+  endDate: dayjs.Dayjs,
+): string[] {
   const now = dayjs();
   const endOfDay = now.endOf("day");
   let pivotDate = dayjs(startDate);
   const dates: string[] = [];
-  while ((pivotDate.isBefore(endDate) || pivotDate.isSame(endDate)) && pivotDate.isBefore(endOfDay)) {
+  while (
+    (pivotDate.isBefore(endDate) || pivotDate.isSame(endDate)) &&
+    pivotDate.isBefore(endOfDay)
+  ) {
     dates.push(pivotDate.format("YYYY-MM-DD"));
     pivotDate = pivotDate.add(1, "day");
   }
   return dates;
 }
 
-function getWeekTimeline(startDate: dayjs.Dayjs, endDate: dayjs.Dayjs): string[] {
+function getWeekTimeline(
+  startDate: dayjs.Dayjs,
+  endDate: dayjs.Dayjs,
+): string[] {
   const now = dayjs();
   const endOfDay = now.endOf("day");
   let pivotDate = dayjs(startDate);

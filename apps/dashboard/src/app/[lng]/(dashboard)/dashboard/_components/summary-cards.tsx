@@ -26,7 +26,9 @@ export const SummaryCards = () => {
       });
 
       const res = await get(
-        `${env.NEXT_PUBLIC_API_BASE_URI}/api/statistic/summary?${searchParams.toString()}`
+        `${
+          env.NEXT_PUBLIC_API_BASE_URI
+        }/api/statistic/summary?${searchParams.toString()}`,
       );
       return res.data;
     },
@@ -78,7 +80,9 @@ export const SummaryCards = () => {
   );
 };
 
-const LoadingSummaryCards = (props: { categories: { title: string; index: string }[] }) => {
+const LoadingSummaryCards = (props: {
+  categories: { title: string; index: string }[];
+}) => {
   const { categories } = props;
   return (
     <Grid numItemsSm={2} numItemsLg={4} className="gap-x-4 gap-y-4">

@@ -39,7 +39,10 @@ const emptyResponseEventsByStatus = {
   },
 };
 
-export const getStatisticSummary = async ({ startDate, endDate }: GetStatisticSummaryQueryInput) => {
+export const getStatisticSummary = async ({
+  startDate,
+  endDate,
+}: GetStatisticSummaryQueryInput) => {
   const whereConditional: Prisma.OrderWhereInput = {};
 
   const baseWhereCondition = {
@@ -49,12 +52,20 @@ export const getStatisticSummary = async ({ startDate, endDate }: GetStatisticSu
       lte: endDate,
     },
   };
-  const baseOrdersCount = await prisma.order.count({ where: baseWhereCondition });
+  const baseOrdersCount = await prisma.order.count({
+    where: baseWhereCondition,
+  });
 
   const startTimeEndTimeDiff = dayjs(endDate).diff(dayjs(startDate), "day");
 
-  const lastPeriodStartDate = dayjs(startDate).subtract(startTimeEndTimeDiff, "day");
-  const lastPeriodEndDate = dayjs(endDate).subtract(startTimeEndTimeDiff, "day");
+  const lastPeriodStartDate = dayjs(startDate).subtract(
+    startTimeEndTimeDiff,
+    "day",
+  );
+  const lastPeriodEndDate = dayjs(endDate).subtract(
+    startTimeEndTimeDiff,
+    "day",
+  );
 
   const lastPeriodBaseCondition = {
     ...whereConditional,
@@ -111,7 +122,9 @@ export const getStatisticSummary = async ({ startDate, endDate }: GetStatisticSu
       count: totalCompleted,
       deltaPrevious: getPercentage(
         baseOrdersCount - totalCancelled - totalPending,
-        lastPeriodBaseOrdersCount - lastPeriodTotalCancelled - lastPeriodTotalPending
+        lastPeriodBaseOrdersCount -
+          lastPeriodTotalCancelled -
+          lastPeriodTotalPending,
       ),
     },
     pending: {
@@ -130,7 +143,9 @@ export const getStatisticSummary = async ({ startDate, endDate }: GetStatisticSu
   console.log(
     "🚀 ~ file: statistic.service.ts:130 ~ getStatisticSummary ~ result.completed.baseOrdersCount:",
     baseOrdersCount - totalCancelled - totalPending,
-    lastPeriodBaseOrdersCount - lastPeriodTotalCancelled - lastPeriodTotalPending
+    lastPeriodBaseOrdersCount -
+      lastPeriodTotalCancelled -
+      lastPeriodTotalPending,
   );
 
   if (
@@ -165,14 +180,19 @@ export const getStatisticOrdersTimeline = async ({
   const whereConditional: Prisma.OrderWhereInput = {};
 
   // Get timeline data
-  const timeline = await getTimeLine(timeView, dayjs(startDate), dayjs(endDate));
+  const timeline = await getTimeLine(
+    timeView,
+    dayjs(startDate),
+    dayjs(endDate),
+  );
 
   // iterate timeline and fetch data
   if (!timeline) {
     return [];
   }
 
-  const dateFormat: string = timeView === "year" ? "YYYY" : timeView === "month" ? "MMM YYYY" : "ll";
+  const dateFormat: string =
+    timeView === "year" ? "YYYY" : timeView === "month" ? "MMM YYYY" : "ll";
   const result = [];
 
   for (const date of timeline) {
@@ -197,28 +217,28 @@ export const getStatisticOrdersTimeline = async ({
           start: startDate,
           end: endDate,
         },
-        whereConditional
+        whereConditional,
       ),
       getCompletedOrdersInTimeRange(
         {
           start: startDate,
           end: endDate,
         },
-        whereConditional
+        whereConditional,
       ),
       getPendingOrdersInTimeRange(
         {
           start: startDate,
           end: endDate,
         },
-        whereConditional
+        whereConditional,
       ),
       getCancelledOrdersInTimeRange(
         {
           start: startDate,
           end: endDate,
         },
-        whereConditional
+        whereConditional,
       ),
     ]);
 

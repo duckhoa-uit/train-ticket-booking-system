@@ -47,4 +47,5 @@ interface BaseChartProps extends React.HTMLAttributes<HTMLDivElement> {
   maxValue?: number;
 }
 
-export type LineChartProps = BaseChartProps & React.RefAttributes<HTMLDivElement>;
+export type LineChartProps = BaseChartProps &
+  React.RefAttributes<HTMLDivElement>;

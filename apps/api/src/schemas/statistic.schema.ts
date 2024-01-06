@@ -20,7 +20,9 @@ export const getStatisticPopularJourneysQueryInputSchema = z.object({
   }),
 });
 
-export type GetStatisticSummaryQueryInput = z.infer<typeof getStatisticSummaryQueryInputSchema>["query"];
+export type GetStatisticSummaryQueryInput = z.infer<
+  typeof getStatisticSummaryQueryInputSchema
+>["query"];
 export type GetStatisticOrdersTimelineQueryInput = z.infer<
   typeof getStatisticOrdersTimelineQueryInputSchema
 >["query"];

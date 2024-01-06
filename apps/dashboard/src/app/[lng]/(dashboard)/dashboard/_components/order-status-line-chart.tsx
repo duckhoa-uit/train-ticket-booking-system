@@ -23,7 +23,13 @@ export const OrderStatusLineChart = () => {
     isSuccess,
     isLoading,
   } = useQuery({
-    queryKey: ["statistic", "orders-timeline", selectedTimeView, startDate, endDate],
+    queryKey: [
+      "statistic",
+      "orders-timeline",
+      selectedTimeView,
+      startDate,
+      endDate,
+    ],
     queryFn: async () => {
       const searchParams = new URLSearchParams({
         startDate: startDate.toISOString(),
@@ -32,7 +38,9 @@ export const OrderStatusLineChart = () => {
       });
 
       const res = await get(
-        `${env.NEXT_PUBLIC_API_BASE_URI}/api/statistic/orders-timeline?${searchParams.toString()}`
+        `${
+          env.NEXT_PUBLIC_API_BASE_URI
+        }/api/statistic/orders-timeline?${searchParams.toString()}`,
       );
       return res.data;
     },

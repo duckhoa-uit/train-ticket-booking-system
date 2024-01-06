@@ -15,7 +15,11 @@ export default function Dashboard() {
 
   return (
     <MainLayout>
-      <ShellMain withoutSeo heading={t("dashboard_page_title")} hideHeadingOnMobile>
+      <ShellMain
+        withoutSeo
+        heading={t("dashboard_page_title")}
+        hideHeadingOnMobile
+      >
         <FiltersProvider>
           <Filters />
 

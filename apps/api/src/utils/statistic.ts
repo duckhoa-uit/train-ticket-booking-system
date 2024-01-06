@@ -5,7 +5,10 @@ interface ITimeRange {
   start: dayjs.Dayjs;
   end: dayjs.Dayjs;
 }
-const getOrdersInTimeRange = async (timeRange: ITimeRange, where: Prisma.OrderWhereInput) => {
+const getOrdersInTimeRange = async (
+  timeRange: ITimeRange,
+  where: Prisma.OrderWhereInput,
+) => {
   const { start, end } = timeRange;
 
   const orders = await prisma.order.count({
@@ -21,13 +24,19 @@ const getOrdersInTimeRange = async (timeRange: ITimeRange, where: Prisma.OrderWh
   return orders;
 };
 
-export const getCreatedOrdersInTimeRange = async (timeRange: ITimeRange, where: Prisma.OrderWhereInput) => {
+export const getCreatedOrdersInTimeRange = async (
+  timeRange: ITimeRange,
+  where: Prisma.OrderWhereInput,
+) => {
   const result = await getOrdersInTimeRange(timeRange, where);
 
   return result;
 };
 
-export const getCancelledOrdersInTimeRange = async (timeRange: ITimeRange, where: Prisma.OrderWhereInput) => {
+export const getCancelledOrdersInTimeRange = async (
+  timeRange: ITimeRange,
+  where: Prisma.OrderWhereInput,
+) => {
   const result = await getOrdersInTimeRange(timeRange, {
     ...where,
     paymentStatus: "CANCELED",
@@ -36,7 +45,10 @@ export const getCancelledOrdersInTimeRange = async (timeRange: ITimeRange, where
   return result;
 };
 
-export const getCompletedOrdersInTimeRange = async (timeRange: ITimeRange, where: Prisma.OrderWhereInput) => {
+export const getCompletedOrdersInTimeRange = async (
+  timeRange: ITimeRange,
+  where: Prisma.OrderWhereInput,
+) => {
   const result = await getOrdersInTimeRange(timeRange, {
     ...where,
     paymentStatus: "PAID",
@@ -45,7 +57,10 @@ export const getCompletedOrdersInTimeRange = async (timeRange: ITimeRange, where
   return result;
 };
 
-export const getPendingOrdersInTimeRange = async (timeRange: ITimeRange, where: Prisma.OrderWhereInput) => {
+export const getPendingOrdersInTimeRange = async (
+  timeRange: ITimeRange,
+  where: Prisma.OrderWhereInput,
+) => {
   const result = await getOrdersInTimeRange(timeRange, {
     ...where,
     paymentStatus: "PENDING",

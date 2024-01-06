@@ -14,16 +14,20 @@ import {
 
 export const statisticRouter = Router();
 
-statisticRouter.get("/summary", validate(getStatisticSummaryQueryInputSchema), getStatisticSummaryHandler);
+statisticRouter.get(
+  "/summary",
+  validate(getStatisticSummaryQueryInputSchema),
+  getStatisticSummaryHandler,
+);
 
 statisticRouter.get(
   "/orders-timeline",
   validate(getStatisticOrdersTimelineQueryInputSchema),
-  getStatisticOrdersTimelineHandler
+  getStatisticOrdersTimelineHandler,
 );
 
 statisticRouter.get(
   "/popular-journeys",
   validate(getStatisticPopularJourneysQueryInputSchema),
-  getStatisticPopularHandler
+  getStatisticPopularHandler,
 );
