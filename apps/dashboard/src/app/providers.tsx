@@ -9,7 +9,13 @@ import { Toaster } from "sonner";
 
 import { LangProvider } from "@ttbs/i18n";
 
-export default function Providers({ children, lang }: { children: React.ReactNode; lang: string }) {
+export default function Providers({
+  children,
+  lang,
+}: {
+  children: React.ReactNode;
+  lang: string;
+}) {
   const [queryClient] = useState(() => new QueryClient());
 
   return (
