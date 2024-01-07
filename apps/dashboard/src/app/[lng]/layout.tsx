@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
 import { languages } from "@ttbs/i18n";
+import { cn } from "@ttbs/lib/cn";
 
 import Providers from "../providers";
 import "./globals.css";
@@ -29,7 +30,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" dir={dir(lng)}>
-      <body className={inter.className}>
+      <body className={cn(inter.className, "light")}>
         <Providers lang={lng}>{children}</Providers>
       </body>
     </html>

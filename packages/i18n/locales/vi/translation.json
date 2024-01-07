@@ -44,6 +44,8 @@
   "request_is_expired_instructions": "Yêu cầu đó đã hết hạn. Hãy quay lại và nhập email được liên kết với tài khoản của bạn và chúng tôi sẽ gửi cho bạn một liên kết khác để đặt lại mật khẩu.",
   "try_again": "Thử lại",
   "new_password": "Mật khẩu mới",
+  "my_profile": "Profile",
+  "sign_out": "Đăng xuất",
   "stations_page_title": "Các trạm",
   "stations_page_subtitle": "Xem các trạm trong hệ thống của bạn",
   "default_station_name": "Hà Nội",
@@ -71,6 +73,7 @@
   "train_created_successfully": "Tàu {{trainName}} được tạo thành công",
   "trips_page_title": "Chuyến đi",
   "trip_stations": "Trạm",
+  "trip_updated_successfully": "Cập nhật chuyến đi thành công",
   "seat_types_page_title": "Loại ghế",
   "seat_types_page_subtitle": "Xem/sửa xoá các loại chỗ trong hệ thống",
   "seat_type_created_successfully": "Loại ghế {{seatType}} được tạo thành công",
@@ -82,5 +85,13 @@
   "seat_type_floors_hint": "Ghế ngồi -> 1, giường nằm -> tương ứng với số tầng",
   "seat_type_seat_per_row": "Số ghế theo hàng ngang",
   "default_seat_type_seat_per_row": "3",
-  "seat_type_seat_per_row_hint": "Giường nằm -> tương ứng với số tầng, ghế ngồi tương ứng với số ghế theo hàng ngang"
+  "seat_type_seat_per_row_hint": "Giường nằm -> tương ứng với số tầng, ghế ngồi tương ứng với số ghế theo hàng ngang",
+  "dashboard_page_title": "Dashboard",
+  "orders_page_title": "Đơn hàng",
+  "orders_created": "Đơn hàng được tạo",
+  "orders_completed": "Đơn hàng hoàn tất",
+  "orders_pending": "Đơn hàng đợi thanh toán",
+  "orders_cancelled": "Đơn hàng bị huỷ",
+  "from_last_period": "So với kì trước",
+  "order_trends": "Thống kê đơn hàng"
 }

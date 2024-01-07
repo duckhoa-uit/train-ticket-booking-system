@@ -16,7 +16,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@ttbs/ui";
-import { ChevronDown, LogOut, Settings, User as UserIcon } from "@ttbs/ui/components/icons";
+import { ChevronDown, LogOut, User as UserIcon } from "@ttbs/ui/components/icons";
 
 interface UserDropdownProps {
   small?: boolean;
@@ -84,11 +84,6 @@ export function UserDropdown({ small }: UserDropdownProps) {
           <DropdownMenuItem>
             <DropdownItem type="button" StartIcon={UserIcon} href="/settings/my-account/profile">
               {t("my_profile")}
-            </DropdownItem>
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            <DropdownItem type="button" StartIcon={Settings} href="/settings/my-account/general">
-              {t("my_settings")}
             </DropdownItem>
           </DropdownMenuItem>
           <DropdownMenuSeparator />

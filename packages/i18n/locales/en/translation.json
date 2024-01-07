@@ -71,5 +71,7 @@
   "train_created_successfully": "{{trainName}} train created successfully",
   "trips_page_title": "Trips",
   "trip_stations": "Stations",
-  "seat_types_page_title": "Seat Types"
+  "seat_types_page_title": "Seat Types",
+  "dashboard_page_title": "Dashboard",
+  "orders_page_title": "Orders"
 }

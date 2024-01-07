@@ -16,12 +16,7 @@ export default async function SeatTypesLayout({
 
   return (
     <MainLayout>
-      <ShellMain
-        withoutSeo
-        hideHeadingOnMobile
-        heading={t("orders_page_title")}
-        subtitle={t("orders_page_subtitle")}
-      >
+      <ShellMain withoutSeo hideHeadingOnMobile heading={t("orders_page_title")}>
         {children}
       </ShellMain>
     </MainLayout>

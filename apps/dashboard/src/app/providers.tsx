@@ -17,6 +17,7 @@ export default function Providers({ children, lang }: { children: React.ReactNod
       //disableTransitionOnChange
       storageKey="DARK_MODE_STORAGE_KEY"
       attribute="class"
+      defaultTheme="light"
     >
       <QueryClientProvider client={queryClient}>
         <LangProvider lang={lang}>

@@ -55,7 +55,7 @@ export default function Trips({ searchParams }: TripsPageProps) {
         withoutSeo
         heading={t("trips_page_title")}
         hideHeadingOnMobile
-        CTA={<Button href="/trips/new">{t("add_trip")}</Button>}
+        CTA={<Button href="/trips/new">{t("new")}</Button>}
       >
         <TripsTable data={tripsQuery.data ?? []} pageCount={1} />
       </ShellMain>
