@@ -9,7 +9,9 @@ import type {
   Trip,
 } from "@ttbs/prisma";
 
-export type TrainItemDetailsApiResponse = Train & { carriages: Array<Carriage & { seatType: SeatType }> };
+export type TrainItemDetailsApiResponse = Train & {
+  carriages: Array<Carriage & { seatType: SeatType }>;
+};
 
 export type TripItemDetailsApiResponse = Trip & {
   train: TrainItemDetailsApiResponse;

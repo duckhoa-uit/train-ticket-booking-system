@@ -10,7 +10,14 @@ import { env } from "@ttbs/env";
 import { useClientTranslation } from "@ttbs/i18n";
 import { HttpError } from "@ttbs/lib/http-error";
 import type { Carriage, Train } from "@ttbs/prisma";
-import { Button, ConfirmationDialogContent, Dialog, DialogTrigger, Form, VerticalDivider } from "@ttbs/ui";
+import {
+  Button,
+  ConfirmationDialogContent,
+  Dialog,
+  DialogTrigger,
+  Form,
+  VerticalDivider,
+} from "@ttbs/ui";
 import { Trash } from "@ttbs/ui/components/icons";
 
 import EditableHeading from "@/components/editable-heading";
@@ -55,7 +62,9 @@ const TrainDetailsPage = ({ params: { trainId } }: TrainDetailsPageProps) => {
   } = useQuery({
     queryKey: ["trains", trainId],
     queryFn: async () => {
-      const res = await get(`${env.NEXT_PUBLIC_API_BASE_URI}/api/trains/${trainId}`);
+      const res = await get(
+        `${env.NEXT_PUBLIC_API_BASE_URI}/api/trains/${trainId}`,
+      );
       if (res.error) throw new Error(res.error);
 
       return res.data as Train & { carriages: Carriage[] };
@@ -84,7 +93,10 @@ const TrainDetailsPage = ({ params: { trainId } }: TrainDetailsPageProps) => {
 
   const updateMutation = useMutation({
     mutationFn: async (values: UpdateTrainFormValues) => {
-      const res = await patch(`${env.NEXT_PUBLIC_API_BASE_URI}/api/trains/${trainId}`, values);
+      const res = await patch(
+        `${env.NEXT_PUBLIC_API_BASE_URI}/api/trains/${trainId}`,
+        values,
+      );
 
       if (res.error) {
         const respError = res.error as ResponseError;
@@ -107,7 +119,7 @@ const TrainDetailsPage = ({ params: { trainId } }: TrainDetailsPageProps) => {
         toast.success(
           t("train_updated_successfully", {
             trainName: res.data.name,
-          })
+          }),
         );
       }
     },
@@ -121,7 +133,9 @@ const TrainDetailsPage = ({ params: { trainId } }: TrainDetailsPageProps) => {
 
   const deleteMutation = useMutation({
     mutationFn: async () => {
-      const res = await delete_(`${env.NEXT_PUBLIC_API_BASE_URI}/api/trains/${trainId}`);
+      const res = await delete_(
+        `${env.NEXT_PUBLIC_API_BASE_URI}/api/trains/${trainId}`,
+      );
       console.log("🚀 ~ file: page.tsx:53 ~ mutationFn: ~ res:", res);
 
       queryClient.invalidateQueries({ queryKey: ["trains"] });
@@ -150,7 +164,9 @@ const TrainDetailsPage = ({ params: { trainId } }: TrainDetailsPageProps) => {
         <Controller
           control={form.control}
           name="name"
-          render={({ field }) => <EditableHeading isReady={!isLoading} {...field} />}
+          render={({ field }) => (
+            <EditableHeading isReady={!isLoading} {...field} />
+          )}
         />
       }
       CTA={
