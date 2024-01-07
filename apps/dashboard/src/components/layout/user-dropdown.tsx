@@ -16,7 +16,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@ttbs/ui";
-import { ChevronDown, LogOut, User as UserIcon } from "@ttbs/ui/components/icons";
+import {
+  ChevronDown,
+  LogOut,
+  User as UserIcon,
+} from "@ttbs/ui/components/icons";
 
 interface UserDropdownProps {
   small?: boolean;
@@ -37,18 +41,21 @@ export function UserDropdown({ small }: UserDropdownProps) {
 
   return (
     <Dropdown open={menuOpen}>
-      <DropdownMenuTrigger asChild onClick={() => setMenuOpen((menuOpen) => !menuOpen)}>
+      <DropdownMenuTrigger
+        asChild
+        onClick={() => setMenuOpen((menuOpen) => !menuOpen)}
+      >
         <Button
           color="minimal"
           className={cn(
             "hover:bg-emphasis group mx-0 flex cursor-pointer appearance-none items-center rounded-full text-left outline-none focus:outline-none focus:ring-0 md:rounded-none lg:rounded",
-            small ? "p-2" : "px-2 py-1.5"
+            small ? "p-2" : "px-2 py-1.5",
           )}
         >
           <span
             className={cn(
               small ? "h-4 w-4" : "h-5 w-5 ltr:mr-2 rtl:ml-2",
-              "relative flex-shrink-0 rounded-full "
+              "relative flex-shrink-0 rounded-full ",
             )}
           >
             <Avatar
@@ -62,7 +69,9 @@ export function UserDropdown({ small }: UserDropdownProps) {
           {!small && (
             <span className="flex flex-grow items-center gap-2">
               <span className="line-clamp-1 flex-grow text-sm leading-none">
-                <span className="text-emphasis block font-medium">{user.name || "Nameless User"}</span>
+                <span className="text-emphasis block font-medium">
+                  {user.name || "Nameless User"}
+                </span>
               </span>
               <ChevronDown
                 className="group-hover:text-subtle text-muted h-4 w-4 flex-shrink-0 rtl:mr-4"
@@ -82,7 +91,11 @@ export function UserDropdown({ small }: UserDropdownProps) {
           className="group overflow-hidden rounded-md"
         >
           <DropdownMenuItem>
-            <DropdownItem type="button" StartIcon={UserIcon} href="/settings/my-account/profile">
+            <DropdownItem
+              type="button"
+              StartIcon={UserIcon}
+              href="/settings/my-account/profile"
+            >
               {t("my_profile")}
             </DropdownItem>
           </DropdownMenuItem>
