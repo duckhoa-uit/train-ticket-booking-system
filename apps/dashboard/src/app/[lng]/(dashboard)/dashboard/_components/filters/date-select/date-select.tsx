@@ -38,10 +38,18 @@ export const DateSelect = () => {
 
           if (
             range &&
-            (range === "tdy" || range === "w" || range === "t" || range === "m" || range === "y")
+            (range === "tdy" ||
+              range === "w" ||
+              range === "t" ||
+              range === "m" ||
+              range === "y")
           ) {
             setConfigFilters({
-              dateRange: [dayjs(start).startOf("d"), dayjs(end).endOf("d"), range],
+              dateRange: [
+                dayjs(start).startOf("d"),
+                dayjs(end).endOf("d"),
+                range,
+              ],
             });
 
             return;

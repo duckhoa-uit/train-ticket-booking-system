@@ -1,12 +1,20 @@
 import { getToken } from "next-auth/jwt";
-import { NextResponse, type NextFetchEvent, type NextRequest } from "next/server";
+import {
+  NextResponse,
+  type NextFetchEvent,
+  type NextRequest,
+} from "next/server";
 
 import { getUserLanguage } from "@ttbs/i18n";
 
 import type { CustomMiddleware } from "./chain";
 
 export function withAuthMiddleware(middleware: CustomMiddleware) {
-  return async (req: NextRequest, event: NextFetchEvent, response: NextResponse) => {
+  return async (
+    req: NextRequest,
+    event: NextFetchEvent,
+    response: NextResponse,
+  ) => {
     const path = req.nextUrl.pathname;
     const lng = getUserLanguage(req);
 
@@ -22,7 +30,9 @@ export function withAuthMiddleware(middleware: CustomMiddleware) {
       response = NextResponse.redirect(new URL(`/${lng}/auth/login`, req.url));
     } else if (
       token &&
-      (path === `/${lng}/auth/login` || path === `/${lng}/auth/register` || path === `/${lng}`)
+      (path === `/${lng}/auth/login` ||
+        path === `/${lng}/auth/register` ||
+        path === `/${lng}`)
     ) {
       response = NextResponse.redirect(new URL(`/${lng}/dashboard`, req.url));
     }

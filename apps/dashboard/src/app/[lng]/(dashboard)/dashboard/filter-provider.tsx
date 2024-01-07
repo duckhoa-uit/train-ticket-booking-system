@@ -40,7 +40,9 @@ export function FiltersProvider({ children }: { children: React.ReactNode }) {
     endTimeParsed = safe.data.endTime;
   }
 
-  const [configFilters, setConfigFilters] = useState<FilterContextType["filter"]>({
+  const [configFilters, setConfigFilters] = useState<
+    FilterContextType["filter"]
+  >({
     dateRange: [
       startTimeParsed ? dayjs(startTimeParsed) : dayjs().subtract(1, "month"),
       endTimeParsed ? dayjs(endTimeParsed) : dayjs(),
@@ -72,9 +74,15 @@ export function FiltersProvider({ children }: { children: React.ReactNode }) {
 
           const { isAll, dateRange, initialConfig } = newConfigFilters;
           const [startTime, endTime] = dateRange || [null, null];
-          const newSearchParams = new URLSearchParams(searchParams?.toString() ?? undefined);
-          function setParamsIfDefined(key: string, value: string | number | boolean | null | undefined) {
-            if (value !== undefined && value !== null) newSearchParams.set(key, value.toString());
+          const newSearchParams = new URLSearchParams(
+            searchParams?.toString() ?? undefined,
+          );
+          function setParamsIfDefined(
+            key: string,
+            value: string | number | boolean | null | undefined,
+          ) {
+            if (value !== undefined && value !== null)
+              newSearchParams.set(key, value.toString());
           }
 
           setParamsIfDefined("isAll", isAll || initialConfig?.isAll);

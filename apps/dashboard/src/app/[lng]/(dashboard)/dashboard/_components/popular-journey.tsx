@@ -1,5 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
-import { Table, TableBody, TableCell, TableRow, Text, Title } from "@tremor/react";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableRow,
+  Text,
+  Title,
+} from "@tremor/react";
 
 import { env } from "@ttbs/env";
 import { useClientTranslation } from "@ttbs/i18n";
@@ -25,9 +32,15 @@ export const PopularJourneysTable = () => {
       });
 
       const res = await get(
-        `${env.NEXT_PUBLIC_API_BASE_URI}/api/statistic/popular-journeys?${searchParams.toString()}`
+        `${
+          env.NEXT_PUBLIC_API_BASE_URI
+        }/api/statistic/popular-journeys?${searchParams.toString()}`,
       );
-      return res.data as { journeyId: number; journeyName: string; count: number }[];
+      return res.data as {
+        journeyId: number;
+        journeyName: string;
+        count: number;
+      }[];
     },
     staleTime: 30000,
     enabled: !!startDate && !!endDate,
@@ -56,7 +69,9 @@ export const PopularJourneysTable = () => {
       </Table>
       {data.length === 0 && (
         <div className="flex h-60 text-center">
-          <p className="m-auto text-sm font-light">{t("insights_no_data_found_for_filter")}</p>
+          <p className="m-auto text-sm font-light">
+            {t("insights_no_data_found_for_filter")}
+          </p>
         </div>
       )}
     </CardInsights>

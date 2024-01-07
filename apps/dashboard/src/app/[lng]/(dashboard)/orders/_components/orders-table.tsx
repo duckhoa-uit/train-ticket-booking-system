@@ -40,7 +40,8 @@ export function OrdersTable({ data, pageCount }: OrdersTableProps) {
   const [selectedRowIds, setSelectedRowIds] = React.useState<number[]>([]);
 
   const deleteOrderMutation = useMutation({
-    mutationFn: (id: number) => delete_(`${env.NEXT_PUBLIC_API_BASE_URI}/api/orders/${id}`),
+    mutationFn: (id: number) =>
+      delete_(`${env.NEXT_PUBLIC_API_BASE_URI}/api/orders/${id}`),
   });
 
   // Memoize the columns so they don't re-render on every render
@@ -53,7 +54,9 @@ export function OrdersTable({ data, pageCount }: OrdersTableProps) {
             checked={table.getIsAllPageRowsSelected()}
             onCheckedChange={(value) => {
               table.toggleAllPageRowsSelected(!!value);
-              setSelectedRowIds((prev) => (prev.length === data.length ? [] : data.map((row) => row.id)));
+              setSelectedRowIds((prev) =>
+                prev.length === data.length ? [] : data.map((row) => row.id),
+              );
             }}
             aria-label="Select all"
             className="translate-y-[2px]"
@@ -65,7 +68,9 @@ export function OrdersTable({ data, pageCount }: OrdersTableProps) {
             onCheckedChange={(value) => {
               row.toggleSelected(!!value);
               setSelectedRowIds((prev) =>
-                value ? [...prev, row.original.id] : prev.filter((id) => id !== row.original.id)
+                value
+                  ? [...prev, row.original.id]
+                  : prev.filter((id) => id !== row.original.id),
               );
             }}
             aria-label="Select row"
@@ -77,21 +82,29 @@ export function OrdersTable({ data, pageCount }: OrdersTableProps) {
       },
       {
         accessorKey: "id",
-        header: ({ column }) => <DataTableColumnHeader column={column} title="ID" />,
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} title="ID" />
+        ),
         cell: ({ row }) => <div className="w-[80px]">{row.getValue("id")}</div>,
         enableSorting: false,
         enableHiding: false,
       },
       {
         accessorKey: "buyerName",
-        header: ({ column }) => <DataTableColumnHeader column={column} title="Buyer Name" />,
-        cell: ({ row }) => <div className="w-[160px]">{row.getValue("buyerName")}</div>,
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} title="Buyer Name" />
+        ),
+        cell: ({ row }) => (
+          <div className="w-[160px]">{row.getValue("buyerName")}</div>
+        ),
         enableSorting: false,
         enableHiding: false,
       },
       {
         accessorKey: "buyerIdentification",
-        header: ({ column }) => <DataTableColumnHeader column={column} title="Buyer Identification" />,
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} title="Buyer Identification" />
+        ),
         cell: ({ row }) => (
           <span className="max-w-40 truncate text-center font-medium">
             {row.getValue("buyerIdentification")}
@@ -102,25 +115,35 @@ export function OrdersTable({ data, pageCount }: OrdersTableProps) {
       },
       {
         accessorKey: "buyerPhone",
-        header: ({ column }) => <DataTableColumnHeader column={column} title="Buyer Phone" />,
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} title="Buyer Phone" />
+        ),
         cell: ({ row }) => (
-          <span className="max-w-40 truncate text-center font-medium">{row.getValue("buyerPhone")}</span>
+          <span className="max-w-40 truncate text-center font-medium">
+            {row.getValue("buyerPhone")}
+          </span>
         ),
         enableSorting: false,
         enableHiding: false,
       },
       {
         accessorKey: "buyerEmail",
-        header: ({ column }) => <DataTableColumnHeader column={column} title="Buyer Email" />,
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} title="Buyer Email" />
+        ),
         cell: ({ row }) => (
-          <span className="max-w-40 truncate text-center font-medium">{row.getValue("buyerEmail")}</span>
+          <span className="max-w-40 truncate text-center font-medium">
+            {row.getValue("buyerEmail")}
+          </span>
         ),
         enableSorting: false,
         enableHiding: false,
       },
       {
         accessorKey: "paymentStatus",
-        header: ({ column }) => <DataTableColumnHeader column={column} title="Payment Status" />,
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} title="Payment Status" />
+        ),
         cell: ({ row }) => {
           const status = row.original.paymentStatus;
 
@@ -131,13 +154,25 @@ export function OrdersTable({ data, pageCount }: OrdersTableProps) {
           return (
             <div className="flex items-center">
               {status === "PENDING" ? (
-                <AlarmClockIcon className="text-muted-foreground mr-2 h-4 w-4" aria-hidden="true" />
+                <AlarmClockIcon
+                  className="text-muted-foreground mr-2 h-4 w-4"
+                  aria-hidden="true"
+                />
               ) : status === "PAID" ? (
-                <CheckCircleIcon className="text-muted-foreground mr-2 h-4 w-4" aria-hidden="true" />
+                <CheckCircleIcon
+                  className="text-muted-foreground mr-2 h-4 w-4"
+                  aria-hidden="true"
+                />
               ) : status === "CANCELED" ? (
-                <SlashIcon className="text-muted-foreground mr-2 h-4 w-4" aria-hidden="true" />
+                <SlashIcon
+                  className="text-muted-foreground mr-2 h-4 w-4"
+                  aria-hidden="true"
+                />
               ) : (
-                <AlertCircleIcon className="text-muted-foreground mr-2 h-4 w-4" aria-hidden="true" />
+                <AlertCircleIcon
+                  className="text-muted-foreground mr-2 h-4 w-4"
+                  aria-hidden="true"
+                />
               )}
               <span className="capitalize">{status}</span>
             </div>
@@ -171,14 +206,20 @@ export function OrdersTable({ data, pageCount }: OrdersTableProps) {
                   startTransition(() => {
                     row.toggleSelected(false);
 
-                    toast.promise(deleteOrderMutation.mutateAsync(row.original.id), {
-                      loading: "Deleting...",
-                      success: () => "Order deleted successfully.",
-                      error: (err: unknown) => {
-                        console.log("🚀 ~ file: stations-table.tsx:128 ~ toast.promise ~ err:", err);
-                        return "Something has error";
+                    toast.promise(
+                      deleteOrderMutation.mutateAsync(row.original.id),
+                      {
+                        loading: "Deleting...",
+                        success: () => "Order deleted successfully.",
+                        error: (err: unknown) => {
+                          console.log(
+                            "🚀 ~ file: stations-table.tsx:128 ~ toast.promise ~ err:",
+                            err,
+                          );
+                          return "Something has error";
+                        },
                       },
-                    });
+                    );
                   });
                 }}
               >
@@ -189,22 +230,30 @@ export function OrdersTable({ data, pageCount }: OrdersTableProps) {
         ),
       },
     ],
-    [data, isPending]
+    [data, isPending],
   );
 
   function deleteSelectedRows() {
-    toast.promise(Promise.all(selectedRowIds.map((id) => deleteOrderMutation.mutateAsync(id))), {
-      loading: "Deleting...",
-      success: () => {
-        setSelectedRowIds([]);
-        return "Stations deleted successfully.";
+    toast.promise(
+      Promise.all(
+        selectedRowIds.map((id) => deleteOrderMutation.mutateAsync(id)),
+      ),
+      {
+        loading: "Deleting...",
+        success: () => {
+          setSelectedRowIds([]);
+          return "Stations deleted successfully.";
+        },
+        error: (err: unknown) => {
+          console.log(
+            "🚀 ~ file: stations-table.tsx:151 ~ toast.promise ~ err:",
+            err,
+          );
+          setSelectedRowIds([]);
+          return "Something has error.";
+        },
       },
-      error: (err: unknown) => {
-        console.log("🚀 ~ file: stations-table.tsx:151 ~ toast.promise ~ err:", err);
-        setSelectedRowIds([]);
-        return "Something has error.";
-      },
-    });
+    );
   }
 
   return (
@@ -237,7 +286,12 @@ export function OrdersTable({ data, pageCount }: OrdersTableProps) {
         },
       ]}
       // Render floating filters at the bottom of the table on column selection
-      floatingBar={(table) => <OrdersTableFloatingBar table={table} deleteRowsAction={deleteSelectedRows} />}
+      floatingBar={(table) => (
+        <OrdersTableFloatingBar
+          table={table}
+          deleteRowsAction={deleteSelectedRows}
+        />
+      )}
     />
   );
 }

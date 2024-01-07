@@ -18,7 +18,7 @@ import {
 export const getStatisticSummaryHandler = async (
   req: Request<{}, {}, {}, GetStatisticSummaryQueryInput & ParsedQs>,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const { query } = getStatisticSummaryQueryInputSchema.parse(req);
@@ -32,7 +32,7 @@ export const getStatisticSummaryHandler = async (
 export const getStatisticOrdersTimelineHandler = async (
   req: Request<{}, {}, {}, GetStatisticOrdersTimelineQueryInput & ParsedQs>,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const { query } = getStatisticOrdersTimelineQueryInputSchema.parse(req);
@@ -47,7 +47,7 @@ export const getStatisticOrdersTimelineHandler = async (
 export const getStatisticPopularHandler = async (
   req: Request<{}, {}, {}, GetStatisticPopularJourneysQueryInput & ParsedQs>,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const { query } = getStatisticPopularJourneysQueryInputSchema.parse(req);

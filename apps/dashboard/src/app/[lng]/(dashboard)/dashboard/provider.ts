@@ -17,7 +17,9 @@ export type FilterContextType = {
   setConfigFilters: (config: Partial<IFilter>) => void;
 };
 
-export const FilterContext = React.createContext<FilterContextType | null>(null);
+export const FilterContext = React.createContext<FilterContextType | null>(
+  null,
+);
 
 export function useFilterContext() {
   const context = React.useContext(FilterContext);
@@ -29,6 +31,13 @@ export function useFilterContext() {
   return context;
 }
 
-export function FilterProvider<F extends FilterContextType>(props: { value: F; children: React.ReactNode }) {
-  return React.createElement(FilterContext.Provider, { value: props.value }, props.children);
+export function FilterProvider<F extends FilterContextType>(props: {
+  value: F;
+  children: React.ReactNode;
+}) {
+  return React.createElement(
+    FilterContext.Provider,
+    { value: props.value },
+    props.children,
+  );
 }
